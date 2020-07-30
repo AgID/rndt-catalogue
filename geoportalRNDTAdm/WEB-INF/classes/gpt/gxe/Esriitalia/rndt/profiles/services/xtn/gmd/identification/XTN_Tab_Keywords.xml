@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  INSPIRE Identification keywords tab (gmd:descriptiveKeywords) --> 
+<h:div xmlns:g="http://www.esri.com/geoportal/gxe" 
+       xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+       h:tag="div" 
+       g:label="$i18n.catalog.iso19139.MD_Metadata.section.identification.descriptiveKeywords">
+    <g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+        <g:body>
+		
+            <!-- NOTE: g:matchTopElements does not support full XPath expressions -->
+		 
+            <!-- INSPIRE service type. NOTA: è senza Thesaurus. Si fa il match con la parola chiave  --> 
+            <h:div g:label="$i18n.catalog.mdParam.inspire.keyword.dataTheme.service.label" g:info="$i18n.catalog.rdnt.dataset.hint.temaInspireTI"> 
+                <g:element 
+                    g:extends="$base/xtn/gmd/identification/XTN_InspireDataTheme_Keywords.xml">
+                    <g:matchTopElements> 
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:keyword/gco:CharacterString"
+                            g:qValue="^(humanInteractionService|humanCatalogueViewer|humanGeographicViewer|humanGeographicSpreadsheetViewer|humanServiceEditor|humanChainDefinitionEditor|humanWorkflowEnactmentManager|humanGeographicFeatureEditor|humanGeographicSymbolEditor|humanFeatureGeneralizationEditor|humanGeographicDataStructureViewer|infoManagementService|infoFeatureAccessService|infoMapAccessService|infoCoverageAccessService|infoSensorDescriptionService|infoProductAccessService|infoFeatureTypeService|infoCatalogueService|infoRegistryService|infoGazetteerService|infoOrderHandlingService|infoStandingOrderService|taskManagementService|chainDefinitionService|workflowEnactmentService|subscriptionService|spatialProcessingService|spatialCoordinateConversionService|spatialCoordinateTransformationService|spatialCoverageVectorConversionService|spatialImageCoordinateConversionService|spatialRectificationService|spatialOrthorectificationService|spatialSensorGeometryModelAdjustmentService|spatialImageGeometryModelConversionService|spatialSubsettingService|spatialSamplingService|spatialTilingChangeService|spatialDimensionMeasurementService|spatialFeatureManipulationService|spatialFeatureMatchingService|spatialFeatureGeneralizationService|spatialRouteDeterminationService|spatialPositioningService|spatialProximityAnalysisService|thematicProcessingService|thematicGoparameterCalculationService|thematicClassificationService|thematicFeatureGeneralizationService|thematicSubsettingService|thematicSpatialCountingService|thematicChangeDetectionService|thematicGeographicInformationExtractionService|thematicImageProcessingService|thematicReducedResolutionGenerationService|thematicImageManipulationService|thematicImageUnderstandingService|thematicImageSynthesisService|thematicMultibandImageManipulationService|thematicObjectDetectionService|thematicGeoparsingService|thematicGeocodingService|temporalProcessingService|temporalReferenceSystemTransformationService|temporalSubsettingService|temporalSamplingService|temporalProximityAnalysisService|metadataProcessingService|metadataStatisticalCalculationService|metadataGeographicAnnotationService|comService|comEncodingService|comTransferService|comGeographicCompressionService|comGeographicFormatConversionService|comMessagingService|comRemoteFileAndExecutableManagement)" 
+							g:qMode="regX"/>
+                    </g:matchTopElements>
+                </g:element>
+            </h:div> 
+		  
+            <!-- GEMET Concept. Se c'è un Thesaurus GEMET c'è un vincolo (Requisito 25)--> 
+            <h:div g:label="$i18n.catalog.mdParam.inspire.keyword.gemet.concept"> 
+                <g:element 
+                    g:extends="$base/xtn/gmd/identification/XTN_GemetConcept_Keywords.xml">
+                    <g:matchTopElements> 
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qValue="GEMET - Concepts, version 2.4"
+                            g:qMode="must"/>
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode"
+                            g:qMode="must"/>
+                    </g:matchTopElements>
+                </g:element>
+            </h:div>   
+		   
+            <!-- Other keywords with Thesaurus -->
+            <h:div g:label="$i18n.catalog.mdParam.KeywordsAltriTemi.caption"> 
+                <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="unbounded"
+                               g:label="$i18n.catalog.mdParam.opendata.keyword.caption"
+                               g:extends="$base/schema/gmd/identification/MD_Keywords_PropertyType.xml">
+                    <g:matchTopElements>
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qValue="GEMET - INSPIRE themes, version 1.0"
+                            g:qMode="mustNot"/>
+                        <g:match 
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qValue="GEMET - Concepts, version 2.4"
+                            g:qMode="mustNot"/>
+                        <g:match 
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qValue="ISO 19119 service taxonomy"
+                            g:qMode="mustNot"/>
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode"
+                            g:qMode="must"/>
+                    </g:matchTopElements>		      
+                </g:element>
+            </h:div>
+			
+            <!-- Other keywords free -->
+            <h:div g:label="$i18n.catalog.mdParam.keywords.caption"> 
+                <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="1"
+                               g:label="$i18n.catalog.mdParam.keywords.caption"
+                               g:info="$i18n.catalog.rdnt.dataset.hint.keywordColletionTabPC"
+                               g:extends="$base/schema/gmd/identification/MD_Keywords_PropertyTypeOther.xml">
+                    <g:matchTopElements> 
+					    <g:match
+					        g:qPath="gmd:MD_Keywords/gmd:keyword/gco:CharacterString"
+                            g:qValue="^(?!.*(humanInteractionService|humanCatalogueViewer|humanGeographicViewer|humanGeographicSpreadsheetViewer|humanServiceEditor|humanChainDefinitionEditor|humanWorkflowEnactmentManager|humanGeographicFeatureEditor|humanGeographicSymbolEditor|humanFeatureGeneralizationEditor|humanGeographicDataStructureViewer|infoManagementService|infoFeatureAccessService|infoMapAccessService|infoCoverageAccessService|infoSensorDescriptionService|infoProductAccessService|infoFeatureTypeService|infoCatalogueService|infoRegistryService|infoGazetteerService|infoOrderHandlingService|infoStandingOrderService|taskManagementService|chainDefinitionService|workflowEnactmentService|subscriptionService|spatialProcessingService|spatialCoordinateConversionService|spatialCoordinateTransformationService|spatialCoverageVectorConversionService|spatialImageCoordinateConversionService|spatialRectificationService|spatialOrthorectificationService|spatialSensorGeometryModelAdjustmentService|spatialImageGeometryModelConversionService|spatialSubsettingService|spatialSamplingService|spatialTilingChangeService|spatialDimensionMeasurementService|spatialFeatureManipulationService|spatialFeatureMatchingService|spatialFeatureGeneralizationService|spatialRouteDeterminationService|spatialPositioningService|spatialProximityAnalysisService|thematicProcessingService|thematicGoparameterCalculationService|thematicClassificationService|thematicFeatureGeneralizationService|thematicSubsettingService|thematicSpatialCountingService|thematicChangeDetectionService|thematicGeographicInformationExtractionService|thematicImageProcessingService|thematicReducedResolutionGenerationService|thematicImageManipulationService|thematicImageUnderstandingService|thematicImageSynthesisService|thematicMultibandImageManipulationService|thematicObjectDetectionService|thematicGeoparsingService|thematicGeocodingService|temporalProcessingService|temporalReferenceSystemTransformationService|temporalSubsettingService|temporalSamplingService|temporalProximityAnalysisService|metadataProcessingService|metadataStatisticalCalculationService|metadataGeographicAnnotationService|comService|comEncodingService|comTransferService|comGeographicCompressionService|comGeographicFormatConversionService|comMessagingService|comRemoteFileAndExecutableManagement)).*$"
+							g:qMode="regX"/>
+                        <g:match
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName"
+                            g:qMode="mustNot"/>
+                    </g:matchTopElements>	      
+                </g:element>
+            </h:div>    
+		    
+        </g:body>
+    </g:tabs>
+</h:div>     
+

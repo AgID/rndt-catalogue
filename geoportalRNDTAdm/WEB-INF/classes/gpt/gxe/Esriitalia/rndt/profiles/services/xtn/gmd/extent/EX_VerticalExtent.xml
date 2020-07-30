@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe"
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:label="$i18n.catalog.mdParam.rndt.extent.vertical.caption"
+		   g:info="$i18n.catalog.rdnt.servizi.hint.estensioneVerticaleE"
+		   g:minOccurs="0" g:maxOccurs="1" 
+           g:extends="$base/xtn/ui/UI_Element.xml">
+	<g:body>
+		<g:element g:targetName="gmd:EX_VerticalExtent" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+			<g:element g:targetName="gmd:minimumValue" g:info="$i18n.catalog.rdnt.servizi.hint.quotaMinimaE" g:label="$i18n.catalog.mdParam.rndt.extent.vertical.minimum"
+      g:extends="$base/schema/gco/basicTypes/Real_PropertyType.xml">
+			</g:element>
+
+			<g:element g:targetName="gmd:maximumValue" g:info="$i18n.catalog.rdnt.servizi.hint.quotaMassimaE" g:label="$i18n.catalog.mdParam.rndt.extent.vertical.maximum"
+      g:extends="$base/schema/gco/basicTypes/Real_PropertyType.xml">
+			</g:element>
+			<g:element g:targetName="gmd:verticalCRS"  g:info="$i18n.catalog.rdnt.servizi.hint.coordSystemZE" g:label="$i18n.catalog.mdParam.rndt.extent.vertical.verticalCRS"  h:tag="div" g:extends="$base/schema/gmd/extent/MD_ReferenceSystemCode.xml"/>
+
+		</g:element>
+	</g:body>
+
+</g:element>
