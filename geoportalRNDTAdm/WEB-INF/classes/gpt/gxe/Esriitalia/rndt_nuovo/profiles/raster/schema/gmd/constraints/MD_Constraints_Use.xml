@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<h:div xmlns:g="http://www.esri.com/geoportal/gxe" 
+       xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+	   xmlns:xlink="http://www.w3.org/1999/xlink" 
+	   xmlns:gmx="http://www.isotc211.org/2005/gmx"
+	   g:label="$i18n.catalog.mdParam.constraint.security.caption.specify.access4.help"
+       h:tag="div" g:extends="$base/xtn/ui/UI_Element.xml"
+	   g:minOccurs="0" g:maxOccurs="1">
+
+	<g:body>
+		<g:element g:targetName="gmd:MD_LegalConstraints" g:i18nBase="catalog.iso19139.MD_LegalConstraints" g:extends="$base/xtn/ui/UI_Element.xml">
+			<g:element g:targetName="gmd:useConstraints" g:extends="$base/xtn/ui/UI_Element.xml" g:info="$i18n.catalog.rdnt.services.hint.vincoliFruibilitaVAUP" g:label="$i18n.catalog.mdParam.rndt.constraints.use">
+				<g:body>
+					<g:element g:targetName="gmd:MD_RestrictionCode" g:i18nBase="catalog.iso19139.MD_RestrictionCode" g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
+						<g:body>
+							<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml" g:value="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode"/>
+							<g:attribute g:extends="$base/schema/gco/gcoBase/codeListValue.xml">
+								<g:body>
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options g:i18nBase="catalog.mdCode.rndt.MD_RestrictionCode">
+											<g:option g:label="$i18nBase.otherRestrictions" g:value="otherRestrictions"/>
+										</g:options>
+									</g:input>
+								</g:body>
+							</g:attribute>
+						</g:body>
+					</g:element>
+				</g:body>
+			</g:element>
+			<g:element g:targetName="gmd:otherConstraints" g:minOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml">
+				<g:element g:targetName="gmx:Anchor" g:jsClass="gxe.control.Element" g:isIsoXlink="true" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.constraints.otherC" g:extends="$base/xtn/ui/UI_Element.xml" g:info="$i18n.catalog.rdnt.services.hint.vincoliAccessoVAUAV">
+					<g:body>
+						<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+							<g:options g:i18nBase="catalog.mdCode.rndt.MD_RestrictionCode">
+								<g:option g:link="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" g:label="$i18nBase.conditionUnknownLabel" g:value="$i18nBase.conditionUnknownLabel"/>
+								<g:option g:link="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" g:label="$i18nBase.noConditionsApplyLabel" g:value="$i18nBase.noConditionsApplyLabel"/>
+							</g:options>
+						</g:input>
+					</g:body>
+				</g:element>
+				<g:matchTopElements>
+					<g:match
+						g:qPath="gmx:Anchor"
+						g:qValue="^Condizioni di Accesso|^Nessuna Condizione"
+						g:qMode="regX"/>
+				</g:matchTopElements>
+			</g:element>
+		</g:element>
+	</g:body>
+</h:div>

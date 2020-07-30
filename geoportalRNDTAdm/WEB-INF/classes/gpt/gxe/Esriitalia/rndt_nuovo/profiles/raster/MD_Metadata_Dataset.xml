@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- gmd:MD_Metadata root element (Raster) -->     
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+		xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+		xmlns="http://www.isotc211.org/2005/gmd"
+		xmlns:xlink="http://www.w3.org/1999/xlink" 
+		g:targetNS="http://www.isotc211.org/2005/gmd" 
+		g:targetName="MD_Metadata" 
+		g:i18nBase="catalog.iso19139.MD_Metadata" 
+		g:label="$i18n.catalog.mdParam.schema.rndt-nuovo.raster"
+		g:extends="$base/xtn/ui/UI_Element.xml">
+
+	<!-- namespaces -->
+	<g:namespaces g:overridable="true">
+
+		<g:namespace g:prefix="gmd" g:uri="http://www.isotc211.org/2005/gmd"/>
+		<g:namespace g:prefix="gmx" g:uri="http://www.isotc211.org/2005/gmx"/>
+		<g:namespace g:prefix="gco" g:uri="http://www.isotc211.org/2005/gco"/>
+		<g:namespace g:prefix="srv" g:uri="http://www.isotc211.org/2005/srv"/>
+		<g:namespace g:prefix="gml" g:uri="http://www.opengis.net/gml/3.2"/>
+		<g:namespace g:prefix="xlink" g:uri="http://www.w3.org/1999/xlink"/>
+		<g:namespace g:prefix="xsi" g:uri="http://www.w3.org/2001/XMLSchema-instance"/>		
+	</g:namespaces>
+	<g:body>
+		<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+			<g:body>
+
+				<!-- Metadata tab -->
+				<h:div g:label="$i18n.catalog.mdParam.rndt.general.caption">
+					<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+						<g:body>
+							<!-- Identification -->
+							<h:div g:label="$i18n.catalog.mdParam.identification.caption">
+								<g:element g:info="$i18n.catalog.rdnt.dataset.hint.fileIdentifier" g:extends="$base/xtn/gmd/metadataEntity/XTN_FileIdentifier.xml"/>
+								<g:element g:info="$i18n.catalog.rdnt.dataset.hint.language" g:extends="$base/xtn/gmd/metadataEntity/XTN_Language.xml"/>
+								<g:element g:info="$i18n.catalog.rdnt.dataset.hint.characterset" g:extends="$base/xtn/gmd/metadataEntity/XTN_CharacterSet.xml"/>
+								<g:element g:info="$i18n.catalog.rdnt.dataset.hint.parentIdentifier" g:extends="$base/xtn/gmd/metadataEntity/XTN_ParentIdentifier.xml"/>
+								<g:element g:info="$i18n.catalog.rdnt.dataset.hint.hierarchyLevel" g:targetName="gmd:hierarchyLevel" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.general.hierarchyLevel" g:extends="$base/xtn/gmd/maintenance/XTN_ScopeCode.xml"/>
+
+								<!--<g:element g:info="$i18n.catalog.rdnt.dataset.hint.hierarchyLevelName" g:targetName="gmd:hierarchyLevelName" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.general.hierarchyLevelName" g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml"/> -->
+
+								<g:element g:targetName="gmd:hierarchyLevelName" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element  g:label="$i18n.catalog.mdParam.rndt.general.hierarchyLevelName" g:info="$i18n.catalog.rdnt.dataset.hint.hierarchyLevelName" g:targetName="gco:CharacterString" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+										<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+											<g:options g:i18nBase="catalog.mdParam.rndt.general.standardVersion">
+												<g:option g:value="$i18n.catalog.mdCode.rndt.MD_ScopeCode.dataset" g:label="$i18n.catalog.mdCode.rndt.MD_ScopeCode.dataset" g:selected="true"/>
+											</g:options>
+										</g:input>
+									</g:element>
+								</g:element>
+							</h:div>
+							<!-- Responsabile metadati -->
+							<h:div g:label="$i18n.catalog.mdParam.rndt.general.contact.caption">
+								<g:element g:extends="$base/xtn/gmd/citation/XTN_Metadata_Contact.xml"/>
+							</h:div>
+							<!-- data e Standard -->
+							<h:div g:label="$i18n.catalog.mdParam.dataEStandard.caption">
+								<g:element g:targetName="gmd:dateStamp" g:info="$i18n.catalog.rdnt.dataset.hint.dataCreazione" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.general.datestamp"
+										g:extends="$base/schema/gco/basicTypes/Date_PropertyType.xml">
+									<g:body>
+										<g:element g:value="#{EditMetadataController.now}"/>
+									</g:body>
+								</g:element>
+								
+								<!--<g:element g:targetName="gmd:metadataStandardName" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+
+									<g:element  g:label="$i18n.fgdc.standard.name" g:info="$i18n.catalog.rdnt.dataset.hint.nomeStandard" g:targetName="gco:CharacterString" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+										<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+											<g:options g:i18nBase="catalog.mdParam.rndt.general.standardVersion">
+												<g:option g:value="$i18nBase.metadataStandardName" g:label="$i18nBase.metadataStandardName" g:selected="true"/>
+											</g:options>
+										</g:input>
+									</g:element>
+								</g:element>-->
+								
+								
+								<g:element g:targetName="gmd:metadataStandardName" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+
+									<g:element g:label="$i18n.fgdc.standard.name" g:info="$i18n.catalog.rdnt.dataset.hint.nomeStandard" g:minOccurs="1" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+										<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+											<g:options g:i18nBase="catalog.mdParam.rndt.general.standardVersion">
+												<g:option g:value="$i18nBase.metadataStandardName2" g:label="$i18nBase.metadataStandardName2" g:selected="true"/>
+											</g:options>
+										</g:input>
+										<g:attribute g:targetNS="" h:class="gxeDisplayNone" g:targetName="xlink:href" h:tag="div" g:jsClass="gxe.control.Attribute" g:fixedValue="http://registry.geodati.gov.it/document/rndt-lg">
+											<g:input g:extends="$base/core/ui/InputText.xml"/>
+										</g:attribute>
+									</g:element>
+
+								</g:element>
+
+								<g:element g:targetName="gmd:metadataStandardVersion" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+
+									<g:element  g:label="$i18n.fgdc.standard.version" g:info="$i18n.catalog.rdnt.dataset.hint.versioneStandard" g:targetName="gco:CharacterString" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+										<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+											<g:options g:i18nBase="catalog.mdParam.rndt.general.standardVersion">
+												<!-- <g:option g:label="" g:value=""/> -->
+												<g:option g:value="$i18nBase.metadataStandardVersion2" g:label="$i18nBase.metadataStandardVersion2" g:selected="true"/>
+											</g:options>
+										</g:input>
+									</g:element>
+								</g:element>
+							</h:div>
+						</g:body>
+					</g:tabs>
+				</h:div>
+				<!-- DATI RASTER -->
+				<h:div g:label="$i18n.catalog.mdParam.rndt.raster.caption">
+					<g:element g:targetName="gmd:spatialRepresentationInfo"  g:label="$i18n.catalog.mdParam.rndt.raster.caption"  h:tag="div" g:jsClass="gxe.control.Element">
+						<g:import g:src="$base/xtn/gmd/identification/XTN_Tab_Raster.xml"/>
+					</g:element>
+				</h:div>
+				<!-- Sistema di riferimento tab -->
+				<h:div g:label="$i18n.catalog.mdParam.referenceSystemInfo.caption">
+					<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+						<g:body>
+							<h:div g:label="$i18n.catalog.mdParam.referenceSystemInfo.caption.spatial">
+								<g:element g:targetName="gmd:referenceSystemInfo" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:targetName="gmd:MD_ReferenceSystem" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+										<g:element g:targetName="gmd:referenceSystemIdentifier" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+											<g:element g:targetName="gmd:RS_Identifier" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+												<g:element g:targetName="gmd:code" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+													<g:element g:info="$i18n.catalog.rdnt.dataset.hint.sistemaRiferimento" g:isIsoXlink="true" g:label="$i18n.catalog.mdParam.rndt.referenceSystemInfo" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+														<g:body>
+															<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+																<g:options g:i18nBase="catalog.mdCode.MD_ReferenceSystemCode">
+																	<g:option g:link="$i18nBase.ETRS89-XYZ" g:label="$i18nBase.ETRS89-XYZLabel" g:value="$i18nBase.ETRS89-XYZLabel"/>
+																	<g:option g:link="$i18nBase.ETRS89-GRS80h" g:label="$i18nBase.ETRS89-GRS80hLabel" g:value="$i18nBase.ETRS89-GRS80hLabel"/>
+																	<g:option g:link="$i18nBase.ETRS89-GRS80" g:label="$i18nBase.ETRS89-GRS80Label" g:value="$i18nBase.ETRS89-GRS80Label"/>
+																	<g:option g:link="$i18nBase.ETRS89-LAEA" g:label="$i18nBase.ETRS89-LAEALabel" g:value="$i18nBase.ETRS89-LAEALabel"/>
+																	<g:option g:link="$i18nBase.ETRS89-LCC" g:label="$i18nBase.ETRS89-LCCLabel" g:value="$i18nBase.ETRS89-LCCLabel"/>
+																	<g:option g:link="$i18nBase.ETRS89/UTMzone32N" g:label="$i18nBase.ETRS89/UTMzone32NLabel" g:value="$i18nBase.ETRS89/UTMzone32NLabel"/>
+																	<g:option g:link="$i18nBase.ETRS89/UTMzone33N" g:label="$i18nBase.ETRS89/UTMzone33NLabel" g:value="$i18nBase.ETRS89/UTMzone33NLabel"/>
+																	<g:option g:link="$i18nBase.ETRS89/UTMzone34N" g:label="$i18nBase.ETRS89/UTMzone34NLabel" g:value="$i18nBase.ETRS89/UTMzone34NLabel"/>
+																	<g:option g:link="$i18nBase.RDN2008.6704" g:label="$i18nBase.RDN2008.6704Label" g:value="$i18nBase.RDN2008.6704Label"/>
+																	<g:option g:link="$i18nBase.RDN2008.6705" g:label="$i18nBase.RDN2008.6705Label" g:value="$i18nBase.RDN2008.6705Label"/>
+																	<g:option g:link="$i18nBase.RDN2008.6706" g:label="$i18nBase.RDN2008.6706Label" g:value="$i18nBase.RDN2008.6706Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM32(N,E)" g:label="$i18nBase.RDN2008/TM32(N,E)Label" g:value="$i18nBase.RDN2008/TM32(N,E)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM32(E,N)" g:label="$i18nBase.RDN2008/TM32(E,N)Label" g:value="$i18nBase.RDN2008/TM32(E,N)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM33(N,E)" g:label="$i18nBase.RDN2008/TM33(N,E)Label" g:value="$i18nBase.RDN2008/TM33(N,E)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM33(E,N)" g:label="$i18nBase.RDN2008/TM33(E,N)Label" g:value="$i18nBase.RDN2008/TM33(E,N)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM34(N,E)" g:label="$i18nBase.RDN2008/TM34(N,E)Label" g:value="$i18nBase.RDN2008/TM34(N,E)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/TM34(E,N)" g:label="$i18nBase.RDN2008/TM34(E,N)Label" g:value="$i18nBase.RDN2008/TM34(E,N)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/Italyzone(N,E)" g:label="$i18nBase.RDN2008/Italyzone(N,E)Label" g:value="$i18nBase.RDN2008/Italyzone(N,E)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/Italyzone(E,N)" g:label="$i18nBase.RDN2008/Italyzone(E,N)Label" g:value="$i18nBase.RDN2008/Italyzone(E,N)Label"/>
+																	<g:option g:link="$i18nBase.RDN2008/Zone12(N,E)" g:label="$i18nBase.RDN2008/Zone12(N,E)Label" g:value="$i18nBase.RDN2008/Zone12(N,E)Label"/>
+																	<g:option g:link="$i18nBase.ED50" g:label="$i18nBase.ED50Label" g:value="$i18nBase.ED50Label"/>
+																	<g:option g:link="$i18nBase.ED50/UTMzone32N" g:label="$i18nBase.ED50/UTMzone32NLabel" g:value="$i18nBase.ED50/UTMzone32NLabel"/>
+																	<g:option g:link="$i18nBase.ED50/UTMzone33N" g:label="$i18nBase.ED50/UTMzone33NLabel" g:value="$i18nBase.ED50/UTMzone33NLabel"/>
+																	<g:option g:link="$i18nBase.ED50/UTMzone34N" g:label="$i18nBase.ED50/UTMzone34NLabel" g:value="$i18nBase.ED50/UTMzone34NLabel"/>
+																	<g:option g:link="$i18nBase.MonteMario(Rome)" g:label="$i18nBase.MonteMario(Rome)Label" g:value="$i18nBase.MonteMario(Rome)Label"/>
+																	<g:option g:link="$i18nBase.MonteMario" g:label="$i18nBase.MonteMarioLabel" g:value="$i18nBase.MonteMarioLabel"/>
+																	<g:option g:link="$i18nBase.MonteMario/Italyzone1" g:label="$i18nBase.MonteMario/Italyzone1Label" g:value="$i18nBase.MonteMario/Italyzone1Label"/>
+																	<g:option g:link="$i18nBase.MonteMario/Italyzone2" g:label="$i18nBase.MonteMario/Italyzone2Label" g:value="$i18nBase.MonteMario/Italyzone2Label"/>
+																	<g:option g:link="$i18nBase.EVRS" g:label="$i18nBase.EVRSLabel" g:value="$i18nBase.EVRSLabel"/>
+																	<g:option g:link="$i18nBase.LAT" g:label="$i18nBase.LATLabel" g:value="$i18nBase.LATLabel"/>
+																	<g:option g:link="$i18nBase.MSL" g:label="$i18nBase.MSLLabel" g:value="$i18nBase.MSLLabel"/>
+																	<g:option g:link="$i18nBase.ISA" g:label="$i18nBase.ISALabel" g:value="$i18nBase.ISALabel"/>
+																	<g:option g:link="$i18nBase.ETRS89-GRS80-EVRS" g:label="$i18nBase.ETRS89-GRS80-EVRSLabel" g:value="$i18nBase.ETRS89-GRS80-EVRSLabel"/>
+																</g:options>
+															</g:input>
+														</g:body>          
+													</g:element>
+												</g:element>
+											</g:element>
+										</g:element>
+									</g:element>
+								</g:element>
+							</h:div>
+							<h:div g:label="$i18n.catalog.mdParam.referenceSystemInfo.caption.time">
+							<!--
+								<g:element g:targetName="gmd:referenceSystemInfo" g:label="$i18n.catalog.mdParam.referenceSystemInfo.caption.time" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:targetName="gmd:MD_ReferenceSystem" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+										<g:element g:targetName="gmd:referenceSystemIdentifier" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+											<g:element g:targetName="gmd:RS_Identifier" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+												<g:element g:targetName="gmd:code" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+													<g:element g:info="$i18n.catalog.rdnt.dataset.hint.sistemaRiferimento" g:label="$i18n.catalog.mdParam.OneGeology.referenceSystemInfo.code" g:targetName="gco:CharacterString" g:minOccurs="0" g:maxOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+														<g:input g:extends="$base/core/ui/InputText.xml"/>
+													</g:element>
+												</g:element>
+											</g:element>
+										</g:element>
+									</g:element>
+								</g:element>
+								-->
+								<g:import g:src="$base/xtn/gmd/referenceSystem/XTN_TemporalReference.xml"/>
+							</h:div>
+						</g:body>
+					</g:tabs>
+				</h:div>
+				<!-- Identification tab -->
+				<g:element g:targetName="gmd:identificationInfo"  g:label="$i18n.catalog.mdParam.identificationDati.caption"  h:tag="div" g:jsClass="gxe.control.Element">
+					<g:import g:src="$base/xtn/gmd/identification/XTN_Tab_Identification.xml"/>
+				</g:element>
+				<!-- DATI RASTER Contenuto -->
+				<h:div g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.caption">
+					<g:element g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.caption" g:targetName="gmd:contentInfo" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml">
+						<g:body>
+							<g:element g:targetName="gmd:MD_ImageDescription" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+								<g:element g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.attribute" g:info="$i18n.catalog.rdnt.raster.hint.tipoValoriCellaCDDR" g:targetName="gmd:attributeDescription" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/xtn/gmd/imageDescription/XTN_RecordType.xml" /> 
+
+								<g:element g:targetName="gmd:contentType" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:minOccurs="1" g:maxOccurs="1" g:targetName="gmd:MD_CoverageContentTypeCode" g:extends="$base/schema/gmd/content/MD_CoverageContentTypeCode.xml" />
+								</g:element>
+								<g:element g:targetName="gmd:dimension" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.dimension" g:targetName="gmd:MD_Band" g:minOccurs="0" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element"  >
+										<g:element g:targetName="gmd:bitsPerValue" g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.dimension" g:info="$i18n.catalog.rdnt.raster.hint.risoluzioneRadiometricaCDDR" g:minOccurs="0"  g:maxOccurs="1"  g:extends="$base/schema/gco/basicTypes/Integer_PropertyType.xml"/>		
+									</g:element>				
+								</g:element>
+								<g:element g:label="$i18n.catalog.mdParam.rndt.raster.contentinfo.triangulation" g:info="$i18n.catalog.rdnt.raster.hint.triangolazioneAereaCDDR" g:extends="$base/xtn/gmd/metadataEntity/XTN_TriangulationIndicator.xml" g:minOccurs="0" g:maxOccurs="1" g:targetName="gmd:triangulationIndicator"/>
+							</g:element>
+						</g:body>
+					</g:element>
+				</h:div>
+				<!-- Distribution tab -->
+				<h:div g:label="$i18n.catalog.iso19139.MD_Metadata.section.distribution">
+					<g:element g:targetName="gmd:distributionInfo"  g:label="$i18n.catalog.mdParam.rndt.distribution.distributor.caption"  h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:MD_Distribution" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+								<g:body>
+									<g:import g:label="$i18n.catalog.mdParam.rndt.distribution.caption" g:src="$base/xtn/gmd/distribution/XTN_Distribution.xml"/>
+									<g:import g:label="$i18n.catalog.mdParam.rndt.distribution.distributor.caption" g:src="$base/xtn/gmd/citation/XTN_DistributorContact.xml"/>
+									<g:import g:label="$i18n.catalog.mdParam.rndt.distribution.onlineresource.caption" g:src="$base/xtn/gmd/citation/XTN_OnLineResource.xml"/>
+								</g:body>
+							</g:tabs>
+						</g:element> 
+					</g:element> 
+				</h:div>
+
+				<!-- Quality tab-->
+				<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.caption" g:targetName="gmd:dataQualityInfo" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element"> 
+					<g:element g:targetName="gmd:DQ_DataQuality" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+							<g:body>
+								<!-- scope -->
+								<h:div g:label="$i18n.catalog.mdParam.LivelloDiQualita.caption">
+									<g:element g:extends="$base/xtn/gmd/dataQuality/XTN_Scope.xml"/>
+									<g:element g:targetName="gmd:report" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.caption" g:minOccurs="1" g:maxOccurs="1"    h:tag="div" g:jsClass="gxe.control.Element">
+										<g:element g:targetName="gmd:DQ_AbsoluteExternalPositionalAccuracy"   h:tag="div" g:jsClass="gxe.control.Element">
+											<g:element g:targetName="gmd:result"  h:tag="div" g:jsClass="gxe.control.Element">
+												<g:element g:targetName="gmd:DQ_QuantitativeResult"    h:tag="div" g:jsClass="gxe.control.Element">
+													<g:element g:targetName="gmd:valueUnit"  g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.valueUnit"  h:tag="div" g:jsClass="gxe.control.Element">
+														<g:element g:info="$i18n.catalog.rdnt.dataset.hint.unitaMisuraQDD" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.valueUnit" g:targetName="gml:BaseUnit"  h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml">
+															<g:attribute g:targetNS="" g:targetName="gml:id" h:tag="div" g:jsClass="gxe.control.Attribute"
+																	g:fixedValue="m">
+																<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+															</g:attribute>
+															<g:element h:class="gxeDisplayNone" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.valueUnit" g:fixedValue="m" g:targetName="gml:identifier" h:tag="div" g:jsClass="gxe.control.Element" >
+																<g:attribute g:targetNS="" g:targetName="codeSpace" h:tag="div" g:jsClass="gxe.control.Attribute" g:fixedValue="http://www.bipm.org/en/si/base_units">
+																	<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+																</g:attribute>
+																<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml" g:value="m" g:fixedValue="m"/>
+															</g:element>
+															<g:element g:targetName="gml:unitsSystem" h:class="gxeDisplayNone" h:tag="div" g:jsClass="gxe.control.Element"  >
+																<g:attribute g:targetNS="" g:targetName="xlink:href" h:tag="div" g:jsClass="gxe.control.Attribute"
+																		g:fixedValue="http://www.bipm.org/en/si">
+																	<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+																</g:attribute>
+															</g:element>
+
+														</g:element>
+
+
+													</g:element>
+													<g:element g:targetName="gmd:value" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.value" h:tag="div" g:jsClass="gxe.control.Element">
+														<g:element g:targetName="gco:Record" g:info="$i18n.catalog.rdnt.dataset.hint.valoreQDD" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.value" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/schema/gco/basicTypes/Real_PropertyType.xml"/>
+													</g:element>
+												</g:element>
+											</g:element>
+										</g:element>
+									</g:element>
+								</h:div>
+
+								<!-- conformance report -->
+
+								<h:div g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption">
+									<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+										<g:body>
+											<!-- Conformità Direttiva -->
+											<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption_1" g:extends="$base/xtn/gmd/dataQuality/XTN_ConformanceReport6.xml">
+												<g:matchTopElements> 
+													<g:match
+															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor"
+															g:qValue="$i18n.catalog.mdParam.rndt.dataQuality.conformity.titleINSPIRE" 
+															g:qMode="must"/>
+												</g:matchTopElements> 
+											</g:element>
+											<!-- Conformità con Data specification -->
+											<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption_2d" g:extends="$base/xtn/gmd/dataQuality/XTN_ConformanceReport5.xml">
+												<g:matchTopElements> 
+													<g:match
+															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
+															g:qValue="^INSPIRE Data Specification on" 
+															g:qMode="regX"/>
+												</g:matchTopElements> 
+											</g:element>
+											<!-- Conformità con TEchnical Guidelines (si va per esclusione dei due casi precedenti) -->
+											<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption_3" g:extends="$base/xtn/gmd/dataQuality/XTN_ConformanceReport3.xml">
+												<g:matchTopElements> 
+													<g:match
+															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
+															g:qMode="must"/>
+													<g:match
+															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
+															g:qValue="$i18n.catalog.mdParam.rndt.dataQuality.conformity.titleINSPIRE" 
+															g:qMode="mustNot"/>
+													<g:match
+															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
+															g:qValue="^INSPIRE Data Specification on" g:qMode="regX"/>
+
+												</g:matchTopElements> 
+											</g:element>
+
+										</g:body>
+									</g:tabs>
+
+								</h:div>
+
+
+								<!-- lineage -->
+								<g:element g:extends="$base/xtn/gmd/dataQuality/XTN_Lineage.xml"/>
+
+							</g:body>
+						</g:tabs>
+					</g:element>   
+				</g:element>
+			</g:body>
+		</g:tabs>
+	</g:body>  
+</g:element>
