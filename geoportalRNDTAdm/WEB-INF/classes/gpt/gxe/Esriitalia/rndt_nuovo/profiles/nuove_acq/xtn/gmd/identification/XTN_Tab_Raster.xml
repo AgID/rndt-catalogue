@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Identification/Resource tab -->      
+<g:tabs xmlns:g="http://www.esri.com/geoportal/gxe" 
+       xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+	   g:label="$i18n.catalog.mdParam.rndt.raster.caption" 
+	   g:minOccurs="0" g:maxOccurs="1"
+	   g:extends="$base/xtn/ui/UI_ElementChoice.xml">
+				<g:body>
+					<!--GEORETTIFICATI-->
+					<g:element g:targetName="gmd:MD_Georectified" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.caption"  g:minOccurs="1" g:maxOccurs="1"  h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:numberOfDimensions" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.numberdimension" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml" >
+							<g:element g:extends="$base/schema/gco/basicTypes/Integer.xml"  g:label="$i18n.catalog.mdParam.rndt.raster.spatial.numberdimension" g:minOccurs="1" g:maxOccurs="1"  />
+						</g:element>
+
+						<g:element g:minOccurs="1" g:maxOccurs="unbounded" xmlns:g="http://www.esri.com/geoportal/gxe" 
+                    xmlns:h="http://www.esri.com/geoportal/gxe/html"
+                    g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml"
+					g:targetName="gmd:axisDimensionProperties" 
+					g:label="$i18n.catalog.mdParam.rndt.raster.spatial.dimensions.caption">       
+							<g:body>
+								
+									<g:element g:targetName="gmd:MD_Dimension" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.caption" g:minOccurs="1" g:maxOccurs="unbounded"  g:extends="$base/schema/gmd/spatialRepresentation/MD_Dimension_Type.xml"/>
+
+
+							</g:body>
+						</g:element>
+
+						<g:element g:extends="$base/xtn/gmd/metadataEntity/XTN_CellGeometry.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.cellgeometry"/>
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_CofT.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.transformation"/>
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_CheckPointAvaible.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.checkavail"/>
+						<g:element g:targetName="gmd:checkPointDescription" g:minOccurs="0" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.checkdescr"  g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml"/>
+
+						<g:element g:targetName="gmd:cornerPoints" g:minOccurs="1" g:maxOccurs="unbounded"  h:tag="div" g:jsClass="gxe.control.Element">
+
+							<g:element g:targetName="gml:Point" g:minOccurs="1" g:maxOccurs="unbounded"  h:tag="div" g:jsClass="gxe.control.Element">
+								<!--NICOL<g:element g:targetName="gml:name" g:minOccurs="1" g:maxOccurs="1" h:class="gxeDisplayNone" g:fixedValue="coordinata1"/>-->
+								<g:element h:class="gxeDisplayNone" g:targetName="gml:name" h:tag="div" g:jsClass="gxe.control.Element" g:fixedValue="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.cornerhighleft" >
+									<g:input  h:class="gxeDisplayNone" g:extends="$base/xtn/ui/UI_ElementTextOnly.xml"/>
+								</g:element>
+
+								<g:element g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.cornerhighleft" g:targetName="gml:coordinates" h:tag="div" g:jsClass="gxe.control.Element" >
+									<g:input g:extends="$base/xtn/ui/UI_ElementTextOnly.xml"/>
+									<g:attribute g:targetNS="" g:targetName="decimal" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue=".">
+										<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+									<g:attribute g:targetNS="" g:targetName="cs" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue=",">
+										<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+
+								</g:element>
+
+								<g:attribute g:targetNS="" g:targetName="gml:id" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue="PNT_1">
+									<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+								</g:attribute>
+
+
+
+							</g:element>
+						</g:element>
+						<g:element g:targetName="gmd:cornerPoints" g:minOccurs="1" g:maxOccurs="unbounded"  h:tag="div" g:jsClass="gxe.control.Element">
+
+							<g:element g:targetName="gml:Point" g:minOccurs="1" g:maxOccurs="unbounded"  h:tag="div" g:jsClass="gxe.control.Element">
+								<!--NICOL<g:element g:targetName="gml:name" g:minOccurs="1" g:maxOccurs="1" h:class="gxeDisplayNone" g:fixedValue="coordinata1"/>-->
+								<g:element h:class="gxeDisplayNone" g:targetName="gml:name" h:tag="div" g:jsClass="gxe.control.Element" g:fixedValue="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.cornerhighleft" >
+									<g:input  h:class="gxeDisplayNone" g:extends="$base/xtn/ui/UI_ElementTextOnly.xml"/>
+								</g:element>
+
+								<g:element g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.cornerhighleft" g:targetName="gml:coordinates" h:tag="div" g:jsClass="gxe.control.Element" >
+									<g:input g:extends="$base/xtn/ui/UI_ElementTextOnly.xml"/>
+									<g:attribute g:targetNS="" g:targetName="decimal" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue=".">
+										<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+									<g:attribute g:targetNS="" g:targetName="cs" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue=",">
+										<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+
+								</g:element>
+
+								<g:attribute g:targetNS="" g:targetName="gml:id" h:tag="div" g:jsClass="gxe.control.Attribute" 
+																   g:fixedValue="PNT_2">
+									<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+								</g:attribute>
+
+
+
+							</g:element>
+						</g:element>
+
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_PointInPixel.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.pixelpoint"/>
+
+
+					</g:element>
+
+					<!-- GEOREFERIBII-->
+					<g:element g:targetName="gmd:MD_Georeferenceable" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georeferenceable.caption"  h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:numberOfDimensions" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.numberdimension" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/xtn/ui/UI_Element.xml" >
+							<g:element g:extends="$base/schema/gco/basicTypes/Integer.xml"  g:label="$i18n.catalog.mdParam.rndt.raster.spatial.numberdimension" g:minOccurs="1" g:maxOccurs="1"  />
+						</g:element>
+						<g:element g:minOccurs="1" g:maxOccurs="unbounded" xmlns:g="http://www.esri.com/geoportal/gxe" 
+                    xmlns:h="http://www.esri.com/geoportal/gxe/html"
+                    g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml"
+					g:targetName="gmd:axisDimensionProperties" 
+					g:label="$i18n.catalog.mdParam.rndt.raster.spatial.dimensions.caption">       
+							<g:body>
+								
+									<g:element g:targetName="gmd:MD_Dimension" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.caption" g:minOccurs="1" g:maxOccurs="unbounded"  g:extends="$base/schema/gmd/spatialRepresentation/MD_Dimension_Type.xml"/>
+
+
+							</g:body>
+						</g:element>
+
+						<g:element g:extends="$base/xtn/gmd/metadataEntity/XTN_CellGeometry.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.cellgeometry"/>
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_CofT.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.transformation"/>
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_ControlPointAvaible.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georeferenceable.controlavail"/>
+						<g:element g:extends="$base/xtn/gmd/freeText/XTN_OrientationParameterAvaible.xml" 
+			g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georeferenceable.orientavail"/>
+
+
+						<g:element g:targetName="gmd:georeferencedParameters" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georeferenceable.parameter"  h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:targetName="gco:Record" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georeferenceable.parameter" g:minOccurs="1" g:maxOccurs="1"
+      g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml"/>
+						</g:element>
+<!--						<g:element g:minOccurs="1" g:maxOccurs="unbounded" xmlns:g="http://www.esri.com/geoportal/gxe" 
+                    xmlns:h="http://www.esri.com/geoportal/gxe/html"
+                    g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml"
+					g:label="$i18n.catalog.mdParam.rndt.raster.spatial.dimensions.caption">       
+							<g:body>
+								<g:element g:targetName="gmd:axisDimensionProperties"  g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.caption" g:minOccurs="1" g:maxOccurs="unbounded"  h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:targetName="gmd:MD_Dimension" g:label="$i18n.catalog.mdParam.rndt.raster.spatial.georectified.caption" g:minOccurs="1" g:maxOccurs="unbounded"  g:extends="$base/schema/gmd/spatialRepresentation/MD_Dimension_Type.xml"/>
+
+								</g:element>
+							</g:body>
+						</g:element>
+-->
+					</g:element>
+				</g:body>
+</g:tabs> 
+

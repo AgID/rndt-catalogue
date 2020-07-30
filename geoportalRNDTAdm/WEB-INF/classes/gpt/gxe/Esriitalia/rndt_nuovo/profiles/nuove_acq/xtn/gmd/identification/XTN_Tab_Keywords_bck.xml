@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  INSPIRE Identification keywords tab (gmd:descriptiveKeywords) --> 
+<h:div xmlns:g="http://www.esri.com/geoportal/gxe" 
+       xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+       h:tag="div" 
+	   g:jsClass="gxe.control.Element"
+       g:label="$i18n.catalog.iso19139.MD_Metadata.section.identification.descriptiveKeywords">
+	<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+		<g:body>
+
+			<h:div g:label="$i18n.catalog.mdParam.rndt.identification.keyword.gemet.caption">
+				<g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="1" g:maxOccurs="unbounded" g:label="$i18n.catalog.mdParam.rndt.identification.keyword.gemet.keyword">
+					<g:element 
+           g:label="$i18n.catalog.mdParam.rndt.identification.keyword.gemet.caption"
+
+		   g:targetName="gmd:keyword"
+           g:extends="$base/xtn/ui/UI_Wrapped_ElementTextOnly.xml">
+
+						<g:body>
+							<g:input g:extends="$base/core/ui/InputSelectMany.xml">
+								<g:options>
+									<g:option g:value="Atmospheric conditions"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.atmosphericConditions"/>
+									<g:option g:value="Land cover"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.landCover"/>
+									<g:option g:value="Population distribution - demography"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.populationDistributionDemography"/>
+									<g:option g:value="Species distribution"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.speciesDistribution"/>
+									<g:option g:value="Buildings"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.buildings"/>
+									<g:option g:value="Meteorological geographical features"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.meteorologicalGeographicalFeatures"/>
+									<g:option g:value="Oceanographic geographical features"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.oceanographicGeographicalFeatures"/>
+									<g:option g:value="Elevation"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.elevation"/>
+									<g:option g:value="Geology"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geology"/>
+									<g:option g:value="Habitats and biotopes"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.habitatsAndBiotopes"/>
+									<g:option g:value="Hydrography"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.hydrography"/>
+									<g:option g:value="Agricultural and aquaculture facilities"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.agriculturalAndAquacultureFacilities"/>
+									<g:option g:value="Environmental monitoring facilities"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.environmentalMonitoringFacilities"/>
+									<g:option g:value="Addresses"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.addresses"/>
+									<g:option g:value="Geographical names"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geographicalNames"/>
+									<g:option g:value="Orthoimagery"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.orthoimagery"/>
+									<g:option g:value="Cadastral parcels"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.cadastralParcels"/>
+									<g:option g:value="Production and industrial facilities"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.productionAndIndustrialFacilities"/>
+									<g:option g:value="Bio-geographical regions"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.bioGeographicalRegions"/>
+									<g:option g:value="Sea regions"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.seaRegions"/>
+									<g:option g:value="Transport networks"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.transportNetworks"/>
+									<g:option g:value="Energy resources"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.energyResources"/>
+									<g:option g:value="Mineral resources"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.mineralResources"/>
+									<g:option g:value="Human health and safety"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.humanHealthAndSafety"/>
+									<g:option g:value="Utility and governmental services"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.utilityAndGovernmentService"/>
+									<g:option g:value="Coordinate reference systems"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.coordinateReferenceSystems"/>
+									<g:option g:value="Geographical grid systems"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geographicalGridSystems"/>
+									<g:option g:value="Protected sites"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.protectedSites"/>
+									<g:option g:value="Soil"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.soil"/>
+									<g:option g:value="Administrative units"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.administrativeUnits"/>
+									<g:option g:value="Statistical units"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.statisticalUnits"/>
+									<g:option g:value="Land use"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.landUser"/>
+									<g:option g:value="Natural risk zones"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.naturalRiskZones"/>
+									<g:option g:value="Area management/restriction/regulation zones and reporting units"
+                                                    g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.areaManagementRestrictionRegulationZonesAndReportingUnits"/>
+								</g:options>
+							</g:input>
+						</g:body>
+					</g:element>
+
+
+					<g:element g:targetName="gmd:thesaurusName" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:CI_Citation" g:minOccurs="1" g:maxOccurs="1" g:i18nBase="catalog.iso19139.CI_Citation" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:extends="$base/xtn/gmd/citation/XTN_ThesaurusName_Title.xml"/>
+							<g:element g:extends="$base/xtn/gmd/citation/XTN_ThesaurusName_Date.xml"/>
+							<g:element g:targetName="gmd:dateType" g:label="$i18n.catalog.mdParam.rndt.identification.keyword.gemet.dateType" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml">
+								<g:body>
+									<g:element g:minOccurs="1" g:extends="$base/schema/gmd/citation/CI_DateTypePubblicationCode.xml"/>
+								</g:body>
+							</g:element>
+						</g:element> 
+					</g:element>  
+				</g:element>
+			</h:div>		  
+			<!-- GEMET Concept  -->
+			<!-- <h:div g:label="$i18n.catalog.mdParam.inspire.keyword.gemet.concept">  -->
+			<!-- <g:element  -->
+			<!-- g:extends="$base/xtn/gmd/identification/XTN_GemetConcept_Keywords.xml"> -->
+			<!-- <g:matchTopElements>  -->
+			<!-- <g:match -->
+			<!-- g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString" -->
+			<!-- g:qValue="GEMET - Concepts, version 2.4" -->
+			<!-- g:qMode="must"/> -->
+			<!-- </g:matchTopElements> -->
+			<!-- </g:element> -->
+			<!-- </h:div>    -->
+
+			<!-- Other keywords -->
+			<!-- <h:div g:label="$i18n.catalog.mdParam.rndt.identification.keyword.thesaurus.caption">  -->
+			<!-- <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="unbounded" -->
+			<!-- g:label="$i18n.catalog.iso19139.AbstractMD_Identification.descriptiveKeywords" -->
+			<!-- g:extends="$base/schema/gmd/identification/MD_Keywords_PropertyType.xml"> -->
+			<!-- <g:matchTopElements> -->
+			<!-- <g:match -->
+			<!-- g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString" -->
+			<!-- g:qValue="GEMET - INSPIRE themes, version 1.0" -->
+			<!-- g:qMode="mustNot"/> -->
+			<!-- <g:match  -->
+			<!-- g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString" -->
+			<!-- g:qValue="GEMET - Concepts, version 2.4" -->
+			<!-- g:qMode="mustNot"/> -->
+			<!-- <g:match  -->
+			<!-- g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString" -->
+			<!-- g:qValue="ISO 19119 service taxonomy" -->
+			<!-- g:qMode="mustNot"/> -->
+			<!-- </g:matchTopElements>		       -->
+			<!-- </g:element> -->
+			<!-- </h:div>     -->
+			<!-- <h:div g:label="$i18n.catalog.mdParam.rndt.identification.keyword.free.caption">  -->
+			<!-- <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="unbounded" -->
+			<!-- g:label="$i18n.catalog.iso19139.AbstractMD_Identification.descriptiveKeywords" -->
+			<!-- g:extends="$base/schema/gmd/identification/MD_Keywords_PropertyTypeOther.xml"> -->
+			<!-- </g:element> -->
+			<!-- </h:div>     -->
+
+		</g:body>
+	</g:tabs>
+</h:div>     
+
