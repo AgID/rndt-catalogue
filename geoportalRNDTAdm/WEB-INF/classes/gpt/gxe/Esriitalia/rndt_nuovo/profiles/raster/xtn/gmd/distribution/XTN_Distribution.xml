@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Identification/Citation tab (simplified) -->      
+<h:div xmlns:g="http://www.esri.com/geoportal/gxe" 
+    xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:gmx="http://www.isotc211.org/2005/gmx"
+    h:tag="div" >
+	<!-- distribution format -->
+	<g:element g:targetName="gmd:distributionFormat" g:info="$i18n.catalog.rdnt.dataset.hint.formatoDistribuzioneD" g:label="$i18n.catalog.mdParam.rndt.distribution.format.caption"  g:minOccurs="1" g:maxOccurs="unbounded"
+        g:extends="$base/xtn/ui/UI_Element.xml">
+		<g:body>
+			<g:element g:targetName="gmd:MD_Format" g:minOccurs="1" g:maxOccurs="1"
+            g:i18nBase="catalog.iso19139.MD_Format"
+            h:tag="div" g:jsClass="gxe.control.Element"> 
+
+				<g:element g:targetName="gmd:name" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:jsClass="gxe.control.Element">
+					<g:element g:label="$i18n.catalog.mdParam.distribution.format.name" g:info="$i18n.catalog.rdnt.dataset.hint.nomeFormatoD" g:targetName="gmx:Anchor" g:isIsoXlink="true" g:extends="$base/xtn/ui/UI_Element.xml">
+						<g:body>
+							<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+								<g:options g:i18nBase="catalog.mdParam.rndt.distribution">
+									<g:option g:link="https://www.iana.org/assignments/media-types/application/geo+json" g:label = "$i18nBase.distributor.app.geojson" g:value="$i18nBase.distributor.app.geojson"/>
+									<g:option g:link="https://www.iana.org/assignments/media-types/application/geopackage+sqlite3" g:label = "$i18nBase.distributor.app.geopackagesqlite3" g:value="$i18nBase.distributor.app.geopackagesqlite3"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/application/gml+xml" g:label = "$i18nBase.distributor.app.gmlxml" g:value="$i18nBase.distributor.app.gmlxml"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kml+xml" g:label = "$i18nBase.distributor.app.vndgoogleearthkmlxml" g:value="$i18nBase.distributor.app.vndgoogleearthkmlxml"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kmz" g:label = "$i18nBase.distributor.app.vndgoogleearthkmz" g:value="$i18nBase.distributor.app.vndgoogleearthkmz"/>
+									<g:option g:link="https://www.iana.org/assignments/media-types/application/vnd.sqlite3" g:label = "$i18nBase.distributor.app.vndsqlite3" g:value="$i18nBase.distributor.app.vndsqlite3"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-ascii-grid" g:label = "$i18nBase.distributor.app.xasciigrid" g:value="$i18nBase.distributor.app.xasciigrid"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-ecw" g:label = "$i18nBase.distributor.app.xecw" g:value="$i18nBase.distributor.app.xecw"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-filegdb" g:label = "$i18nBase.distributor.app.xfilegdb" g:value="$i18nBase.distributor.app.xfilegdb"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-gmz" g:label = "$i18nBase.distributor.app.xgmz" g:value="$i18nBase.distributor.app.xgmz"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-las" g:label = "$i18nBase.distributor.app.xlas" g:value="$i18nBase.distributor.app.xlas"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-laz" g:label = "$i18nBase.distributor.app.xlaz" g:value="$i18nBase.distributor.app.xlaz"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-oracledump" g:label = "$i18nBase.distributor.app.xoracledump" g:value="$i18nBase.distributor.app.xoracledump"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-shapefile" g:label = "$i18nBase.distributor.app.xshapefile" g:value="$i18nBase.distributor.app.xshapefile"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-tab" g:label = "$i18nBase.distributor.app.xtab" g:value="$i18nBase.distributor.app.xtab"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-tab-raster" g:label = "$i18nBase.distributor.app.xtabraster" g:value="$i18nBase.distributor.app.xtabraster"/>
+									<g:option g:link="http://inspire.ec.europa.eu/media-types/application/x-worldfile" g:label = "$i18nBase.distributor.app.xworldfile" g:value="$i18nBase.distributor.app.xworldfile"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/image/jp2" g:label = "$i18nBase.distributor.image.jp2" g:value="$i18nBase.distributor.image.jp2"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/image/tiff" g:label = "$i18nBase.distributor.image.tiff" g:value="$i18nBase.distributor.image.tiff"/>
+									<g:option g:link="http://www.iana.org/assignments/media-types/text/csv" g:label = "$i18nBase.distributor.text.csv" g:value="$i18nBase.distributor.text.csv"/>
+								</g:options>									
+							</g:input>
+						</g:body>     
+					</g:element>
+				</g:element>
+
+				<g:element g:info="$i18n.catalog.rdnt.dataset.hint.versioneFormatoD" g:targetName="gmd:version" g:minOccurs="1" g:maxOccurs="1"
+              g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml"/>
+
+			</g:element>
+		</g:body>
+	</g:element>
+
+
+
+</h:div>
+
