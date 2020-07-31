@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  See the NOTICE file distributed with  this work for additional information regarding copyright ownership.  Esri Inc. licenses this file to You under the Apache License, Version 2.0  (the "License"); you may not use this file except in compliance with  the License.  You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software  distributed under the License is distributed on an "AS IS" BASIS,  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the specific language governing permissions and  limitations under the License. -->
+<!-- 
+ESRI Italy may 2017
+- Added Italian RNDT Schemas for series, dataset and services and "nuove acquisizionI"
+- Commented schemas not used by the application and left schemas not editable because they are used for catalogs
+
+ -->
+<schemas>
+
+
+	
+<!-- Schemi ufficiali per i profili RNDT VERSIONE 2.0 delle linee guida-->
+        <schema fileName="gpt/metadata/EsriItaly/rndt_nuovo/esriitalia-rndt_nuovo-definition_dataset.xml"/>	
+        <schema fileName="gpt/metadata/EsriItaly/rndt_nuovo/esriitalia-rndt_nuovo-definition_series.xml"/>
+        <schema fileName="gpt/metadata/EsriItaly/rndt_nuovo/esriitalia-rndt_nuovo-definition_services.xml"/>		
+		<schema fileName="gpt/metadata/EsriItaly/rndt_nuovo/esriitalia-rndt_nuovo-definition_raster.xml"/>	
+        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_dataset.xml"/>	
+        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_series.xml"/>
+		<schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_services.xml"/> 
+        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_raster.xml"/>
+        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_nuoveacq.xml"/> 
+
+
+<!-- Schema Feature Catalog Esri Inc-->
+	<!-- 
+	<schema fileName="gpt/metadata/iso/iso-19110-fc-definition.xml"/> 
+	-->
+
+
+	<!-- Deafult Esri Schemas -->
+	<!-- FGDC Non è  necessario gli altri sono "non editable" -->
+	<!--
+	<schema fileName="gpt/metadata/fgdc/fgdc-definition.xml"/>
+	-->
+	<schema fileName="gpt/metadata/esri/esri-arcgis-definition.xml"/>
+	<schema fileName="gpt/metadata/esri/esri-iso-definition.xml"/>
+
+	 <!-- Dublin Core profile is needed for external resources	 -->
+	<schema fileName="gpt/metadata/dc/dc-definition.xml"/>
+
+ 
+<!--  NAP 
+	<schema fileName="gpt/metadata/iso/nap/nap-iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/nap/nap-iso-19119-definition.xml"/> -->
+
+<!-- UK GEMINI 2.1  GEMINI document interrogation rules are based upon gmd:metadataStandardVersion[gco:CharacterString='UK GEMINI 2.1']
+	<schema fileName="gpt/metadata/iso/gemini/gemini-iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/gemini/gemini-iso-19119-definition.xml"/>-->
+	<!-- 
+	<schema fileName="gpt/metadata/iso/Gemini2_R1r2/gemini-iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/Gemini2_R1r2/gemini-iso-19119-definition.xml"/> -->
+
+<!--  NOTE: Only one of INSPIRE or standard ISO should be enabled -->
+	<!--  Esri Italy: Additional rules set so that interrogation works fine for both schemas -->
+
+	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19119-definition.xml"/>
+
+	<schema fileName="gpt/metadata/iso/iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/iso-19119-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/iso-19115-2-definition.xml"/>
+	<!-- 
+	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19115-definition.xml"/>
+	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19119-definition.xml"/>-->
+
+<!-- ATOM 1.0 -->
+<!-- Lasciati perché non editabili --> 
+	<schema fileName="gpt/metadata/atom/atom-1-0-entry-definition.xml"/>
+	<schema fileName="gpt/metadata/atom/atom-1-0-feed-definition.xml"/>
+
+	<!-- These scehmas are not editable but used for internal transformations -->
+	<schema fileName="gpt/metadata/ogc/ogc-definition.xml"/>
+	<schema fileName="gpt/metadata/ogc/cswRecord-definition.xml"/>
+	<schema fileName="gpt/metadata/other/georss-definition.xml"/>
+	<schema fileName="gpt/metadata/other/opensearch-definition.xml"/>
+
+</schemas>
