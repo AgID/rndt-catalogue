@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<h:div xmlns:g="http://www.esri.com/geoportal/gxe" 
+    xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+    h:tag="div">
+	
+            <g:element g:extends="$base/xtn/gmd/metadataEntity/XTN_Language.xml" g:label="$i18n.catalog.mdParam.rndt.identification.language"/>
+            <g:element g:extends="$base/xtn/gmd/identification/XTN_SupplementalInformation.xml"/>
+
+
+</h:div>
