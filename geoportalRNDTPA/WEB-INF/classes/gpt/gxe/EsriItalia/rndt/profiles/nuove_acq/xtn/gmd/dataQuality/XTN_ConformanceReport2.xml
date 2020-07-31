@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- simplified conformance report 
+     (gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult -->
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:targetName="gmd:report" g:minOccurs="1" g:maxOccurs="unbounded"
+		   g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption"  
+           g:extends="$base/xtn/ui/UI_Element.xml">
+	<g:body>
+
+		<g:element g:targetName="gmd:DQ_DomainConsistency" g:minOccurs="1" g:maxOccurs="1"  h:tag="div" g:jsClass="gxe.control.Element">
+			<g:element g:targetName="gmd:result" g:minOccurs="1" g:maxOccurs="unbounded" h:tag="div" g:jsClass="gxe.control.Element">
+				<g:element g:targetName="gmd:DQ_ConformanceResult" g:minOccurs="1" g:maxOccurs="1"  h:tag="div" g:jsClass="gxe.control.Element">
+					<!-- Citation for the specification to which the degree of conformance will be judged -->
+					<g:element g:targetName="gmd:specification" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:CI_Citation" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.title" g:targetName="gmd:title" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+
+								<g:element  g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.title" g:targetName="gco:CharacterString" g:extends="$base/xtn/ui/UI_Element.xml"
+		          g:fixedValue="">
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options >
+											<g:option g:value="INSPIRE Data Specification on Atmospheric conditions - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.atmosphericConditions"/>
+											<g:option g:value="INSPIRE Data Specification on Land cover - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.landCover"/>
+											<g:option g:value="INSPIRE Data Specification on Population distribution - demography - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.populationDistributionDemography"/>
+											<g:option g:value="INSPIRE Data Specification on Species distribution - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.speciesDistribution"/>
+											<g:option g:value="INSPIRE Data Specification on Buildings - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.buildings"/>
+											<g:option g:value="INSPIRE Data Specification on Meteorological geographical features - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.meteorologicalGeographicalFeatures"/>
+											<g:option g:value="INSPIRE Data Specification on Oceanographic geographical features - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.oceanographicGeographicalFeatures"/>
+											<g:option g:value="INSPIRE Data Specification on Elevation - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.elevation"/>
+											<g:option g:value="INSPIRE Data Specification on Geology - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geology"/>
+											<g:option g:value="INSPIRE Data Specification on Habitats and biotopes - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.habitatsAndBiotopes"/>
+											<g:option g:value="INSPIRE Data Specification on Hydrography - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.hydrography"/>
+											<g:option g:value="INSPIRE Data Specification on Agricultural and aquaculture facilities - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.agriculturalAndAquacultureFacilities"/>
+											<g:option g:value="INSPIRE Data Specification on Environmental monitoring facilities - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.environmentalMonitoringFacilities"/>
+											<g:option g:value="INSPIRE Data Specification on Addresses - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.addresses"/>
+											<g:option g:value="INSPIRE Data Specification on Geographical names - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geographicalNames"/>
+											<g:option g:value="INSPIRE Data Specification on Orthoimagery - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.orthoimagery"/>
+											<g:option g:value="INSPIRE Data Specification on Cadastral parcels - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.cadastralParcels"/>
+											<g:option g:value="INSPIRE Data Specification on Production and industrial facilities - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.productionAndIndustrialFacilities"/>
+											<g:option g:value="INSPIRE Data Specification on Bio-geographical regions - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.bioGeographicalRegions"/>
+											<g:option g:value="INSPIRE Data Specification on Sea regions - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.seaRegions"/>
+											<g:option g:value="INSPIRE Data Specification on Transport networks - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.transportNetworks"/>
+											<g:option g:value="INSPIRE Data Specification on Energy resources - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.energyResources"/>
+											<g:option g:value="INSPIRE Data Specification on Mineral resources - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.mineralResources"/>
+											<g:option g:value="INSPIRE Data Specification on Human health and safety - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.humanHealthAndSafety"/>
+											<g:option g:value="INSPIRE Data Specification on Utility and governmental services - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.utilityAndGovernmentService"/>
+											<g:option g:value="INSPIRE Data Specification on Coordinate reference systems - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.coordinateReferenceSystems"/>
+											<g:option g:value="INSPIRE Data Specification on Geographical grid systems - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.geographicalGridSystems"/>
+											<g:option g:value="INSPIRE Data Specification on Protected sites - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.protectedSites"/>
+											<g:option g:value="INSPIRE Data Specification on Soil - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.soil"/>
+											<g:option g:value="INSPIRE Data Specification on Administrative units - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.administrativeUnits"/>
+											<g:option g:value="INSPIRE Data Specification on Statistical units - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.statisticalUnits"/>
+											<g:option g:value="INSPIRE Data Specification on Land use - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.landUser"/>
+											<g:option g:value="INSPIRE Data Specification on Natural risk zones - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.naturalRiskZones"/>
+											<g:option g:value="INSPIRE Data Specification on Area management/restriction/regulation zones and reporting units - Technical Guidelines"
+                          g:label="$i18n.catalog.mdCode.rndt.GEMET.dataTheme.areaManagementRestrictionRegulationZonesAndReportingUnits"/>
+
+										</g:options>
+									</g:input>
+								</g:element>
+							</g:element>
+
+							<g:element g:targetName="gmd:date" h:tag="div" g:jsClass="gxe.control.Element">
+								<g:element g:targetName="gmd:CI_Date" h:tag="div" g:jsClass="gxe.control.Element">
+									<g:element g:targetName="gmd:date" h:tag="div" g:label="$i18n.catalog.iso19139.CI_Date.date" g:extends="$base/schema/gco/basicTypes/Date_PropertyType.xml"/>
+
+									<g:element g:targetName="gmd:dateType" h:tag="div" g:jsClass="gxe.control.Element" g:label="$i18n.catalog.iso19139.CI_Date.dateType"  g:extends="$base/xtn/ui/UI_Element.xml">
+										<g:element g:targetName="gmd:CI_DateTypeCode" h:tag="div" g:jsClass="gxe.control.Element">
+											<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+												<g:options>
+													<g:option g:label="$i18n.catalog.mdParam.inspire.conformity.date.publication" g:value="$i18n.catalog.mdParam.inspire.conformity.date.publication" />
+												</g:options>
+											</g:input>
+											<g:attribute g:targetNS="" h:class="gxeDisplayNone" g:targetName="codeList" h:tag="div" g:jsClass="gxe.control.Attribute"
+		               g:fixedValue="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_DateTypeCode">
+												<g:input g:extends="$base/core/ui/InputText.xml"/>
+											</g:attribute>
+											<g:attribute g:targetNS="" h:class="gxeDisplayNone"  g:targetName="codeListValue" h:tag="div" g:jsClass="gxe.control.Attribute"
+		               g:fixedValue="publication">
+												<g:input g:extends="$base/core/ui/InputText.xml"/>
+											</g:attribute>
+
+										</g:element>
+									</g:element>
+								</g:element>
+							</g:element>
+
+						</g:element> 
+
+					</g:element>
+					<!-- an explanation of the result -->
+
+					<g:element g:targetName="gmd:explanation" g:extends="$base/xtn/ui/UI_Element.xml" g:minOccurs="1" g:maxOccurs="1" g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.explanation">
+						<g:element g:targetName="gco:CharacterString" g:value="Fare riferimento alle specifiche indicate" g:extends="$base/core/ui/InputTextArea.xml"/>
+					</g:element> 
+					<!-- degree of conformance (pass/fail) -->
+					<g:element g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.degree" g:targetName="gmd:pass" g:serializeIfEmpty="true" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element" g:extends="$base/schema/gco/xtn/Wrapped_BasicPropertyType.xml">
+						<g:element g:targetName="gco:Boolean" g:minOccurs="1" g:maxOccurs="1" preferOpen="true" g:extends="$base/xtn/ui/UI_Element.xml">
+
+							<g:input g:i18nBase="catalog.mdParam.rndt.dataQuality.conformity.degree" g:extends="$base/core/ui/InputSelectOne.xml">
+								<g:options>
+									<g:option g:label="$i18nBase.notEvaluated" g:value="" />
+									<g:option g:label="$i18nBase.conformant" g:value="true"/>
+									<g:option g:label="$i18nBase.notConformant" g:value="false"/>
+								</g:options>
+							</g:input>
+
+						</g:element>
+
+					</g:element> 
+
+				</g:element> 
+			</g:element> 
+		</g:element>
+
+	</g:body>     
+</g:element>
