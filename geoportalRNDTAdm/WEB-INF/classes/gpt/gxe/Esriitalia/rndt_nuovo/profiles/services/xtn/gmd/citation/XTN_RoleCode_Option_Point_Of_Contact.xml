@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:options xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:i18nBase="catalog.iso19139.CI_RoleCode">
+			<g:option g:label="$i18nBase.pointOfContact" g:value="pointOfContact" g:selected="true"/>
+			<g:option g:label="$i18nBase.custodian" g:value="custodian" g:selected="true"/>
+</g:options>
+ 
