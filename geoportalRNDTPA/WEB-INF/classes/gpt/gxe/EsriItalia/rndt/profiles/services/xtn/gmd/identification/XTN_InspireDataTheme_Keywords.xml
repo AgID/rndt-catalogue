@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- INSPIRE data theme keywords (gmd:descriptiveKeywords) --> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+           h:class=""
+           g:targetName="gmd:descriptiveKeywords" g:minOccurs="1" g:maxOccurs="1"
+           g:extends="$base/xtn/ui/UI_Element.xml">
+  <g:header g:rendered="false"/>
+  <g:body>
+	  <g:element g:targetName="gmd:MD_Keywords" g:minOccurs="0" g:maxOccurs="1"
+	    h:tag="div" g:jsClass="gxe.control.Element">
+	    
+	    <!-- keyword selection -->
+	    <g:element g:targetName="gmd:keyword" g:minOccurs="1" g:maxOccurs="unbounded"
+	      g:label="$i18n.catalog.mdParam.inspire.keyword.dataTheme.service.label"
+		  g:info="$i18n.catalog.rdnt.servizi.hint.temaInspireKTI"
+	      g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml">
+	      <g:body>
+	        <g:element g:isIsoWMVL="true">
+	          <g:body>
+	            <g:input g:extends="$base/core/ui/InputSelectMany.xml">
+	              <g:options>
+<g:option g:value="humanInteractionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanInteractionService"/>
+<g:option g:value="humanCatalogueViewer" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanCatalogueViewer"/>
+<g:option g:value="humanGeographicViewer" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanGeographicViewer"/>
+<g:option g:value="humanGeographicSpreadsheetViewer" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanGeographicSpreadsheetViewer"/>
+<g:option g:value="humanServiceEditor" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanServiceEditor"/>
+<g:option g:value="humanChainDefinitionEditor" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanChainDefinitionEditor"/>
+<g:option g:value="humanWorkflowEnactmentManager" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanWorkflowEnactmentManager"/>
+<g:option g:value="humanGeographicFeatureEditor" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanGeographicFeatureEditor"/>
+<g:option g:value="humanGeographicSymbolEditor" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanGeographicSymbolEditor"/>
+<g:option g:value="humanFeatureGeneralizationEditor" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanFeatureGeneralizationEditor"/>
+<g:option g:value="humanGeographicDataStructureViewer" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.humanGeographicDataStructureViewer"/>
+<g:option g:value="infoManagementService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoManagementService"/>
+<g:option g:value="infoFeatureAccessService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoFeatureAccessService"/>
+<g:option g:value="infoMapAccessService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoMapAccessService"/>
+<g:option g:value="infoCoverageAccessService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoCoverageAccessService"/>
+<g:option g:value="infoSensorDescriptionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoSensorDescriptionService"/>
+<g:option g:value="infoProductAccessService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoProductAccessService"/>
+<g:option g:value="infoFeatureTypeService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoFeatureTypeService"/>
+<g:option g:value="infoCatalogueService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoCatalogueService"/>
+<g:option g:value="infoRegistryService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoRegistryService"/>
+<g:option g:value="infoGazetteerService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoGazetteerService"/>
+<g:option g:value="infoOrderHandlingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoOrderHandlingService"/>
+<g:option g:value="infoStandingOrderService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.infoStandingOrderService"/>
+<g:option g:value="taskManagementService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.taskManagementService"/>
+<g:option g:value="chainDefinitionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.chainDefinitionService"/>
+<g:option g:value="workflowEnactmentService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.workflowEnactmentService"/>
+<g:option g:value="subscriptionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.subscriptionService"/>
+<g:option g:value="spatialProcessingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialProcessingService"/>
+<g:option g:value="spatialCoordinateConversionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialCoordinateConversionService"/>
+<g:option g:value="spatialCoordinateTransformationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialCoordinateTransformationService"/>
+<g:option g:value="spatialCoverageVectorConversionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialCoverageVectorConversionService"/>
+<g:option g:value="spatialImageCoordinateConversionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialImageCoordinateConversionService"/>
+<g:option g:value="spatialRectificationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialRectificationService"/>
+<g:option g:value="spatialOrthorectificationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialOrthorectificationService"/>
+<g:option g:value="spatialSensorGeometryModelAdjustmentService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialSensorGeometryModelAdjustmentService"/>
+<g:option g:value="spatialImageGeometryModelConversionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialImageGeometryModelConversionService"/>
+<g:option g:value="spatialSubsettingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialSubsettingService"/>
+<g:option g:value="spatialSamplingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialSamplingService"/>
+<g:option g:value="spatialTilingChangeService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialTilingChangeService"/>
+<g:option g:value="spatialDimensionMeasurementService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialDimensionMeasurementService"/>
+<g:option g:value="spatialFeatureManipulationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialFeatureManipulationService"/>
+<g:option g:value="spatialFeatureMatchingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialFeatureMatchingService"/>
+<g:option g:value="spatialFeatureGeneralizationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialFeatureGeneralizationService"/>
+<g:option g:value="spatialRouteDeterminationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialRouteDeterminationService"/>
+<g:option g:value="spatialPositioningService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialPositioningService"/>
+<g:option g:value="spatialProximityAnalysisService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.spatialProximityAnalysisService"/>
+<g:option g:value="thematicProcessingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicProcessingService"/>
+<g:option g:value="thematicGoparameterCalculationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicGoparameterCalculationService"/>
+<g:option g:value="thematicClassificationService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicClassificationService"/>
+<g:option g:value="thematicFeatureGeneralizationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicFeatureGeneralizationService"/>
+<g:option g:value="thematicSubsettingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicSubsettingService"/>
+<g:option g:value="thematicSpatialCountingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicSpatialCountingService"/>
+<g:option g:value="thematicChangeDetectionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicChangeDetectionService"/>
+<g:option g:value="thematicGeographicInformationExtractionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicGeographicInformationExtractionService"/>
+<g:option g:value="thematicImageProcessingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicImageProcessingService"/>
+<g:option g:value="thematicReducedResolutionGenerationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicReducedResolutionGenerationService"/>
+<g:option g:value="thematicImageManipulationService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicImageManipulationService"/>
+<g:option g:value="thematicImageUnderstandingService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicImageUnderstandingService"/>
+<g:option g:value="thematicImageSynthesisService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicImageSynthesisService"/>
+<g:option g:value="thematicMultibandImageManipulationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicMultibandImageManipulationService"/>
+<g:option g:value="thematicObjectDetectionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicObjectDetectionService"/>
+<g:option g:value="thematicGeoparsingService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicGeoparsingService"/>
+<g:option g:value="thematicGeocodingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.thematicGeocodingService"/>
+<g:option g:value="temporalProcessingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.temporalProcessingService"/>
+<g:option g:value="temporalReferenceSystemTransformationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.temporalReferenceSystemTransformationService"/>
+<g:option g:value="temporalSubsettingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.temporalSubsettingService"/>
+<g:option g:value="temporalSamplingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.temporalSamplingService"/>
+<g:option g:value="temporalProximityAnalysisService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.temporalProximityAnalysisService"/>
+<g:option g:value="metadataProcessingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.metadataProcessingService"/>
+<g:option g:value="metadataStatisticalCalculationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.metadataStatisticalCalculationService"/>
+<g:option g:value="metadataGeographicAnnotationService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.metadataGeographicAnnotationService"/>
+<g:option g:value="comService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comService"/>
+<g:option g:value="comEncodingService"  g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comEncodingService"/>
+<g:option g:value="comTransferService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comTransferService"/>
+<g:option g:value="comGeographicCompressionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comGeographicCompressionService"/>
+<g:option g:value="comGeographicFormatConversionService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comGeographicFormatConversionService"/>
+<g:option g:value="comMessagingService" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comMessagingService"/>
+<g:option g:value="comRemoteFileAndExecutableManagement" g:label="$i18n.catalog.mdParam.rndt.identification.servicetype.comRemoteFileAndExecutableManagement"/>
+                      </g:options>
+		          </g:input>
+		        </g:body>
+		      </g:element>
+		    </g:body> 
+	    </g:element>
+	  </g:element>
+	</g:body>
+</g:element>
+  
+      
+
