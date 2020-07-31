@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<schema 
+	key="rndt-series-nuovo" 
+	cswOutputSchema="http://www.isotc211.org/2005/gmd" 
+	cswBriefXslt="gpt/metadata/iso/apiso-brief.xslt" 
+	cswSummaryXslt="gpt/metadata/iso/apiso-summary.xslt"
+	schematronSch="gpt/gxe/EsriItalia/rndt_nuovo/profiles/series/RNDT_schematron_rules_series.xml"
+    xsdLocation="https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd"
+	detailsXslt="gpt/metadata/EsriItaly/rndt_nuovo/rndt_nuovo-details_series.xslt">
+  	
+	<!-- schema label -->
+	<label resourceKey="catalog.mdParam.schema.rndt-nuovo.series"/>
+	
+	<!-- schema namespaces -->
+	<namespace prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
+	<namespace prefix="gco" uri="http://www.isotc211.org/2005/gco"/>
+	<namespace prefix="gml" uri="http://www.opengis.net/gml"/>
+	<namespace prefix="gmx" uri="http://www.isotc211.org/2005/gmx"/>
+	<namespace prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
+	
+	<!-- schema interrogation -->
+	<!-- <interrogation count="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification)"/> -->
+    <interrogation count="(count(/gmd:MD_Metadata/gmd:metadataStandardVersion[contains(gco:CharacterString,'2.0')] | /gmd:MD_Metadata/gmd:metadataStandardName/gmx:Anchor[@xlink:href = 'http://registry.geodati.gov.it/document/rndt-lg']) * count(/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode[@codeListValue = 'series']))" />
+
+	
+	<!-- indexables -->
+	<indexables fileName="gpt/metadata/EsriItaly/rndt_nuovo/rndt_nuovo-apiso-indexables.xml"/>
+	
+  <!-- Geopoprtal XML editor -->
+   <editor fileName="gpt/gxe/EsriItalia/rndt_nuovo/profiles/series/esriitalia-iso19139-series-editor.xml"/>
+	
+	
+
+</schema>
+
+
