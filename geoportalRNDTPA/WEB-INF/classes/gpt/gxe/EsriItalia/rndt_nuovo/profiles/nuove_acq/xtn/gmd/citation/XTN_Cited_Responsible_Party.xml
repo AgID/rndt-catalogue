@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!--  simplified metadata contact gmd:MD_Metadata/gmd:contact -->      
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+    xmlns:h="http://www.esri.com/geoportal/gxe/html"
+    g:targetName="gmd:citedResponsibleParty" g:minOccurs="1" g:maxOccurs="unbounded"
+    g:label="$i18n.catalog.mdParam.rndt.identification.contact.caption"
+    g:extends="$base/xtn/ui/UI_Element.xml"> 
+	<g:body>
+		<g:element g:targetName="gmd:CI_ResponsibleParty" g:minOccurs="1" g:maxOccurs="1"
+            g:i18nBase="catalog.iso19139.CI_ResponsibleParty"
+            h:tag="div" g:jsClass="gxe.control.Element">
+
+			<g:element g:targetName="gmd:organisationName" g:info="$i18n.catalog.rdnt.nuoveAcquisizioni.hint.nomeEnteISDC" g:label="$i18nBase.organisationName" g:minOccurs="1" g:maxOccurs="1"
+                g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml">
+				<g:body>
+					<g:element g:value="#{EditMetadataController.userProfile['organization'].value}"/>
+				</g:body>
+			</g:element>
+
+			<g:element g:targetName="gmd:contactInfo" g:minOccurs="0" g:maxOccurs="1"
+                h:tag="div" g:jsClass="gxe.control.Element">
+				<g:element g:targetName="gmd:CI_Contact" g:minOccurs="0" g:maxOccurs="1"
+                    h:tag="div" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gmd:phone" g:minOccurs="0" g:maxOccurs="1"
+                        h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:CI_Telephone" g:minOccurs="0" g:maxOccurs="1"
+                            h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:targetName="gmd:voice" g:minOccurs="0" g:maxOccurs="1"  g:preferOpen="true" 
+                                g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml" g:info="$i18n.catalog.rdnt.nuoveAcquisizioni.hint.telefonoISDC" g:label="$i18n.catalog.mdParam.rndt.general.contact.organizationInfo.phoneNumber">
+								<g:body>
+									<g:element g:value="#{EditMetadataController.userProfile['phone'].value}"/>
+								</g:body>
+							</g:element>
+						</g:element>
+					</g:element>
+					<g:element g:targetName="gmd:address" g:minOccurs="0" g:maxOccurs="1"
+								h:tag="div" g:jsClass="gxe.control.Element"> 
+						<g:element g:targetName="gmd:CI_Address" g:minOccurs="0" g:maxOccurs="1"
+									h:tag="div" g:jsClass="gxe.control.Element"> 
+							<g:element g:targetName="gmd:electronicMailAddress" 
+										g:minOccurs="1" g:maxOccurs="unbounded"
+										g:label="$i18n.catalog.mdParam.rndt.general.contact.organizationInfo.email"
+										g:info="$i18n.catalog.rdnt.nuoveAcquisizioni.hint.emailISDC"
+										g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml">
+								<g:body>
+									<g:element g:value="#{EditMetadataController.userProfile['email'].value}"/>
+								</g:body>
+							</g:element>
+						</g:element>
+					</g:element>
+					<g:element g:targetName="gmd:onlineResource" g:minOccurs="0" g:maxOccurs="1"
+                        h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:CI_OnlineResource" g:minOccurs="0" g:maxOccurs="1"
+                            h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:targetName="gmd:linkage" g:minOccurs="0" g:maxOccurs="1" g:preferOpen="true"
+                                g:extends="$base/schema/gmd/citation/URL_PropertyType.xml"
+								g:info="$i18n.catalog.rdnt.nuoveAcquisizioni.hint.sitoWebISDC"								
+                                g:label="$i18n.catalog.mdParam.rndt.general.contact.organizationInfo.onlineResource">
+								<g:body>
+									<g:element g:value="#{EditMetadataController.userProfile['website'].value}"/>
+								</g:body>
+							</g:element>
+						</g:element>
+					</g:element>
+				</g:element>
+			</g:element>     
+			<g:element g:targetName="gmd:role" g:minOccurs="1" g:maxOccurs="1" g:info="$i18n.catalog.rdnt.nuoveAcquisizioni.hint.ruoloISDC" g:label="$i18n.catalog.mdParam.rndt.general.contact.role"
+                g:extends="$base/xtn/gmd/citation/XTN_Role_Code_Responsible_Party.xml"/>
+
+		</g:element>
+
+	</g:body>
+</g:element>
+
