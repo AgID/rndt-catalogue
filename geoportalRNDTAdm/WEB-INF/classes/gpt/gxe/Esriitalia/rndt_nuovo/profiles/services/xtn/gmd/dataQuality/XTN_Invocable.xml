@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- simplified reference system info gmd:MD_Metadata/gmd:referenceSystemInfo -->
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           h:tag="div" g:extends="$base/xtn/ui/UI_Element.xml"
+           g:jsClass="gxe.control.Element" >            
+  <g:body>
+	<g:element g:targetName="gmd:DQ_DomainConsistency" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+		<g:element g:targetName="gmd:result" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+			<g:element g:targetName="gmd:DQ_ConformanceResult" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">		
+				<g:element g:targetName="gmd:specification" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gmd:CI_Citation" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:title" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:label="$i18n.catalog.mdParam.referenceSystemInfo.typology" g:isIsoXlink="true" g:info="$i18n.catalog.mdParam.referenceSystemInfo.typology.hint" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml">
+								<g:body>
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options g:i18nBase="catalog.mdParam.referenceSystemInfo.typology.options">
+											<g:option g:link="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable" g:value="$i18nBase.invocable" g:label="$i18nBase.invocable"/>
+										</g:options>
+									</g:input>
+								</g:body>
+								<g:attribute g:targetNS="" h:class="gxeDisplayNone" g:targetName="xlink:title" h:tag="div" g:fixedValue="INSPIRE Invocable Spatial Data Services metadata" g:jsClass="gxe.control.Attribute">
+									<g:input g:extends="$base/core/ui/InputText.xml"/>
+								</g:attribute>
+							</g:element>
+						</g:element>
+						<g:element g:targetName="gmd:date" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:targetName="gmd:CI_Date" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+								<g:element g:targetName="gmd:date" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:jsClass="gxe.control.Element">
+									<g:element g:targetName="gco:Date" g:label="$i18n.catalog.mdParam.referenceSystemInfo.typology.date" g:info="$i18n.catalog.mdParam.referenceSystemInfo.typology.date.hint" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element" g:extends="$base/xtn/ui/UI_Element.xml">
+										<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+											<g:options>
+												<g:option g:value="2016-05-01" g:label="2016-05-01" g:selected="true"/>
+											</g:options>
+										</g:input>
+									</g:element>
+								</g:element>
+								<g:element g:targetName="gmd:dateType" g:label="$i18n.catalog.mdParam.referenceSystemInfo.typology.dateType" g:info="$i18n.catalog.mdParam.referenceSystemInfo.typology.dateType.hint" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element" g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml">
+									<g:element g:targetName="gmd:CI_DateTypeCode" g:i18nBase="catalog.mdParam.referenceSystemInfo.dateType" g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
+										<g:body>
+											<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml"
+											  g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode"/>
+											 
+											<g:attribute g:extends="$base/schema/gco/gcoBase/codeListValue.xml">
+											  <g:body>
+												<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+												  <g:options>
+													<g:option g:label="$i18nBase.publication" g:value="publication" g:selected="true"/>
+												  </g:options>
+												</g:input>
+											  </g:body>          
+											</g:attribute>      
+										</g:body>
+									</g:element>
+								</g:element>
+							</g:element>
+						</g:element>
+					</g:element>
+				</g:element>
+				<g:element g:targetName="gmd:explanation" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gco:CharacterString" g:minOccurs="1" g:maxOccurs="1" g:jsClass="gxe.control.Element" g:extends="$base/xtn/ui/UI_Element.xml">
+						<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+							<g:options g:i18nBase="catalog.mdParam.referenceSystemInfo.typology.explanation">
+								<g:option g:value="$i18nBase.invocable" g:label="$i18nBase.invocable"/>
+								</g:options>
+						</g:input>
+					</g:element>
+				</g:element>
+				<g:element g:targetName="gmd:pass" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gco:Boolean" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element" g:fixedValue="true">
+						<g:input g:i18nBase="catalog.mdParam.rndt.dataQuality.conformity.degree" g:extends="$base/core/ui/InputSelectOne.xml">
+							<g:options>
+									<g:option g:label="Vero" g:value="true"/>
+							</g:options>
+						</g:input>
+					</g:element> 
+				</g:element> 
+			</g:element> 
+		</g:element> 
+	</g:element> 
+  </g:body>
+</g:element>
+
