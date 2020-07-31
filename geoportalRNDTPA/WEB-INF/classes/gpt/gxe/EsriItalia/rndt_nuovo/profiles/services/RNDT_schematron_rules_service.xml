@@ -1,0 +1,1445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+* Esri Italy 2019
+* Schematron per i servizi con profilo RNDT 2.0
+*
+*/ 
+-->
+<sch:schema xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+	xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv"
+	xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:gml="http://www.opengis.net/gml/3.2">
+	<sch:ns uri="http://www.isotc211.org/2005/gmd" prefix="gmd"/>
+	<sch:ns uri="http://www.isotc211.org/2005/gco" prefix="gco"/>
+	<sch:ns uri="http://www.isotc211.org/2005/srv" prefix="srv"/>
+	<sch:ns uri="http://www.isotc211.org/2005/gmx" prefix="gmx"/>
+	<sch:ns uri="http://www.w3.org/1999/xlink" prefix="xlink"/>
+	<sch:ns uri="http://www.opengis.net/gml/3.2" prefix="gml"/>
+	<sch:let name="lowercase" value="'abcdefghijklmnopqrstuvwxyz'"/>
+	<sch:let name="uppercase" value="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
+
+	<!-- ############################################ -->
+	<!-- General issues.                              -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing implementation</sch:title>
+		<sch:rule context="/*">
+			<sch:assert test="namespace-uri(/*) = 'http://www.isotc211.org/2005/gmd'">Il documento
+				XML e' definito in un namespace sbagliato: <sch:value-of select="namespace-uri(/*)"
+				/>
+			</sch:assert>
+			<sch:report role="INFO" test="namespace-uri(/*) = 'http://www.isotc211.org/2005/gmd'">Il
+				namespace del documento e' <sch:value-of select="namespace-uri(/*)"/>
+			</sch:report>
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Metadata on metadata                         -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Metadata on metadata' elements</sch:title>
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert test="gmd:fileIdentifier/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:fileIdentifier non presente </sch:assert>
+			<sch:assert test="gmd:dateStamp/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:dateStamp non presente </sch:assert>
+			<sch:assert test="gmd:metadataStandardName/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:metadataStandardName non presente </sch:assert>
+			<sch:assert test="gmd:metadataStandardVersion/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:metadataStandardVersion non presente </sch:assert>
+			<sch:assert test="gmd:language/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:language non presente </sch:assert>
+			<sch:assert test="gmd:hierarchyLevel/*">La struttura dell'xml è errata: sezione
+				//gmd:MD_Metadata/gmd:hierarchyLevel non presente </sch:assert>
+			<sch:assert test="gmd:contact/*">La struttura dell'xml è errata: sezione
+				gmd:MD_Metadata/gmd:contact non presente </sch:assert>
+		</sch:rule>
+
+		<!-- Elementi singoli. Meglio così per testarli in modo separato e non avere conflitto con la rule generale -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:fileIdentifier">
+			<sch:let name="fileIdentifier" value="gco:CharacterString/text()"/>
+			<!-- assertions and report -->
+			<sch:assert test="$fileIdentifier">L'elemento "Identificatore del file" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$fileIdentifier">Identificatore del file: <sch:value-of
+					select="$fileIdentifier"/>
+			</sch:report>
+		</sch:rule>
+		<sch:rule context="/gmd:MD_Metadata/gmd:dateStamp">
+			<sch:let name="dateStamp" value="gco:Date/text()"/>
+			<!-- assertions and report -->
+			<sch:assert test="$dateStamp">L'elemento "Data dei metadati" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$dateStamp">Data dei metadati: <sch:value-of
+					select="$dateStamp"/>
+			</sch:report>
+		</sch:rule>
+
+		<sch:rule context="/gmd:MD_Metadata/gmd:metadataStandardName">
+			<sch:let name="metadataStandardName" value="./*/text()"/>
+
+
+			<sch:let name="metadataStandardNameAnchorPresent" value="gmx:Anchor/text()"/>
+			<sch:let name="metadataStandardNameLink" value="gmx:Anchor/@xlink:href"/>
+			<!-- assertions and report -->
+			<!--<sch:assert test="$metadataStandardName = 'DM - Regole tecniche RNDT 2.0'">L'elemento
+				"Nome dello Standard" non presente o errato: deve essere "DM - Regole tecniche RNDT 2.0"</sch:assert>-->
+			<sch:assert test="translate($metadataStandardName, $uppercase, $lowercase) = 'linee guida rndt'">L'elemento
+				"Nome dello Standard" non presente o errato: deve essere "Linee Guida RNDT"</sch:assert>
+			<sch:report role="INFO" test="$metadataStandardName">Nome dello Standard: <sch:value-of
+					select="$metadataStandardName"/>
+			</sch:report>
+			<sch:assert
+				test="($metadataStandardNameAnchorPresent and ($metadataStandardNameLink = 'https://registry.geodati.gov.it/document/rndt-lg' or $metadataStandardNameLink = 'http://registry.geodati.gov.it/document/rndt-lg')) or (not($metadataStandardNameAnchorPresent))"
+				>L'elemento link al nome dello Standard è errato</sch:assert>
+			<sch:report role="INFO" test="$metadataStandardNameLink = ''">Link allo Standard:
+					<sch:value-of select="$metadataStandardNameLink"/>
+			</sch:report>
+		</sch:rule>
+
+		<sch:rule context="/gmd:MD_Metadata/gmd:metadataStandardVersion">
+			<sch:let name="metadataStandardVersion" value="gco:CharacterString/text()"/>
+			<!--<sch:assert test="$metadataStandardVersion = '10 novembre 2011'">L'elemento "Versione
+				dello Standard" non e' presente o ha un valore errato</sch:assert>-->
+				<sch:assert test="$metadataStandardVersion = '2.0'">L'elemento "Versione
+				dello Standard" non e' presente o ha un valore errato</sch:assert>
+			<sch:report role="INFO" test="$metadataStandardVersion">Versione dello Standard:
+					<sch:value-of select="$metadataStandardVersion"/>
+			</sch:report>
+		</sch:rule>
+
+		<sch:rule context="/gmd:MD_Metadata/gmd:language">
+			<sch:let name="language"
+				value="translate(gmd:LanguageCode/text(), $uppercase, $lowercase)"/>
+			<sch:let name="language_present"
+				value="
+					$language = 'bul' or
+					$language = 'ita' or
+					$language = 'cze' or
+					$language = 'lav' or
+					$language = 'dan' or
+					$language = 'lit' or
+					$language = 'dut' or
+					$language = 'mlt' or
+					$language = 'eng' or
+					$language = 'pol' or
+					$language = 'est' or
+					$language = 'por' or
+					$language = 'fin' or
+					$language = 'rum' or
+					$language = 'fre' or
+					$language = 'slo' or
+					$language = 'ger' or
+					$language = 'slv' or
+					$language = 'gre' or
+					$language = 'spa' or
+					$language = 'hun' or
+					$language = 'swe' or
+					$language = 'gle'"/>
+
+			<sch:assert test="$language_present">L'elemento "Lingua dei metadati" non e' presente o
+				ha un valore errato</sch:assert>
+			<sch:report role="INFO" test="$language_present">Lingua dei metadati: <sch:value-of
+					select="$language"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- Livello gerarchico: deve essere servizio -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:hierarchyLevel">
+			<sch:let name="resourceType"
+				value="translate(gmd:MD_ScopeCode/text(), $uppercase, $lowercase)"/>
+			<sch:let name="resourceTypeName"
+				value="translate(../gmd:hierarchyLevelName/gco:CharacterString/text(), $uppercase, $lowercase)"/>
+
+			<!-- Il livello deve essere servizio -->
+			<sch:assert test="$resourceType = 'servizio' or $resourceType = 'service'">L'elemento
+				"Livello gerarchico" non e' presente o non è corretto</sch:assert>
+			<sch:report role="INFO" test="$resourceType">Livello gerarchico: <sch:value-of
+					select="$resourceType"/>
+			</sch:report>
+
+			<!-- Il livello e il nome devono essere uguali o in italiano -->
+			<sch:assert test="$resourceTypeName = 'service' or $resourceTypeName = 'servizio'">L'elemento "Nome Livello
+				gerarchico" non e' presente o ha un valore diverso dal livello</sch:assert>
+			<sch:report role="INFO" test="$resourceTypeName">Nome Livello gerarchico: <sch:value-of
+					select="$resourceTypeName"/>
+			</sch:report>
+		</sch:rule>
+
+
+		<sch:rule context="/gmd:MD_Metadata/gmd:contact">
+			<sch:let name="organisationName"
+				value="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/text()"/>
+			<sch:let name="role"
+				value="translate(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/text(), $uppercase, $lowercase)"/>
+			<sch:let name="roleCode"
+				value="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+
+			<!-- Diventati opzionali 
+			<sch:let name="telephone" value="gmd:contactInfo/*/gmd:phone/*/gmd:voice/*/text()"/>
+			<sch:let name="onlineResource" value="gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/*/text()"/>
+			-->
+			<sch:let name="emailAddress"
+				value="gmd:CI_ResponsibleParty/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString/text()"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="$organisationName">L'elemento "Responsabile dei metadati - Nome Ente"
+				non e' presente</sch:assert>
+			<sch:report role="INFO" test="$organisationName">Responsabile dei metadati - Nome Ente:
+					<sch:value-of select="$organisationName"/>
+			</sch:report>
+
+			<sch:assert test="$emailAddress">L'elemento "Responsabile dei metadati - E-mail" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$emailAddress">Responsabile dei metadati - E-mail:
+					<sch:value-of select="$emailAddress"/>
+			</sch:report>
+			<sch:assert test="$role = 'pointofcontact' or $role = 'punto di contatto'">L'elemento
+				"Responsabile dei metadati - Ruolo" non è presente o ha un valore sbagliato. Il
+				valore del ruolo del responsabile dei metadati deve essere 'Punto di contatto'
+				('pointOfContact')</sch:assert>
+			<sch:report role="INFO" test="$role">Responsabile dei metadati - Ruolo: <sch:value-of
+					select="$role"/>
+			</sch:report>
+			<sch:assert test="$roleCode = 'pointOfContact'">L'elemento "Responsabile dei metadati -
+				Codice Ruolo" non è presente o ha un valore sbagliato. Il valore del codcie ruolo
+				del responsabile dei metadati deve essere 'pointOfContact'</sch:assert>
+			<sch:report role="INFO" test="$role">Responsabile dei metadati - Codice Ruolo:
+					<sch:value-of select="$role"/>
+			</sch:report>
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification (title, abstract, standard, etc). 
+		Le keyword, il responsabile, il punto di contatto, il tipo di servizio, i constraints e l'estensione sono separati-->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Identification' elements</sch:title>
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert test="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">La struttura
+				dell'xml è errata: sezione //gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation
+				non presente </sch:assert>
+			<sch:assert test="gmd:identificationInfo/*/gmd:abstract">La struttura dell'xml è errata:
+				sezione gmd:identificationInfo/*/gmd:abstract non presente </sch:assert>
+		</sch:rule>
+
+		<!-- Titolo, identificativo e data -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation">
+			<sch:let name="resourceTitle" value="gmd:title/gco:CharacterString/text()"/>
+			<sch:let name="resourceIdentifier_code" value="gmd:identifier/*/gmd:code/*/text()"/>
+			<sch:let name="resourceIdentifier_codeSpace"
+				value="gmd:identifier/*/gmd:codeSpace/*/text()"/>
+			<sch:let name="date" value="gmd:date/gmd:CI_Date/gmd:date/gco:Date/text()"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="$resourceTitle">L'elemento "Titolo" non e' presente</sch:assert>
+			<sch:report role="INFO" test="$resourceTitle">Titolo: <sch:value-of
+					select="$resourceTitle"/>
+			</sch:report>
+			<sch:assert test="$resourceIdentifier_code">L'elemento "Identificatore dei dati" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$resourceIdentifier_code">Identificatore: <sch:value-of
+					select="$resourceIdentifier_code"/>
+			</sch:report>
+			<sch:assert test="$date">L'elemento "data dei dati" non e' presente</sch:assert>
+			<sch:report role="INFO" test="$date">Data dei dati: <sch:value-of select="$date"/>
+			</sch:report>
+
+			<!-- Almeno una data con creation o revision o publication -->
+			<sch:assert
+				test="count(gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode[@codeListValue = 'creation' or @codeListValue = 'publication' or @codeListValue = 'revision']) > 0"
+				>L'elemento "tipo di data" non e' presente o ha un valore errato</sch:assert>
+
+		</sch:rule>
+
+		<!-- Descrizione -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:abstract">
+			<sch:let name="resourceAbstract" value="*/text()"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="$resourceAbstract">L'elemento "Descrizione" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$resourceAbstract">Descrizione: <sch:value-of
+					select="$resourceAbstract"/>
+			</sch:report>
+		</sch:rule>
+
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Keyword                                    -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Keyword' elements</sch:title>
+		
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert test="gmd:identificationInfo/srv:SV_ServiceIdentification/*">La struttura dell'xml è errata: sezione
+				/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification non presente </sch:assert>
+		</sch:rule>
+		
+		<!-- Testo che vi sia almeno una parola chiave -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification">
+			<sch:let name="keywordsChar" value="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString/text()"/>
+			<!-- Ci deve essere almeno una keyword che descrive il servizio -->
+			<sch:let name="keywordsCharOK" value="$keywordsChar = 'humanGeographicViewer' or
+				$keywordsChar = 'humanGeographicSpreadsheetViewer' or
+				$keywordsChar = 'humanServiceEditor' or
+				$keywordsChar = 'humanChainDefinitionEditor' or
+				$keywordsChar = 'humanWorkflowEnactmentManager' or
+				$keywordsChar = 'humanGeographicFeatureEditor' or
+				$keywordsChar = 'humanGeographicSymbolEditor' or
+				$keywordsChar = 'humanFeatureGeneralizationEditor' or
+				$keywordsChar = 'humanGeographicDataStructureViewer' or
+				$keywordsChar = 'infoManagementService' or
+				$keywordsChar = 'infoFeatureAccessService' or
+				$keywordsChar = 'infoMapAccessService' or
+				$keywordsChar = 'infoCoverageAccessService' or
+				$keywordsChar = 'infoSensorDescriptionService' or
+				$keywordsChar = 'infoProductAccessService' or
+				$keywordsChar = 'infoFeatureTypeService' or
+				$keywordsChar = 'infoCatalogueService' or
+				$keywordsChar = 'infoRegistryService' or
+				$keywordsChar = 'infoGazetteerService' or
+				$keywordsChar = 'infoOrderHandlingService' or
+				$keywordsChar = 'infoStandingOrderService' or
+				$keywordsChar = 'taskManagementService' or
+				$keywordsChar = 'chainDefinitionService' or
+				$keywordsChar = 'workflowEnactmentService' or
+				$keywordsChar = 'subscriptionService' or
+				$keywordsChar = 'spatialProcessingService' or
+				$keywordsChar = 'spatialCoordinateConversionService' or
+				$keywordsChar = 'spatialCoordinateTransformationService' or
+				$keywordsChar = 'spatialCoverageVectorConversionService' or
+				$keywordsChar = 'spatialImageCoordinateConversionService' or
+				$keywordsChar = 'spatialRectificationService' or
+				$keywordsChar = 'spatialOrthorectificationService' or
+				$keywordsChar = 'spatialSensorGeometryModelAdjustmentService' or
+				$keywordsChar = 'spatialImageGeometryModelConversionService' or
+				$keywordsChar = 'spatialSubsettingService' or
+				$keywordsChar = 'spatialSamplingService' or
+				$keywordsChar = 'spatialTilingChangeService' or
+				$keywordsChar = 'spatialDimensionMeasurementService' or
+				$keywordsChar = 'spatialFeatureManipulationService' or
+				$keywordsChar = 'spatialFeatureMatchingService' or
+				$keywordsChar = 'spatialFeatureGeneralizationService' or
+				$keywordsChar = 'spatialRouteDeterminationService' or
+				$keywordsChar = 'spatialPositioningService' or
+				$keywordsChar = 'spatialProximityAnalysisService' or
+				$keywordsChar = 'thematicProcessingService' or
+				$keywordsChar = 'thematicGoparameterCalculationService' or
+				$keywordsChar = 'thematicClassificationService' or
+				$keywordsChar = 'thematicFeatureGeneralizationService' or
+				$keywordsChar = 'thematicSubsettingService' or
+				$keywordsChar = 'thematicSpatialCountingService' or
+				$keywordsChar = 'thematicChangeDetectionService' or
+				$keywordsChar = 'thematicGeographicInformationExtractionService' or
+				$keywordsChar = 'thematicImageProcessingService' or
+				$keywordsChar = 'thematicReducedResolutionGenerationService' or
+				$keywordsChar = 'thematicImageManipulationService' or
+				$keywordsChar = 'thematicImageUnderstandingService' or
+				$keywordsChar = 'thematicImageSynthesisService' or
+				$keywordsChar = 'thematicMultibandImageManipulationService' or
+				$keywordsChar = 'thematicObjectDetectionService' or
+				$keywordsChar = 'thematicGeoparsingService' or
+				$keywordsChar = 'thematicGeocodingService' or
+				$keywordsChar = 'temporalProcessingService' or
+				$keywordsChar = 'temporalReferenceSystemTransformationService' or
+				$keywordsChar = 'temporalSubsettingService' or
+				$keywordsChar = 'temporalSamplingService' or
+				$keywordsChar = 'temporalProximityAnalysisService' or
+				$keywordsChar = 'metadataProcessingService' or
+				$keywordsChar = 'metadataStatisticalCalculationService' or
+				$keywordsChar = 'metadataGeographicAnnotationService' or
+				$keywordsChar = 'comService' or
+				$keywordsChar = 'comEncodingService' or
+				$keywordsChar = 'comTransferService' or
+				$keywordsChar = 'comGeographicCompressionService' or
+				$keywordsChar = 'comGeographicFormatConversionService' or
+				$keywordsChar = 'comMessagingService' or
+				$keywordsChar = 'comRemoteFileAndExecutableManagement'"/>
+			
+			<sch:let name="keywordsAnchor" value="gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor/@xlink:href"/>
+			<sch:let name="keywordsAnchorOK" value="$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanCatalogueViewer' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicViewer' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSpreadsheetViewer' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanServiceEditor' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanChainDefinitionEditor' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanWorkflowEnactmentManager' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicFeatureEditor' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSymbolEditor' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanFeatureGeneralizationEditor' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicDataStructureViewer' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoMapAccessService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCoverageAccessService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoSensorDescriptionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoProductAccessService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureTypeService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoRegistryService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoGazetteerService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoOrderHandlingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoStandingOrderService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/taskManagementService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/chainDefinitionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/workflowEnactmentService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/subscriptionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProcessingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateConversionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateTransformationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoverageVectorConversionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageCoordinateConversionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRectificationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialOrthorectificationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSensorGeometryModelAdjustmentService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageGeometryModelConversionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSubsettingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSamplingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialTilingChangeService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialDimensionMeasurementService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureManipulationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureMatchingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureGeneralizationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRouteDeterminationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialPositioningService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProximityAnalysisService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicProcessingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGoparameterCalculationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicClassificationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicFeatureGeneralizationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSubsettingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSpatialCountingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicChangeDetectionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeographicInformationExtractionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageProcessingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicReducedResolutionGenerationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageManipulationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageUnderstandingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageSynthesisService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicMultibandImageManipulationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicObjectDetectionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeoparsingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeocodingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProcessingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalReferenceSystemTransformationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSubsettingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSamplingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProximityAnalysisService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataProcessingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataStatisticalCalculationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataGeographicAnnotationService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comEncodingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comTransferService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicCompressionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicFormatConversionService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comMessagingService' or
+				$keywordsAnchor = 'http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comRemoteFileAndExecutableManagement'"/>
+			<!-- Assert e Report -->
+			<sch:assert test="$keywordsCharOK or $keywordsAnchorOK">Per i servizi deve essere
+				documentata la categoria o la sotto-categoria del servizio come definita nella parte
+				D4 del Regolamento INSPIRE sui metadati (Reg. (CE) n. 1205/2008.</sch:assert>
+			<sch:report role="INFO" test="$keywordsCharOK or $keywordsAnchorOK">La Parola chiave
+				descrittiva del servizio è presente</sch:report>
+			
+		</sch:rule>
+
+		<!-- Se viene specificato un Thesaurus deve esserci il titolo e la data  -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName">
+			<sch:let name="titleThesaurus" value="gmd:CI_Citation/gmd:title/*/text()"/>
+			<sch:let name="dateThesaurus"
+				value="gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date"/>
+			<sch:let name="dateTypeThesaurus"
+				value="gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+
+			<!-- Assert e Report -->
+			<sch:assert test="$titleThesaurus">Il titolo del Thesaurus è mancante</sch:assert>
+			<sch:report role="INFO" test="$titleThesaurus">Titolo del Thesaurus: <sch:value-of
+					select="$titleThesaurus"/>
+			</sch:report>
+			<sch:assert test="$dateThesaurus">La data del Thesaurus è mancante</sch:assert>
+			<sch:report role="INFO" test="$dateThesaurus">Data del Thesaurus: <sch:value-of
+					select="$dateThesaurus"/>
+			</sch:report>
+			<sch:assert
+				test="$dateTypeThesaurus = 'creation' or $dateTypeThesaurus = 'publication' or $dateTypeThesaurus = 'revision'"
+				>Il tipo data del Thesaurus è mancante o errata</sch:assert>
+			<sch:report role="INFO" test="$dateTypeThesaurus">Tipo data del Thesaurus: <sch:value-of
+					select="$dateTypeThesaurus"/>
+			</sch:report>
+		</sch:rule>
+
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Responsible organisation                  -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Responsible organisation' elements</sch:title>
+
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert
+				test="gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty"
+				>La struttura dell'xml è errata: sezione
+				//gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation non presente </sch:assert>
+		</sch:rule>
+
+
+		<sch:rule
+			context="//gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty">
+			<sch:let name="organisationName"
+				value="gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString/text()"/>
+			<sch:let name="role"
+				value="translate(gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/text(), $uppercase, $lowercase)"/>
+			<sch:let name="role_codeList"
+				value="gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+			<sch:let name="emailAddress"
+				value="gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString/text()"/>
+
+			<!-- assert and reports -->
+			<sch:assert test="$organisationName">L'elemento "Responsabile - Nome Ente" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$organisationName">Responsabile - Nome Ente: <sch:value-of
+					select="$organisationName"/>
+			</sch:report>
+
+			<!-- Il responsabile non deve essere pointOfContact o distributor, né come testo né come codice -->
+			<!-- testo -->
+			<sch:assert
+				test="
+				$role = 'fornitore della risorsa' or $role = 'resourceprovider' or
+				$role = 'custode' or $role = 'custodian' or
+				$role = 'proprietario' or $role = 'owner' or
+				$role = 'utente' or $role = 'user' or
+				$role = 'editore' or $role = 'editor' or
+				$role = 'autore' or $role = 'author' or
+				$role = 'responsabile del trattamento' or $role = 'processor' or
+				$role = 'responsabile principale delle ricerche' or $role = 'principalinvestigator' or
+				$role = 'ideatore' or $role = 'originator'"
+				>Responsabile dati: il valore del ruolo del responsabile della risorsa è assente o errato</sch:assert>
+			<sch:report role="INFO" test="$role">Responsabile dati: valore Ruolo: <sch:value-of select="$role"/>
+			</sch:report>
+			<!-- codelist -->
+			<sch:assert
+				test="
+					$role_codeList = 'resourceProvider' or
+					$role_codeList = 'custodian' or
+					$role_codeList = 'owner' or
+					$role_codeList = 'user' or
+					$role_codeList = 'originator' or
+					$role_codeList = 'principalInvestigator' or
+					$role_codeList = 'processor' or
+					$role_codeList = 'publisher' or
+					$role_codeList = 'author'"
+				>Responsabile dati: il Codice del ruolo del responsabile della risorsa è assente o errato</sch:assert>
+			<sch:report role="INFO" test="$role_codeList">Responsabile dati: valore Codice Ruolo: <sch:value-of
+					select="$role_codeList"/>
+			</sch:report>
+
+			<sch:assert test="$emailAddress">L'elemento "Responsabile - E-mail" non e' presente </sch:assert>
+			<sch:report role="INFO" test="$emailAddress">Responsabile - E-mail: <sch:value-of
+					select="$emailAddress"/>
+			</sch:report>
+
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Point of Contact -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Point of Contact' elements</sch:title>
+
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert test="gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty"
+				>La struttura dell'xml è errata: sezione
+				gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty non presente
+			</sch:assert>
+		</sch:rule>
+
+		<!-- Solo se il servizio è armonizzato o interoperabile il ruolo deve essere pointOfContact -->
+		<sch:rule context="//gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty">
+			<sch:let name="organisationName" value="gmd:organisationName/gco:CharacterString/text()"/>
+			<sch:let name="role"
+				value="translate(gmd:role/gmd:CI_RoleCode/text(), $uppercase, $lowercase)"/>
+			<sch:let name="role_codeList" value="gmd:role/gmd:CI_RoleCode/@codeListValue"/>
+			<sch:let name="emailAddress"
+				value="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString/text()"/>
+			<sch:let name="servizioInterHarm"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'interoperable') or contains(@xlink:href, 'harmonised')]"/>
+
+			<!-- assert and reports -->
+			<sch:assert test="$organisationName">L'elemento "Punto di contatto - Nome Ente" non e'
+				presente</sch:assert>
+			<sch:report role="INFO" test="$organisationName">Punto di contatto - Nome Ente:
+					<sch:value-of select="$organisationName"/>
+			</sch:report>
+
+			<!-- IL PUNTO DI CONTATTO DEVE AVERE COME RUOLO custodian NEL CASO DI SERVIZI INTEROPERABILI O ARMONIZZATI -->
+			<!-- Il responsabile  deve essere solo pointOfContact come testo e come codice -->
+			<!-- testo -->
+			<!--<sch:assert
+				test="($servizioInterHarm and ($role = 'punto di contatto' or $role = 'pointofcontact')) or (not($servizioInterHarm))"
+				>Il valore del ruolo del punto di contatto è assente o errato. Per i servizi interoperabili e per i dataset  deve essere pointOfContact</sch:assert>-->
+			<sch:assert
+				test="($servizioInterHarm and ($role = 'custode' or $role = 'custodian')) or (not($servizioInterHarm))">Il valore del ruolo del punto di contatto è assente o errato. Per i servizi interoperabili e per i servizi di dati armonizzati deve essere custodian</sch:assert>
+			<sch:report role="INFO" test="$role">Punto di contatto - Ruolo: <sch:value-of
+					select="$role"/>
+			</sch:report>
+			<!-- codelist -->
+
+			<!--<sch:assert
+				test="($servizioInterHarm and $role_codeList = 'pointOfContact') or (not($servizioInterHarm))"
+				>Il Codice del ruolo del Punto di contatto è assente o errato</sch:assert>-->
+				<sch:assert
+				test="($servizioInterHarm and $role_codeList = 'custodian') or (not($servizioInterHarm))">Il Codice del ruolo del Punto di contatto è assente o errato</sch:assert>
+			<sch:report role="INFO" test="$role_codeList">Punto di contatto - codelist:
+					<sch:value-of select="$role_codeList"/>
+			</sch:report>
+
+			<sch:assert test="$emailAddress">L'elemento "Punto di contatto - E-mail" non e' presente </sch:assert>
+			<sch:report role="INFO" test="$emailAddress">Punto di contatto - E-mail: <sch:value-of
+					select="$emailAddress"/>
+			</sch:report>
+
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Type of service (coupling, operateson  etc.)  + Risorsa Online-->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'type of service' elements</sch:title>
+
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert 
+				test="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:couplingType">La struttura dell'xml è errata: sezione //gmd:identificationInfo/srv:SV_ServiceIdentification/srv:couplingType non presente </sch:assert>
+			<sch:assert 
+				test="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType">La struttura dell'xml è errata: sezione //gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType non presente </sch:assert>
+			<sch:assert
+				test="gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations">La struttura dell'xml è errata: sezione //gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations non presente </sch:assert>
+			<sch:assert
+				test="gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">La struttura dell'xml è errata: sezione //gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine non presente </sch:assert>
+		</sch:rule>
+
+		<!-- CouplingType (1 solo) -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:couplingType">
+
+			<sch:let name="couplingType"
+				value="translate(srv:SV_CouplingType/text(), $uppercase, $lowercase)"/>
+			<sch:let name="couplingType_present"
+				value="
+					$couplingType = 'loose' or
+					$couplingType = 'mixed' or
+					$couplingType = 'tight' or
+					$couplingType = 'svincolato' or
+					$couplingType = 'misto' or
+					$couplingType = 'vincolato'"/>
+
+			<!-- assertions and report -->
+			<!-- Tipo di aggancio corretto -->
+			<sch:assert test="$couplingType_present">L'elemento "Tipo di aggancio" non e' presente o
+				non corretto</sch:assert>
+			<sch:report role="INFO" test="$couplingType_present">Tipo di aggancio: <sch:value-of
+					select="$couplingType"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- ServiceType (1 solo) -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType">
+
+			<sch:let name="serviceType"
+				value="translate(gco:LocalName/text(), $uppercase, $lowercase)"/>
+			<!--<sch:let name="serviceType_present"
+				value="
+					$serviceType = 'view'
+					or $serviceType = 'discovery'
+					or $serviceType = 'download'
+					or $serviceType = 'transformation'
+					or $serviceType = 'invoke'
+					or $serviceType = 'other'
+					or $serviceType = 'servizio di ricerca'
+					or $serviceType = 'servizio di consultazione'
+					or $serviceType = 'servizio di conversione'
+					or $serviceType = 'servizio di scaricamento'
+					or $serviceType = 'servizio di richiesta dei servizi'
+					or $serviceType = 'altro servizio'"/>-->
+					<sch:let name="serviceType_present"
+				value="
+					$serviceType = 'view'
+					or $serviceType = 'discovery'
+					or $serviceType = 'download'
+					or $serviceType = 'transformation'
+					or $serviceType = 'other'"/>
+
+			<!-- assertions and report -->
+			<!-- Tipo di servizio corretto -->
+			<sch:assert test="$serviceType_present">L'elemento "Tipo di servizio" non e' presente o
+				non corretto</sch:assert>
+			<sch:report role="INFO" test="$serviceType_present">Tipo di servizio: <sch:value-of
+					select="$serviceType"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- Operates On (0,*) Nessun errore se manca ma se c'è operatesOn allora ci deve essere -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:operatesOn">
+			<sch:let name="coupledResource" value="./@xlink:href"/>
+
+			<!-- Risorsa accoppiata. -->
+			<sch:assert test="$coupledResource">La risorsa accoppiata non e' presente</sch:assert>
+			<sch:report role="INFO" test="$coupledResource">Risorsa accoppiata: <sch:value-of
+					select="$coupledResource"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- ContainsOperations (1,*) -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:containsOperations">
+
+			<!-- Contains operations ha un paio di tag pieni e il DCP codificato -->
+			<sch:let name="containsOperations" value="srv:SV_OperationMetadata/srv:DCP/srv:DCPList"/>
+			<sch:let name="containsOperationsCorretto"
+				value="
+					$containsOperations = 'XML'
+					or
+					$containsOperations = 'xml'
+					or
+					$containsOperations = 'CORBA'
+					or
+					$containsOperations = 'JAVA'
+					or
+					$containsOperations = 'COM'
+					or
+					$containsOperations = 'SQL'
+					or
+					$containsOperations = 'WebServices'
+					or
+					$containsOperations = 'webServices'"/>
+			<sch:let name="connectPoint"
+				value="srv:SV_OperationMetadata/srv:connectPoint/gmd:CI_OnlineResource/gmd:linkage/gmd:URL/text()"/>
+			<sch:let name="operationName"
+				value="srv:SV_OperationMetadata/srv:operationName/gco:CharacterString/text()"/>
+
+			<!-- assertions and report -->
+			<!-- Operation name -->
+			<sch:assert test="$operationName">Nome operazione mancante</sch:assert>
+			<sch:report role="INFO" test="$operationName">Nome operazione: <sch:value-of
+					select="$operationName"/></sch:report>
+			<!-- Punto di connessione -->
+			<sch:assert test="$connectPoint">Punto di connessione mancante</sch:assert>
+			<sch:report role="INFO" test="$connectPoint != ''">Punto di connessione: <sch:value-of
+					select="$connectPoint"/></sch:report>
+			<!-- DCP Operazione -->
+			<sch:assert test="$containsOperationsCorretto">DCP non corretta: <sch:value-of
+					select="$containsOperations"/></sch:assert>
+			<sch:report role="INFO" test="$containsOperationsCorretto">DCP corretta: <sch:value-of
+					select="$containsOperations"/></sch:report>
+		</sch:rule>
+
+		<!-- Risorsa Online. Ce ne deve essere un tipo o un altro a seconda del tipo servizio ma ce ne possono essere più di uno. A me interessa la molteplicità su  gmd:onLine-->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine">
+			<sch:let name="URL" value="gmd:CI_OnlineResource/gmd:linkage/gmd:URL/text()"/>
+			<sch:assert test="$URL">Il valore url della risorsa online è assente o errato</sch:assert>
+			<sch:report role="INFO" test="$URL">Risorsa online - URL: <sch:value-of select="$URL"/>
+			</sch:report>
+
+			<!-- SOLO DESCRIPTION E' OBBLIGATORIA se servicetype = other. NAME E FUNCTION SONO RACCOMANDATI MA NON OBBLIGATORI -->
+			<!-- La presenza di description è obbligatoria solo se serviceType = 'other' -->
+			<sch:let name="tipoServizio"
+				value="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName/text()"/>
+			<sch:let name="description"
+				value="gmd:CI_OnlineResource/gmd:description/gmx:Anchor/@xlink:href"/>
+			<!--<sch:let name="function"
+				value="gmd:CI_OnlineResource/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue"/>-->
+			<!--<sch:let name="descriptionOK"
+				value="
+					$description = 'http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint' or
+					$description = 'http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/endPoint'"/>-->
+			<sch:let name="descriptionOK" value="$description = 'http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint'"/>
+			<!--<sch:let name="functionOK"
+				value="
+					$function = 'download' or
+					$function = 'information' or
+					$function = 'offlineAccess' or
+					$function = 'order' or
+					$function = 'search'"/>-->
+
+			<sch:assert
+				test="($descriptionOK and $tipoServizio = 'other') or ($tipoServizio != 'other')">La descrizione del servizio è mancante o errata (obbligatoria se il tipo servizio e' 'other').</sch:assert>
+			<sch:report role="INFO" test="$description">Valore description: <sch:value-of
+					select="$description"/>
+			</sch:report>
+
+			<!--<sch:assert
+				test="($functionOK and $tipoServizio = 'other') or ($tipoServizio != 'other')">La
+				funzione del servizio è mancante (tipo servizio è 'other') o errata.</sch:assert>
+			<sch:report role="INFO" test="$function">Valore function: <sch:value-of
+					select="$function"/>
+			</sch:report>-->
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Constraints related to access and use        -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Constraints related to access and use' elements</sch:title>
+
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert
+				test="gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints"
+				>La struttura dell'xml è errata: sezione
+				//gmd:identificationInfo[1]/*/gmd:resourceConstraints/*/gmd:accessConstraints non
+				presente </sch:assert>
+		</sch:rule>
+
+		<!--
+			Le condizioni sono le seguenti:
+			- Al più 2 istanze di accessConstraints oppure 1 di accessConstraints e 1 di useConstraints
+			- Tutte queste istanze devono avere sempre valore accessConstraints/gmd:MD:RestrictionCode = 'otherRestrictions'
+			- Ci deve essere 1 e 1 sola istanza di resourceContraints/accessContraints che esprime le limitazioni d'uso tramite uso di resourceContraints/otherContraints/gmx:Anchor con valori codificati (lista LimitationsOnPublicAccess)
+			- Ci deve essere 1 e 1 sola istanza di resourceContraints che esprime le condizioni di accesso e uso. Questo può essere la seconda accessContraints o la useConstraints. 
+			Le condizioni saranno espresse sempre tramite il tag otherContraints, o tramite gmx:Anchor codificato (lista ConditionsApplyingToAccessAndUse) o tramite gco:CharacterString e quindi testo libero.
+		-->
+
+		<!-- Test per il numero delle istanze e per i valori di access e use
+		I test sono complicati, quindi mi metto ad un livello superiore per farli all'interno. -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+			<sch:let name="accessConstraintsCount"
+				value="count(gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints)"/>
+			<sch:let name="useConstraintsCount"
+				value="count(gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints)"/>
+
+			<!-- Le sezioni access devono essere 1 o 2 (qunidi test < 3 e > 0, quella use al massimo 1 (quindi test < 2). Se ci sono due access non ci può essere la use -->
+			<sch:assert test="($accessConstraintsCount &lt; 3) and ($accessConstraintsCount &gt; 0)"
+				>Ci devono essere solo 1 istanza o due istanze di ResourceConstraints con Access Constraints</sch:assert>
+			<sch:assert test="$useConstraintsCount &lt; 2">Ci deve essere al più una istanza ResourceConstraints con 
+				useConstraints</sch:assert>
+			<!-- A questo punto accessContraints è 1 o 2 e useConstraints è 0 o 1. Per essere valido deve essere accessContraints = 1 e UseConstraints = 1 o accessContraints = 2 e UseConstraints= 0-->
+			<sch:assert
+				test="(($accessConstraintsCount = 1) and ($useConstraintsCount = 1)) or (($accessConstraintsCount = 2) and ($useConstraintsCount = 0))"
+				>Se ci sono due istanze ResourceConstraints con accessConstraints non ci può essere una istanza con
+				useConstraints</sch:assert>
+
+			<sch:report role="INFO" test="$accessConstraintsCount">Numero Access Constraints:
+					<sch:value-of select="$accessConstraintsCount"/>
+			</sch:report>
+
+			<sch:report role="INFO" test="$useConstraintsCount">Numero Use Constraints:
+					<sch:value-of select="$useConstraintsCount"/>
+			</sch:report>
+
+			<!-- Ci deve essere almeno una sezione codificata di accessContraints che esprime le limitazioni al pubblico accesso -->
+			<sch:let name="limitationsOnPublicAccess"
+				value="
+					gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/../gmd:otherConstraints/gmx:Anchor[@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h']"/>
+			<sch:assert test="$limitationsOnPublicAccess">Le limitazioni al pubblico accesso sono
+				mancanti o non sono corrette (lista LimitationsOnPublicAccess)</sch:assert>
+			<sch:report role="INFO" test="$limitationsOnPublicAccess">Limitazioni al pubblico
+				accesso: <sch:value-of select="$limitationsOnPublicAccess"/>
+			</sch:report>
+
+			<!-- Ci deve essere almeno una sezione codificata di accessContraints o useConstraints che esprime le condizioni di accesso e uso. Può essere codificato o testo libero  -->
+			<sch:let name="conditionsAccessUse"
+				value="
+					gmd:resourceConstraints/gmd:MD_LegalConstraints/*/../gmd:otherConstraints/gmx:Anchor[@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown' or
+					@xlink:href = 'http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply'] | gmd:resourceConstraints/gmd:MD_LegalConstraints/*/../gmd:otherConstraints/gco:CharacterString/text()"/>
+			<sch:assert test="$conditionsAccessUse">Le condizioni di accesso e uso sono mancanti o
+				non sono corrette (lista ConditionsApplyingToAccessAndUse)</sch:assert>
+			<sch:report role="INFO" test="$conditionsAccessUse">Condizioni di accesso e uso:
+					<sch:value-of select="$conditionsAccessUse"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- Test perche' sia  access che use deve comunque avere il valore otherRestriction. Qui evito il loop e sfrutto il context -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints">
+			<sch:let name="codiceConstraints" value="./*/gmd:MD_RestrictionCode/@codeListValue"/>
+
+			<sch:assert test="$codiceConstraints = 'otherRestrictions'">Il codice di
+				accessConstraints o useConstraints deve essere 'otherRestrictions' </sch:assert>
+			<sch:report role="INFO" test="$codiceConstraints">Codice Constraints: <sch:value-of
+					select="$codiceConstraints"/>
+			</sch:report>
+		</sch:rule>
+
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Identification: Estensione geografica (1,1) e temporale  (0,*) -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Service extent' elements</sch:title>
+
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert
+				test="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement"
+				>La struttura dell'xml è errata: sezione
+				//gmd:identificationInfo/srv:SV_ServiceIdentification/srv:extent/gmd:EX_Extent/gmd:geographicElement
+				non presente </sch:assert>
+		</sch:rule>
+
+		<!-- Geographic Extent -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement">
+			<sch:let name="west"
+				value="number(gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal)"/>
+			<sch:let name="east"
+				value="number(gmd:EX_GeographicBoundingBox/gmd:eastBoundLongitude/gco:Decimal)"/>
+			<sch:let name="north"
+				value="number(gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal)"/>
+			<sch:let name="south"
+				value="number(gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal)"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="(-180.00 &lt;= $west) and ($west &lt;= 180.00)">L'elemento
+				"Longitudine Ovest" non e' presente o ha un valore sbagliato</sch:assert>
+			<sch:report role="INFO" test="(-180.00 &lt;= $west) and ($west &lt;= 180.00)"
+				>Longitudine Ovest: <sch:value-of select="$west"/>
+			</sch:report>
+			<sch:assert test="(-180.00 &lt;= $east) and ($east &lt;= 180.00)">L'elemento
+				"Longitudine Est" non e' presente o ha un valore sbagliato</sch:assert>
+			<sch:report role="INFO" test="(-180.00 &lt;= $east) and ($east &lt;= 180.00)"
+				>Longitudine Est: <sch:value-of select="$east"/>
+			</sch:report>
+			<sch:assert test="(-90.00 &lt;= $south) and ($south &lt;= $north)">L'elemento
+				"Latitudine Sud" non e' presente o ha un valore sbagliato</sch:assert>
+			<sch:report role="INFO" test="(-90.00 &lt;= $south) and ($south &lt;= $north)"
+				>Latitudine Sud: <sch:value-of select="$south"/>
+			</sch:report>
+			<sch:assert test="($south &lt;= $north) and ($north &lt;= 90.00)">L'elemento "Latitudine
+				Nord" non e' presente o ha un valore sbagliato</sch:assert>
+			<sch:report role="INFO" test="($south &lt;= $north) and ($north &lt;= 90.00)">Latitudine
+				Nord: <sch:value-of select="$north"/>
+			</sch:report>
+		</sch:rule>
+
+		<!-- Estensione temporale: se non entra nella rule va bene perché è opzionale, ma se entra ci devono essere i valori -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:EX_Extent/gmd:temporalElement">
+
+			<sch:let name="timePeriodId"
+				value="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/@gml:id"/>
+			<sch:let name="temporalExtentBegin"
+				value="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition/text()"/>
+			<sch:let name="temporalExtentEnd"
+				value="gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition/text()"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="$timePeriodId">L'identificativo del periodo temporale è mancante </sch:assert>
+			<sch:report role="INFO" test="$timePeriodId">identificativo del periodo temporale:
+					<sch:value-of select="$timePeriodId"/>
+			</sch:report>
+
+			<sch:assert test="$temporalExtentBegin">Estensione temporale Data inizio
+				mancante</sch:assert>
+			<sch:report role="INFO" test="$temporalExtentBegin">Estensione temporale - Data inizio:
+					<sch:value-of select="$temporalExtentBegin"/>
+			</sch:report>
+			<sch:assert test="$temporalExtentEnd">Estensione temporale Data fine
+				mancante</sch:assert>
+			<sch:report role="INFO" test="$temporalExtentEnd">Estensione temporale - Data fine:
+					<sch:value-of select="$temporalExtentEnd"/>
+			</sch:report>
+		</sch:rule>
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Quality and validity: conformity             -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Quality and validity for Conformity' elements</sch:title>
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:assert test="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope">La struttura dell'xml è errata: sezione /gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope non
+				presente </sch:assert>
+		</sch:rule>
+		<!-- Sempre regola generica ma separata per fare il match con tutti i report -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality">
+                <sch:let name="titoloSpecs" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title[starts-with (./*/text(), 'REGOLAMENTO (UE) N. 1089/2010')]/*"/>
+                <sch:assert test="$titoloSpecs">Il valore relativo alla conformità N. 1089/2010 è assente</sch:assert>
+        </sch:rule>
+		
+		<!-- Livello e descrizione -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope">
+			<sch:let name="scopeLevelCode" value="gmd:level/gmd:MD_ScopeCode/@codeListValue"/>
+			<sch:let name="scopeLevelDescription"
+				value="gmd:levelDescription/gmd:MD_ScopeDescription/gmd:other/gco:CharacterString"/>
+			<sch:let name="scopeLevelCodeOK" value="$scopeLevelCode = 'service'"/>
+			<sch:let name="scopeLevelDescriptionOK"
+				value="
+					$scopeLevelDescription = 'Servizio' or
+					$scopeLevelDescription = 'servizio' or
+					$scopeLevelDescription = 'Service' or
+					$scopeLevelDescription = 'service'"/>
+
+			<!-- assertions and report -->
+			<sch:assert test="$scopeLevelCodeOK">L'elemento "Livello di qualita' non e' presente o
+				ha un valore errato</sch:assert>
+			<sch:report role="INFO" test="$scopeLevelCodeOK">Livello di qualita': <sch:value-of
+					select="$scopeLevelCode"/>
+			</sch:report>
+			<sch:assert test="$scopeLevelDescriptionOK">L'elemento "Descrizione del livello di
+				qualita' non e' presente o ha un valore errato</sch:assert>
+			<sch:report role="INFO" test="$scopeLevelDescriptionOK">Descrizione del livello di
+				qualita': <sch:value-of select="$scopeLevelDescription"/>
+			</sch:report>
+		</sch:rule>
+
+				<!-- Specifiche di conformità. Possono essere n a me interessa la molteplicità di gmd:DQ_ConformanceResult, ma ognuna è diversa. 
+		Ci deve essere obbligatoriamente la citazione del regolamento 1089/2010. 
+		Dato che si possono usare Anchor oppure Character, per fare queste verifiche per fare queste verifiche mi metto ad un livello superiore  -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[starts-with(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*/text(), 'REGOLAMENTO (UE) N. 1089/2010')]">
+
+			<sch:let name="titoloChar" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
+					<sch:let name="titoloAnchor" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[text()]"/>
+					<sch:let name="titoloLink" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
+					<sch:let name="data" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date/text()"/>
+					<sch:let name="tipodata" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+					<sch:let name="pass" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean/text()"/>
+					<sch:let name="passNIL" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass/@gco:nilReason"/>
+			
+			<!--<sch:assert test="($titoloChar ='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') or 
+							(($titoloAnchor='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and ($titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
+							and
+							($data = '2010-12-08')
+							and
+							($tipodata = 'publication')
+							and
+							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Il valore della conformità relativo al regolamento N. 1089/2010 è assente o errato (il testo, il link, la data o il tipo data o il valore pass)</sch:assert>
+			
+			<sch:report role="INFO" test="($titoloChar ='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') or 
+							(($titoloAnchor='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and ($titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
+							and
+							($data = '2010-12-08')
+							and
+							($tipodata = 'publication')
+							and
+							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Valore conformità (REGOLAMENTO (UE) N. 1089/2010): <sch:value-of select="$titoloChar"/>
+			</sch:report>-->
+			
+			<sch:assert test="((starts-with($titoloChar, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloChar, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloChar) = 255) or 
+							(starts-with($titoloAnchor, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloAnchor, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloAnchor) = 255 and $titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
+							and
+							($data = '2010-12-08')
+							and
+							($tipodata = 'publication')
+							and
+							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Il valore della conformità relativo al regolamento N. 1089/2010 è assente o errato (il testo, il link, la data o il tipo data o il valore pass)</sch:assert>
+			
+			<sch:report role="INFO" test="((starts-with($titoloChar, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloChar, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloChar) = 255) or 
+							(starts-with($titoloAnchor, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloAnchor, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloAnchor) = 255 and $titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
+							and
+							($data = '2010-12-08')
+							and
+							($tipodata = 'publication')
+							and
+							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Valore conformità (REGOLAMENTO (UE) N. 1089/2010): <sch:value-of select="$titoloChar"/>
+			</sch:report>
+
+		</sch:rule>
+
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Quality and validity: Criteri e misure      -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Quality and validity crtieria and measures' elements</sch:title>
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<!--<sch:assert
+				test="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor"
+				>La struttura dell'xml è errata: sezione
+				gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor
+				non presente </sch:assert>-->
+				<sch:assert
+				test="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*"
+				>La struttura dell'xml è errata: sezione
+				gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*
+				non presente </sch:assert>
+		</sch:rule>
+
+		<!-- La presenza di criteri è solo per servizi interoperabili (e quindi anche harmonised). 
+			Qui  il context mi serve solo per fare il match  -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'interoperable') or contains(@xlink:href, 'harmonised')]">
+			<!-- Sezione availability -->
+			<sch:let name="availabilityMeasureName"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/@xlink:href"/>
+			<sch:let name="availabilityMeasureDesc"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:measureDescription/gco:CharacterString"/>
+			<sch:let name="availabilityValueUnit"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/@xlink:href"/>
+			<sch:let name="availabilityValue"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record/text()"/>
+			<sch:assert
+				test="$availabilityMeasureName and $availabilityMeasureDesc and $availabilityValueUnit and $availabilityValue"/>
+			<sch:report role="INFO" test="$availabilityMeasureName">Valore Availability:
+					<sch:value-of
+					select="concat($availabilityMeasureName, ' - ', $availabilityMeasureDesc, ' - ', $availabilityValueUnit, ' - ', $availabilityValue)"
+				/>
+			</sch:report>
+
+			<!-- Sezione performance  -->
+			<sch:let name="performanceMeasureName"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'performance')]/@xlink:href"/>
+			<!--<sch:let name="performanceMeasureDesc"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:measureDescription/gco:CharacterString/text()"/>
+			<sch:let name="performanceValueUnit"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/@xlink:href"/>
+			<sch:let name="performanceValue"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record/text()"/>-->
+				<sch:let name="performanceMeasureDesc"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'performance')]/../../gmd:measureDescription/gco:CharacterString/text()"/>
+			<sch:let name="performanceValueUnit"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'performance')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/@xlink:href"/>
+			<sch:let name="performanceValue"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'performance')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record/text()"/>
+			<sch:assert
+				test="$performanceMeasureName and $performanceMeasureDesc and $performanceValueUnit and $performanceValue"/>
+			<sch:report role="INFO" test="$performanceMeasureName">Valore Performance: <sch:value-of
+					select="concat($performanceMeasureName, ' - ', $performanceMeasureDesc, ' - ', $performanceValueUnit, ' - ', $performanceValue)"
+				/>
+			</sch:report>
+
+			<!-- Sezione capacity  -->
+			<sch:let name="capacityMeasureName"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'capacity')]/@xlink:href"/>
+			<!--<sch:let name="capacityMeasureDesc"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:measureDescription/gco:CharacterString/text()"/>
+			<sch:let name="capacityValueUnit"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/@xlink:href"/>
+			<sch:let name="capacityValue"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'availability')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record/text()"/>-->
+				<sch:let name="capacityMeasureDesc"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'capacity')]/../../gmd:measureDescription/gco:CharacterString/text()"/>
+			<sch:let name="capacityValueUnit"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'capacity')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:valueUnit/@xlink:href"/>
+			<sch:let name="capacityValue"
+				value="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure/gmx:Anchor[contains(@xlink:href, 'capacity')]/../../gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record/text()"/>
+			<sch:assert
+				test="$capacityMeasureName and $capacityMeasureDesc and $capacityValueUnit and $capacityValue"/>
+			<sch:report role="INFO" test="$capacityMeasureName">Valore Capacity: <sch:value-of
+					select="concat($capacityMeasureName, ' - ', $capacityMeasureDesc, ' - ', $capacityValueUnit, ' - ', $capacityValue)"
+				/>
+			</sch:report>
+
+		</sch:rule>
+
+	</sch:pattern>
+
+
+	<!-- ############################################ -->
+	<!-- Categoria             -->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Category' elements</sch:title>
+		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
+		<sch:rule context="/gmd:MD_Metadata">
+			<!--<sch:assert test="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor">La
+				struttura dell'xml è errata: sezione
+				/gmd:MD_Metadata//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor non
+				presente </sch:assert>-->
+			<sch:assert test="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*">La
+				struttura dell'xml è errata: sezione
+				/gmd:MD_Metadata//gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/* non
+				presente </sch:assert>
+		</sch:rule>
+		
+		<!-- Regola per il servizio invocable -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'invocable')]">
+			<sch:let name="titolo" value="@xlink:title"/>
+			<!-- AGGIUNTO URI -->
+			<sch:let name="uri" value="@xlink:href"/>
+			<sch:let name="nome" value="translate(./text(), $uppercase, $lowercase)"/>
+			<sch:let name="data" value="../../gmd:date/gmd:CI_Date/gmd:date/gco:Date"/>
+			<sch:let name="tipoData" value="../../gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+			<!--<sch:let name="explanation" value="../../../../gmd:explanation/gco:CharacterString/text()"/>-->
+			<sch:let name="pass" value="../../../../gmd:pass/gco:Boolean/text()"/>
+
+			<!-- Assert and reports -->
+			<sch:assert test="$titolo = 'INSPIRE Invocable Spatial Data Services metadata'">Categoria: il titolo e' errato </sch:assert>
+			<sch:report role="INFO" test="$titolo">Categoria : Titolo:<sch:value-of select="$titolo"/>	</sch:report>
+			<sch:assert test="$uri = 'http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable' or $uri = 'https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable'">Categoria: l'URI e' errato </sch:assert>
+			<sch:report role="INFO" test="$uri">Categoria : URI:<sch:value-of select="$uri"/>	</sch:report>
+			<!--<sch:assert test="$nome = 'invocable' or $nome='invocabile'">Categoria: il nome e' errato </sch:assert>-->
+			<sch:assert test="$nome = 'invocable'">Categoria: il nome e' errato </sch:assert>
+			<sch:report role="INFO" test="$nome">Categoria : Nome:<sch:value-of select="$nome"/>	</sch:report>	
+			<sch:assert test="$data = '2016-05-01'">Categoria: la data e' errata </sch:assert>
+			<sch:report role="INFO" test="$data">Categoria : Data:<sch:value-of select="$data"/>	</sch:report>	
+			<sch:assert test="$tipoData = 'publication'">Categoria: il tipo data e' errato </sch:assert>
+			<sch:report role="INFO" test="$tipoData">Categoria : Tipo data:<sch:value-of select="$tipoData"/>	</sch:report>	
+			<!--<sch:assert test="$explanation = 'This Spatial Data Service set is conformant with the INSPIRE requirements for Invocable Spatial Data Services'">Categoria: il valore di explanation e' errato </sch:assert>
+			<sch:report role="INFO" test="$explanation">Categoria : Explanation:<sch:value-of select="$explanation"/>	</sch:report>-->	
+			<sch:assert test="$pass = 'true'">Categoria: il valore di pass e' errato </sch:assert>
+			<sch:report role="INFO" test="$pass">Categoria : pass:<sch:value-of select="$pass"/>	</sch:report>
+		</sch:rule>		
+
+		<!-- Regola per il servizio interoperabile -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'interoperable')]">
+			<sch:let name="titolo" value="@xlink:title"/>
+			<!-- AGGIUNTO URI -->
+			<sch:let name="uri" value="@xlink:href"/>
+			<sch:let name="nome" value="translate(./text(), $uppercase, $lowercase)"/>
+			<sch:let name="data" value="../../gmd:date/gmd:CI_Date/gmd:date/gco:Date"/>
+			<sch:let name="tipoData" value="../../gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+			<!--<sch:let name="explanation" value="../../../../gmd:explanation/gco:CharacterString/text()"/>-->
+			<sch:let name="pass" value="../../../../gmd:pass/gco:Boolean/text()"/>
+			
+			<!-- Assert and reports -->
+			<sch:assert test="$titolo = 'INSPIRE Interoperable Spatial Data Services metadata'">Categoria: il titolo e' errato </sch:assert>
+			<sch:report role="INFO" test="$titolo">Categoria : Titolo:<sch:value-of select="$titolo"/>	</sch:report>
+			<sch:assert test="$uri = 'http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable'">Categoria: l'URI e' errato </sch:assert>
+			<sch:report role="INFO" test="$uri">Categoria : URI:<sch:value-of select="$uri"/>	</sch:report>
+			<!--<sch:assert test="$nome = 'interoperable' or $nome='interoperabile'">Categoria: il nome e' errato </sch:assert>-->
+			<sch:assert test="$nome = 'interoperable'">Categoria: il nome e' errato </sch:assert>
+			<sch:report role="INFO" test="$nome">Categoria : Nome:<sch:value-of select="$nome"/>	</sch:report>	
+			<sch:assert test="$data = '2016-05-01'">Categoria: la data e' errata </sch:assert>
+			<sch:report role="INFO" test="$data">Categoria : Data:<sch:value-of select="$data"/>	</sch:report>	
+			<sch:assert test="$tipoData = 'publication'">Categoria: il tipo data e' errato </sch:assert>
+			<sch:report role="INFO" test="$tipoData">Categoria : Tipo data:<sch:value-of select="$tipoData"/>	</sch:report>	
+			<!--<sch:assert test="$explanation = 'This Spatial Data Service set is conformant with the INSPIRE requirements for Interoperable Spatial Data Services'">Categoria: il valore di explanation e' errato </sch:assert>
+			<sch:report role="INFO" test="$explanation">Categoria : Explanation:<sch:value-of select="$explanation"/>	</sch:report>	-->
+			<sch:assert test="$pass = 'true'">Categoria: il valore di pass e' errato </sch:assert>
+			<sch:report role="INFO" test="$pass">Categoria : pass:<sch:value-of select="$pass"/>	</sch:report>
+		</sch:rule>	
+		
+		<!-- Regola per il servizio armonizzato -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'harmonised')]">
+			<sch:let name="titolo" value="@xlink:title"/>
+			<!-- AGGIUNTO URI -->
+			<sch:let name="uri" value="@xlink:href"/>
+			<sch:let name="nome" value="translate(./text(), $uppercase, $lowercase)"/>
+			<sch:let name="data" value="../../gmd:date/gmd:CI_Date/gmd:date/gco:Date"/>
+			<sch:let name="tipoData" value="../../gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+			<!--<sch:let name="explanation" value="../../../../gmd:explanation/gco:CharacterString/text()"/>-->
+			<sch:let name="pass" value="../../../../gmd:pass/gco:Boolean/text()"/>
+			
+			<!-- Assert and reports -->
+			<sch:assert test="$titolo = 'INSPIRE Harmonised Spatial Data Services metadata'">Categoria: il titolo e' errato </sch:assert>
+			<sch:report role="INFO" test="$titolo">Categoria : Titolo:<sch:value-of select="$titolo"/>	</sch:report>
+			<sch:assert test="$uri = 'http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised'">Categoria: l'URI e' errato </sch:assert>
+			<sch:report role="INFO" test="$uri">Categoria : URI:<sch:value-of select="$uri"/>	</sch:report>
+			<!--<sch:assert test="$nome = 'harmonised' or $nome='armonizzato'">Categoria: il nome e' errato </sch:assert>-->
+			<sch:assert test="$nome = 'harmonised'">Categoria: il nome e' errato </sch:assert>
+			<sch:report role="INFO" test="$nome">Categoria : Nome:<sch:value-of select="$nome"/>	</sch:report>	
+			<sch:assert test="$data = '2016-05-01'">Categoria: la data e' errata </sch:assert>
+			<sch:report role="INFO" test="$data">Categoria : Data:<sch:value-of select="$data"/>	</sch:report>	
+			<sch:assert test="$tipoData = 'publication'">Categoria: il tipo data e' errato </sch:assert>
+			<sch:report role="INFO" test="$tipoData">Categoria : Tipo data:<sch:value-of select="$tipoData"/>	</sch:report>	
+			<!--<sch:assert test="$explanation = 'This Spatial Data Service set is conformant with the INSPIRE requirements for Harmonised Spatial Data Services'">Categoria: il valore di explanation e' errato </sch:assert>
+			<sch:report role="INFO" test="$explanation">Categoria : Explanation:<sch:value-of select="$explanation"/>	</sch:report>	-->
+			<sch:assert test="$pass = 'true'">Categoria: il valore di pass e' errato </sch:assert>
+			<sch:report role="INFO" test="$pass">Categoria : pass:<sch:value-of select="$pass"/>	</sch:report>
+		</sch:rule>			
+		
+		
+	</sch:pattern>
+
+	<!-- ############################################ -->
+	<!-- Reference System                         -->
+	<!-- 	Obbligatorio solo per servizi ineroperable e harmonised										-->
+	<!-- ############################################ -->
+	<sch:pattern>
+		<sch:title>Testing 'Reference System' elements</sch:title>
+		<sch:rule context="/gmd:MD_Metadata">
+			<sch:let name="RS_Richiesto" value="gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[contains(@xlink:href, 'interoperable') or contains(@xlink:href, 'harmonised')]" />
+			<sch:let name="RS_Presente" value="gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier" />
+
+			<sch:assert test="($RS_Richiesto and $RS_Presente) or (not($RS_Richiesto))">La struttura dell'xml è errata: sezione
+				/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier
+				non presente e servizio interoperabile </sch:assert>
+				</sch:rule>
+		
+		<!-- Per i servizi invocabili o altri: Se non entra in questa regola va bene, ho già verificato che la sezione ci sia quando è obbligatyoria -->
+		<!-- La lista dei sistemi di riferimento e' fissa. Devo verificare il testo che può essere il nome o l'EPSG, il link che è solo EPSG -->
+		<sch:rule
+			context="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier">
+			<sch:let name="RS_Code" value="translate(gmd:code/*/text(), $uppercase, $lowercase)"/>
+			<sch:let name="RS_CodeOK"
+				value="
+				$RS_Code = 'etrs89-xyz' or
+				$RS_Code = 'etrs89-grs80h' or
+				$RS_Code = 'etrs89-grs80' or
+				$RS_Code = 'etrs89-laea' or
+				$RS_Code = 'etrs89-lcc' or
+				$RS_Code = 'etrs89-utm32n' or
+				$RS_Code = 'etrs89-utm33n' or
+				$RS_Code = 'etrs89-utm34n' or
+				$RS_Code = 'rdn2008-6704' or
+				$RS_Code = 'rdn2008-6705' or
+				$RS_Code = 'rdn2008-6706' or
+				$RS_Code = 'rdn2008-tm32ne' or
+				$RS_Code = 'rdn2008-tm32en' or
+				$RS_Code = 'rdn2008-tm33ne' or
+				$RS_Code = 'rdn2008-tm33en' or
+				$RS_Code = 'rdn2008-tm34ne' or
+				$RS_Code = 'rdn2008-tm34en' or
+				$RS_Code = 'rdn2008-italyne' or
+				$RS_Code = 'rdn2008-italyen' or
+				$RS_Code = 'rdn2008-12ne' or
+				$RS_Code = 'rdn2008-12en' or
+				$RS_Code = 'ed50' or
+				$RS_Code = 'ed50-utm32n' or
+				$RS_Code = 'ed50-utm33n' or
+				$RS_Code = 'ed50-utm34n' or
+				$RS_Code = 'monte-mario-rome' or
+				$RS_Code = 'monte-mario' or
+				$RS_Code = 'monte-mario-italy1' or
+				$RS_Code = 'monte-mario-italy2' or
+				$RS_Code = 'evrs' or
+				$RS_Code = 'lat' or
+				$RS_Code = 'msl' or
+				$RS_Code = 'isa' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4936' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4937' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4258' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3035' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3034' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/25832' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/25833' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/25834' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6704' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6705' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6706' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6707' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/9.6.1/7791' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6708' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/9.6.1/7792' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6709' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/9.6.1/7793' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6875' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/9.6.1/7794' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/6876' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/9.6.1/7795' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4230' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/23032' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/23033' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/23034' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4806' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4265' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3003' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3004' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5730' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5861' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5715' or
+				$RS_Code = 'http://codes.wmo.int/grib2/codeflag/4.2/_0-3-3' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/7409'"/>
+			
+			<!-- Se c'è il codespace allora il codice può essere solo il numero -->
+			<sch:let name="RS_codeSpace"
+				value="gmd:codeSpace/gco:CharacterString/text() = 'http://www.epsg-registry.org/'"/>
+			<sch:let name="RS_codeSpaceOK"
+				value="$RS_Code = '4936' or
+				$RS_Code = '4937' or
+				$RS_Code = '4258' or
+				$RS_Code = '3035' or
+				$RS_Code = '3034' or
+				$RS_Code = '25832' or
+				$RS_Code = '25833' or
+				$RS_Code = '25834' or
+				$RS_Code = '6704' or
+				$RS_Code = '6705' or
+				$RS_Code = '6706' or
+				$RS_Code = '6707' or
+				$RS_Code = '7791' or
+				$RS_Code = '6708' or
+				$RS_Code = '7792' or
+				$RS_Code = '6709' or
+				$RS_Code = '7793' or
+				$RS_Code = '6875' or
+				$RS_Code = '7794' or
+				$RS_Code = '6876' or
+				$RS_Code = '7795' or
+				$RS_Code = '4230' or
+				$RS_Code = '23032' or
+				$RS_Code = '23033' or
+				$RS_Code = '23034' or
+				$RS_Code = '4806' or
+				$RS_Code = '4265' or
+				$RS_Code = '3003' or
+				$RS_Code = '3004' or
+				$RS_Code = '5730' or
+				$RS_Code = '5861' or
+				$RS_Code = '5715' or
+				$RS_Code = '7409'"/>
+			
+			<!-- Infine ci potrebbe essere il link -->
+			<sch:let name="RS_Link" value="translate(gmd:code/gmx:Anchor/@xlink:href, $uppercase, $lowercase)"/>
+			<sch:let name="RS_LinkOK" value="$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4936' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4937' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4258' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3035' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3034' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/25832' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/25833' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/25834' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6704' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6705' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6706' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6707' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/9.6.1/7791' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6708' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/9.6.1/7792' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6709' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/9.6.1/7793' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6875' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/9.6.1/7794' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/6876' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/9.6.1/7795' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4230' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/23032' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/23033' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/23034' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4806' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4265' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3003' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3004' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5730' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5861' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5715' or
+				$RS_Link = 'http://codes.wmo.int/grib2/codeflag/4.2/_0-3-3' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/7409'"/>
+			
+			
+			<!-- assertions and report. Per ogni elemento se c'è allora lo devo testare. Se c'è il link iol resto no mi importa -->
+			<sch:assert test="($RS_Code and $RS_CodeOK) or ($RS_codeSpace and $RS_codeSpaceOK) or ($RS_Link and $RS_LinkOK)">L'elemento "Sistema di
+				riferimento" e' errato o assente</sch:assert>
+			<sch:report role="INFO" test="$RS_Code">Sistema di riferimento:
+				<sch:value-of select="$RS_Code"/>
+			</sch:report>
+			
+		</sch:rule>			
+		
+	</sch:pattern>
+	<!-- ############################################ -->
+
+</sch:schema>

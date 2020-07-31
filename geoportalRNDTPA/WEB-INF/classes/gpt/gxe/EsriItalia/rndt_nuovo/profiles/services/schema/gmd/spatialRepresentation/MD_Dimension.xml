@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+   xmlns:h="http://www.esri.com/geoportal/gxe/html"
+   g:targetName="gmd:axisDimensionProperties" 
+   g:minOccurs="1" g:maxOccurs="unbounded" 
+g:extends="$base/schema/gmd/spatialRepresentation/MD_DimensionInto.xml"> 
+</g:element>
+
+
