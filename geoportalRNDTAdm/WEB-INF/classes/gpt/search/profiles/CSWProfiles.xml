@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!-- See also GptXslSearchProfiles.xml -->
+<CSWProfiles> 
+      
+<!--=======================   Esri Italy Added Implementation of Catalogues =========================-->
+    <!--  RNDT Standard CSW harvesting -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:APISO:RNDT:ESRIItalia:Harvest</ID>
+        <Name>1. Profilo CSW 2.0.2 Standard</Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW 2.0.2 Standard per harvesting</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_APISO_RNDT_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_RNDT_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputSchema=http%3A//www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_RNDT_Harvest_ESRIItaly_GetRecordById_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>True</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+	
+    <!--  OGCISO ESRI GPT Version 10 (ESRI Italia) for harvesting -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:OGCISO:GPT:ESRIItalia:Harvest</ID>
+        <Name>2. Profilo per Esri Geoportal Server (Harvesting)</Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW 2.0.2 per harvesting su cataloghi basati su Esri Geoportal Server</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputSchema=http%3A//www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_Harvest_ESRIItaly_GetRecordById_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>True</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+	
+    <!-- Geonetwork APISO ESRI Italia for harvesting -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:APISO:GeoNetwork:ESRIItalia:Harvest</ID>
+        <Name>3. Profilo per GeoNetwork CSW 2.0.2 (Harvesting) </Name>
+        <Description>Implementazione del profilo CSW 2.0.2 per harvesting su cataloghi basati su Geonetwork</Description>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputSchema=http%3A//www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork_Harvest_ESRIItaly_GetRecordByID_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>False</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+
+
+	<!-- Geonetwork2 APISO ESRI Italia for harvesting (see above) -->
+	<!--
+	<Profile>
+		<ID>urn:ogc:CSW:2.0.2:HTTP:APISO:GeoNetwork2:ESRIItalia:Harvest</ID>
+		<Name>2. Profilo per GeoNetwork CSW 2.0.2 (Harvesting) </Name>
+		<Description>Implementazione del profilo CSW 2.0.2 per harvesting su cataloghi basati su Geonetwork</Description>
+		<CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+		<GetRecords>
+			<XSLTransformations>
+				<Request>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork2_ESRIItaly_GetRecords_Request.xslt</Request>
+				<Response>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork2_ESRIItaly_GetRecords_Response.xslt</Response>
+			</XSLTransformations>
+		</GetRecords>
+		<GetRecordByID>
+			<RequestKVPs>
+				<![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&OutputSchema=csw:IsoRecord]]>
+			</RequestKVPs>
+			<XSLTransformations>
+				<Response>ESRIItaly/CSW_2.0.2_APISO_GeoNetwork2_Harvest_ESRIItaly_GetRecordByID_Response.xslt</Response>
+			</XSLTransformations>
+		</GetRecordByID>
+		<SupportSpatialQuery>True</SupportSpatialQuery>
+		<SupportContentTypeQuery>False</SupportContentTypeQuery>
+		<SupportSpatialBoundary>True</SupportSpatialBoundary>    
+	</Profile>
+-->
+	<!-- GIcat ESRI Italia for harvesting -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:GI-cat:ESRIItalia:Harvest</ID>
+        <Name>4. Profilo per GI-CAT (Harvesting) </Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW 2.0.2 per harvesting su cataloghi basati su GI-CAT</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_OGCISOAP_GICAT_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_GICAT_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputschema=http://www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_GICAT_Harvest_ESRIItaly_GetRecordById_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>False</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+
+    <!-- Deegree ESRI Italia for harvesting -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:DEEGREE:ESRIItalia:Harvest</ID>
+        <Name>5. Profilo per Deegree CSW 2.0.2 (Harvesting) </Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW 2.0.2 per harvesting su cataloghi basati su Deegree</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_APISO_Deegree_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_Deegree_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputschema=http://www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_Deegree_Harvest_ESRIItaly_GetRecordByID_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>False</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>	
+
+    <!--  RNDT Standard CSW harvesting con filtro -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:APISO:RNDT_FILTER:ESRIItalia:Harvest</ID>
+        <Name>6. Profilo CSW 2.0.2 con Filtro</Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW 2.0.2 con filtro su keyword per harvesting</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_APISO_RNDT_FILTER_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_RNDT_FILTER_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputSchema=http%3A//www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_APISO_RNDT_FILTER_Harvest_ESRIItaly_GetRecordById_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>True</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+	
+    <!--  OGCISO ESRI GPT Version 10 (ESRI Italia)-->
+	<!-- Questo profilo va comunque lasciato perché viene utilizzato internamente per la ricerca -->
+    <Profile>
+        <ID>urn:ogc:CSW:2.0.2:HTTP:OGCISO:GPT:ESRIItalia</ID>
+        <Name>7. CSW ISO Application Profile (Non per Harvesting)</Name>
+        <CswNamespace>http://www.opengis.net/cat/csw/2.0.2</CswNamespace>
+        <Description>Implementazione del profilo CSW ISO utilizzato per il nuovo portale RNDT</Description>
+        <GetRecords>
+            <XSLTransformations>
+                <Request>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_ESRIItaly_GetRecords_Request.xslt</Request>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_ESRIItaly_GetRecords_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecords>
+        <GetRecordByID>
+            <RequestKVPs><![CDATA[service=CSW&request=GetRecordById&version=2.0.2&ElementSetName=full&outputSchema=http%3A//www.isotc211.org/2005/gmd]]></RequestKVPs>
+            <XSLTransformations>
+                <Response>ESRIItaly/CSW_2.0.2_OGCISOAP_ESRI_GPT10_ESRIItaly_GetRecordById_Response.xslt</Response>
+            </XSLTransformations>
+        </GetRecordByID>
+        <SupportSpatialQuery>True</SupportSpatialQuery>
+        <SupportContentTypeQuery>True</SupportContentTypeQuery>
+        <SupportSpatialBoundary>True</SupportSpatialBoundary>
+    </Profile>
+
+
+
+</CSWProfiles>
