@@ -1,0 +1,16 @@
+/**
+ * Rest response snippets
+ */
+
+
+.snippet .title {
+	font-size: 1em;
+  font-weight: bold;
+  padding: 1px;
+}
+
+.snippet .abstract {
+	font-family:Arial;
+  margin: 4px 0px 4px 12px;
+  font-size:0.9em;
+}
