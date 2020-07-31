@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- INSPIRE data theme keywords (gmd:descriptiveKeywords) --> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html" 
+           h:class=""
+           g:targetName="gmd:descriptiveKeywords" g:minOccurs="1" g:maxOccurs="1"
+           g:extends="$base/xtn/ui/UI_Element.xml">
+  <g:header g:rendered="false"/>
+  <g:body>
+	  <g:element g:targetName="gmd:MD_Keywords" g:minOccurs="0" g:maxOccurs="1"
+	    h:tag="div" g:jsClass="gxe.control.Element">
+	    
+	    <!-- keyword selection -->
+	    <g:element g:targetName="gmd:keyword" g:minOccurs="1" g:maxOccurs="unbounded"
+	      g:label="$i18n.catalog.mdParam.inspire.keyword.dataTheme.service.label"
+		  g:info="$i18n.catalog.rdnt.servizi.hint.temaInspireKTI"
+	      g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml">
+	      <g:body>
+	        <g:element g:targetName="gmx:Anchor" g:isIsoWMVL="true">
+	          <g:body>
+	            <g:input g:extends="$base/core/ui/InputSelectMany.xml">
+	              <g:options>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService" g:label="humanInteractionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanCatalogueViewer" g:label="humanCatalogueViewer"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicViewer" g:label="humanGeographicViewer"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSpreadsheetViewer" g:label="humanGeographicSpreadsheetViewer"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanServiceEditor" g:label="humanServiceEditor"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanChainDefinitionEditor" g:label="humanChainDefinitionEditor"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanWorkflowEnactmentManager" g:label="humanWorkflowEnactmentManager"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicFeatureEditor" g:label="humanGeographicFeatureEditor"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicSymbolEditor" g:label="humanGeographicSymbolEditor"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanFeatureGeneralizationEditor" g:label="humanFeatureGeneralizationEditor"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanGeographicDataStructureViewer" g:label="humanGeographicDataStructureViewer"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoManagementService" g:label="infoManagementService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService" g:label="infoFeatureAccessService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoMapAccessService" g:label="infoMapAccessService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCoverageAccessService" g:label="infoCoverageAccessService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoSensorDescriptionService" g:label="infoSensorDescriptionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoProductAccessService" g:label="infoProductAccessService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureTypeService" g:label="infoFeatureTypeService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService" g:label="infoCatalogueService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoRegistryService" g:label="infoRegistryService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoGazetteerService" g:label="infoGazetteerService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoOrderHandlingService" g:label="infoOrderHandlingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoStandingOrderService" g:label="infoStandingOrderService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/taskManagementService" g:label="taskManagementService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/chainDefinitionService" g:label="chainDefinitionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/workflowEnactmentService" g:label="workflowEnactmentService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/subscriptionService" g:label="subscriptionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProcessingService" g:label="spatialProcessingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateConversionService" g:label="spatialCoordinateConversionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoordinateTransformationService" g:label="spatialCoordinateTransformationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialCoverageVectorConversionService" g:label="spatialCoverageVectorConversionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageCoordinateConversionService" g:label="spatialImageCoordinateConversionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRectificationService" g:label="spatialRectificationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialOrthorectificationService" g:label="spatialOrthorectificationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSensorGeometryModelAdjustmentService" g:label="spatialSensorGeometryModelAdjustmentService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialImageGeometryModelConversionService" g:label="spatialImageGeometryModelConversionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSubsettingService" g:label="spatialSubsettingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialSamplingService" g:label="spatialSamplingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialTilingChangeService" g:label="spatialTilingChangeService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialDimensionMeasurementService" g:label="spatialDimensionMeasurementService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureManipulationService" g:label="spatialFeatureManipulationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureMatchingService" g:label="spatialFeatureMatchingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialFeatureGeneralizationService" g:label="spatialFeatureGeneralizationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialRouteDeterminationService" g:label="spatialRouteDeterminationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialPositioningService" g:label="spatialPositioningService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/spatialProximityAnalysisService" g:label="spatialProximityAnalysisService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicProcessingService" g:label="thematicProcessingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGoparameterCalculationService" g:label="thematicGoparameterCalculationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicClassificationService"  g:label="thematicClassificationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicFeatureGeneralizationService" g:label="thematicFeatureGeneralizationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSubsettingService" g:label="thematicSubsettingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicSpatialCountingService" g:label="thematicSpatialCountingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicChangeDetectionService" g:label="thematicChangeDetectionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeographicInformationExtractionService" g:label="thematicGeographicInformationExtractionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageProcessingService" g:label="thematicImageProcessingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicReducedResolutionGenerationService" g:label="thematicReducedResolutionGenerationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageManipulationService"  g:label="thematicImageManipulationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageUnderstandingService"  g:label="thematicImageUnderstandingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicImageSynthesisService"  g:label="thematicImageSynthesisService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicMultibandImageManipulationService" g:label="thematicMultibandImageManipulationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicObjectDetectionService" g:label="thematicObjectDetectionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeoparsingService"  g:label="thematicGeoparsingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/thematicGeocodingService" g:label="thematicGeocodingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProcessingService" g:label="temporalProcessingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalReferenceSystemTransformationService" g:label="temporalReferenceSystemTransformationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSubsettingService" g:label="temporalSubsettingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalSamplingService" g:label="temporalSamplingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/temporalProximityAnalysisService" g:label="temporalProximityAnalysisService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataProcessingService" g:label="metadataProcessingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataStatisticalCalculationService" g:label="metadataStatisticalCalculationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/metadataGeographicAnnotationService" g:label="metadataGeographicAnnotationService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comService" g:label="comService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comEncodingService"  g:label="comEncodingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comTransferService" g:label="comTransferService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicCompressionService" g:label="comGeographicCompressionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comGeographicFormatConversionService" g:label="comGeographicFormatConversionService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comMessagingService" g:label="comMessagingService"/>
+						<g:option g:value="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/comRemoteFileAndExecutableManagement" g:label="comRemoteFileAndExecutableManagement"/>
+                      </g:options>
+		          </g:input>
+		        </g:body>
+		      </g:element>
+		    </g:body> 
+	    </g:element>
+	
+			<g:element g:targetName="gmd:thesaurusName" g:jsClass="gxe.control.Element" g:minOccurs="1" g:maxOccurs="1" h:tag="div">
+				<g:element g:targetName="gmd:CI_Citation" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gmd:title" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gco:CharacterString" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:preferOpen="false" g:label="$i18n.catalog.mdParam.rndt.inspire.keyword.dataTheme.thesaurus.title.label" g:jsClass="gxe.control.Element" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+							<!--GEMET - INSPIRE themes, version 1.0-->
+							<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+								<g:options g:i18nBase="catalog.mdParam.rndt.inspire.keyword.dataTheme.thesaurus">
+									<g:option g:value="$i18nBase.title.value" g:label="$i18nBase.title.value"/>
+								</g:options>
+							</g:input>
+						</g:element>
+					</g:element>
+					<g:element g:targetName="gmd:date" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:targetName="gmd:CI_Date" h:tag="div" g:jsClass="gxe.control.Element">
+							<g:element g:targetName="gmd:date" h:tag="div" g:jsClass="gxe.control.Element"> 
+								<g:element g:targetName="gco:Date" g:label="$i18n.catalog.mdParam.rndt.inspire.keyword.dataTheme.thesaurus.date"  h:tag="div" g:jsClass="gxe.control.Element" g:extends="$base/xtn/ui/UI_Element.xml">
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options>
+											<g:option g:value="2008-12-03" g:label="2008-12-03"/>
+										</g:options>
+									</g:input>
+								</g:element>
+							</g:element>
+							<g:element g:targetName="gmd:dateType" h:tag="div" g:jsClass="gxe.control.Element">
+								<g:element g:targetName="gmd:CI_DateTypeCode" g:label="$i18n.catalog.mdParam.rndt.inspire.keyword.dataTheme.thesaurus.typeDate" h:tag="div" g:jsClass="gxe.control.Element"
+				   g:fixedValue="publication" g:extends="$base/xtn/ui/UI_Element.xml">
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options>
+											<g:option g:value="pubblicazione" g:label="pubblicazione"/>
+										</g:options>
+									</g:input>
+									<g:attribute h:class="gxeDisplayNone" g:targetNS="" g:targetName="codeList" h:tag="div" g:jsClass="gxe.control.Attribute"
+					 g:fixedValue="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_DateTypeCode">
+										<g:input g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+									<g:attribute h:class="gxeDisplayNone" g:targetNS="" g:targetName="codeListValue" h:tag="div" g:jsClass="gxe.control.Attribute"
+					 g:fixedValue="publication">
+										<g:input g:extends="$base/core/ui/InputText.xml"/>
+									</g:attribute>
+								</g:element>
+							</g:element>
+						</g:element>
+					</g:element>
+				</g:element> 
+			</g:element>
+		</g:element>
+	</g:body>
+</g:element>
+  
+      
+

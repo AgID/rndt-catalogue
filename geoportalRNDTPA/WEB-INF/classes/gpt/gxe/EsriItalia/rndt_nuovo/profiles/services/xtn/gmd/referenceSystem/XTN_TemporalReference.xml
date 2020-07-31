@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- simplified resource maintenance, gmd:resourceMaintenance -->
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe"
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:targetName="gmd:referenceSystemInfo" g:minOccurs="0" g:maxOccurs="1"
+           g:label="$i18n.catalog.mdParam.referenceSystemInfo.caption.time"
+           g:extends="$base/xtn/ui/UI_Element.xml">
+	<g:body>
+		<g:element g:targetName="gmd:MD_ReferenceSystem" h:tag="div" g:jsClass="gxe.control.Element">
+			<g:element g:targetName="gmd:referenceSystemIdentifier" h:tag="div" g:jsClass="gxe.control.Element">
+				<g:element g:targetName="gmd:RS_Identifier" h:tag="div" g:jsClass="gxe.control.Element">
+					<g:element g:targetName="gmd:code" h:tag="div" g:jsClass="gxe.control.Element">
+						<g:element g:info="$i18n.catalog.rdnt.dataset.hint.sistemaRiferimento" g:label="$i18n.catalog.mdParam.OneGeology.referenceSystemInfo.code" g:targetName="gco:CharacterString" g:extends="$base/xtn/ui/UI_Element.xml" g:fixedValue="">
+							<g:input g:extends="$base/core/ui/InputText.xml"/>
+						</g:element>
+					</g:element>
+				</g:element>
+			</g:element>
+		</g:element>
+	</g:body>  
+</g:element>
