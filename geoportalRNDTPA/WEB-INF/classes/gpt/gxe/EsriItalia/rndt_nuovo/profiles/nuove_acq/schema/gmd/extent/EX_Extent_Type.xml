@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe"
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:i18nBase="catalog.iso19139.EX_Extent" g:label="$i18nBase"
+           g:extends="$base/schema/gco/gcoBase/AbstractObject_Type.xml">
+  <g:body>
+
+    <g:element g:targetName="gmd:description" minOccurs="0"
+      g:extends="$base/schema/gco/basicTypes/CharacterString_PropertyType.xml">
+    </g:element>
+
+    <g:tabs g:extends="$base/core/ui/Tabs.xml">
+      <g:body>
+        <g:element g:targetName="gmd:geographicElement" minOccurs="0"  maxOccurs="unbounded"
+          g:extends="$base/schema/gmd/extent/EX_GeographicExtent_PropertyType.xml">
+        </g:element>
+<!-- =====================-->
+					<!-- LIMITE AMMINISTRATIVO EX_GeographicDescription-->
+        <g:element g:targetName="gmd:geographicElement" minOccurs="0"  maxOccurs="unbounded"
+          g:extends="$base/schema/gmd/extent/EX_GeographicDescription.xml">
+        </g:element>
+      </g:body>
+    </g:tabs>
+
+  </g:body>
+</g:element>
