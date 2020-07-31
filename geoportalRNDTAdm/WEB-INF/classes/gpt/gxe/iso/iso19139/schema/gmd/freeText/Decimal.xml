@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:i18nBase="catalog.iso19139.LocalisedCharacterString" g:label="$i18nBase"
+		   g:targetName="gml:coordinates"
+           g:extends="$base/core/xml/Element.xml">
+  <g:body>
+<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml"
+      g:value=""/>
+     
+    <g:import g:src="$base/core/ui/InputSelectOne.xml">
+   
+  </g:body>
+</g:element>
