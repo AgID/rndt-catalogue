@@ -1,0 +1,16 @@
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:targetName="gml:coordinates" 
+           g:i18nBase="catalog.iso19139.CI_OnLineFunctionCode" g:label="$i18nBase"
+           g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
+  <g:body>
+       
+     
+    <g:attribute g:extends="$base/schema/gco/gcoBase/decimal.xml">
+      <g:body>
+        <g:input g:extends="$base/core/ui/InputText.xml"/>
+      </g:body>          
+    </g:attribute>     
+     
+  </g:body> 
+</g:element>
