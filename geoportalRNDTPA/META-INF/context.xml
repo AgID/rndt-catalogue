@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sostituiti i parametri MaxActive e MaxWait con MaxTotal percher' non piu' usati in DBCP2  -->
+<Context crossContext="true" debug="0" docBase="geoportalRNDTPA" path="/geoportalRNDTPA" reloadable="true">
+	<Resource 
+		auth="Container" 
+		driverClassName="com.mysql.jdbc.Driver" 
+		maxTotal="20" 
+		maxIdle="10" 
+		name="jdbc/gpt" 
+		password="" 
+		type="javax.sql.DataSource" 
+		url="" 
+		connectionProperties="useSSL=false;requireSSL=false"
+		username="geoportal"
+	/>
+</Context>
+
