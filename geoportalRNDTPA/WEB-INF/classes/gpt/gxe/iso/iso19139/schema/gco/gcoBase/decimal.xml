@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>         
+<g:attribute xmlns:g="http://www.esri.com/geoportal/gxe" 
+             xmlns:h="http://www.esri.com/geoportal/gxe/html"
+             h:class="gxeWrappedAttribute"
+             g:targetNS="" g:targetName="decimal" 
+             g:use="required" g:valueType="xs:anyURI"
+             g:extends="$base/xtn/ui/UI_Attribute.xml">
+  <g:header g:rendered="$editor.isExpertMode"></g:header>
+</g:attribute>
