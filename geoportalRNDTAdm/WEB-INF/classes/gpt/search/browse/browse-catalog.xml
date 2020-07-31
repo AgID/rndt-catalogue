@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Liquid XML Studio Designer Edition 8.1.5.2538 (http://www.liquid-technologies.com) -->
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<tree>
+    <label>name</label>
+    <identifier>id</identifier>
+    <!-- Catalog -->
+    <item>
+        <id>0</id>
+        <name resourceKey="catalog.browse.toc.browseCatalog">
+        </name>
+        <query>searchText=*:*</query>
+        <!-- Content types -->
+        <item>
+            <id>1</id>
+            <name resourceKey="catalog.search.filterContentTypes.title">
+            </name>
+            <query>searchText=(contentType:* OR url:*)</query>
+            <item>
+                <id>2</id>
+                <name resourceKey="catalog.search.filterContentTypes.application">
+                </name>
+                <query>searchText=(contentType:(*WEBAPP*) OR ((*:* NOT protocol:(* TO *)) AND contentType:application))</query>
+            </item>
+            <item>
+                <id>3</id>
+                <name resourceKey="catalog.search.filterContentTypes.clearinghouse">
+                </name>
+                <query>searchText=(contentType:clearinghouse)</query>
+            </item>
+            <item>
+                <id>4</id>
+                <name resourceKey="catalog.search.filterContentTypes.document">
+                </name>
+                <query>searchText=(contentType:(*DOC*)  OR ((*:* NOT protocol:(* TO *)) AND (contentType:document OR contentType:*DOC*) ))</query>
+            </item>
+            <item>
+                <id>5</id>
+                <name resourceKey="catalog.search.filterContentTypes.downloadableData">
+                </name>
+                <query>searchText=(contentType:(*\-download*) OR ((*:* NOT protocol:(* TO *)) AND contentType:downloadableData))</query>
+            </item>
+            <item>
+                <id>6</id>
+                <name resourceKey="catalog.search.filterContentTypes.geographicActivities">
+                </name>
+                <query>searchText=(contentType:geographicActivities)</query>
+            </item>
+            <item>
+                <id>7</id>
+                <name resourceKey="catalog.search.filterContentTypes.geographicService">
+                </name>
+                <query>searchText=(contentType:(*TASK*)  OR ((*:* NOT protocol:(* TO *)) AND contentType:geographicService))</query>
+            </item>
+            <item>
+                <id>8</id>
+                <name resourceKey="catalog.search.filterContentTypes.liveData">
+                </name>
+                <query>searchText=(contentType:(*WMS* *WFS* *WCS* *KML* *MAP* *REST*) OR contentType:(*wms* *wfs* *wcs* *kml* *map* *rest*) OR resource.url:(*WMS* *WFS* *WCS* *KML* *KMZ* *REST*) OR resource.url:(*wms* *wfs* *wcs* *kml* *map* *rest*) OR ((*:* NOT protocol:(* TO *)) AND contentType:liveData))</query>
+            </item>
+            <item>
+                <id>9</id>
+                <name resourceKey="catalog.search.filterContentTypes.mapFiles">
+                </name>
+                <query>searchText=(contentType:mapFiles)</query>
+            </item>
+            <item>
+                <id>10</id>
+                <name resourceKey="catalog.search.filterContentTypes.offlineData">
+                </name>
+                <query>searchText=(contentType:(*information*) OR ((*:* NOT protocol:(* TO *)) AND contentType:geographicService ))</query>
+            </item>
+            <item>
+                <id>11</id>
+                <name resourceKey="catalog.search.filterContentTypes.staticMapImage">
+                </name>
+                <query>searchText=(contentType:(*:MAPIMG*) OR ((*:* NOT protocol:(* TO *)) AND contentType:staticMapImage ))</query>
+            </item>
+            <item>
+                <!--added by Esri Italy-->
+                <id>32</id>
+                <name resourceKey="catalog.search.filterContentTypes.staticImage">
+                </name>
+                <query>searchText=(contentType:(*STATICIMG*))</query>
+            </item>
+            <item>
+                <id>33</id>
+                <name resourceKey="catalog.search.filterContentTypes.audio">
+                </name>
+                <query>searchText=(contentType:(*AUDIO*))</query>
+            </item>
+            <item>
+                <id>34</id>
+                <name resourceKey="catalog.search.filterContentTypes.video">
+                </name>
+                <query>searchText=(contentType:(*VIDEO*))</query>
+            </item>
+            <item>
+                <id>35</id>
+                <name resourceKey="catalog.search.filterContentTypes.meteo">
+                </name>
+                <query>searchText=(contentType:(*METEO*))</query>
+            </item>
+        </item>
+        <!-- ISO Topic Categories -->
+        <!-- Data Categories. Modified by ESRI Italy May 2011 -->
+        <item>
+            <id>36</id>
+            <name resourceKey="catalog.search.datacategories.caption">
+            </name>
+            <query>dataCategory=boundaries,farming,climatologyMeteorologyAtmosphere,biota,economy,planningCadastre,society,elevation,environment,structure,geoscientificInformation,health,imageryBaseMapsEarthCover,inlandWaters,location,intelligenceMilitary,oceans,transportation,utilitiesCommunication</query>
+            <item>
+                <id>12</id>
+                <name resourceKey="catalog.harvest.iso.caption">
+                </name>
+                <query>dataCategory=boundaries,farming,climatologyMeteorologyAtmosphere,biota,economy,planningCadastre,society,elevation,environment,structure,geoscientificInformation,health,imageryBaseMapsEarthCover,inlandWaters,location,intelligenceMilitary,oceans,transportation,utilitiesCommunication</query>
+                <item>
+                    <id>13</id>
+                    <name resourceKey="catalog.mdCode.topic.boundaries">
+                    </name>
+                    <query>dataCategory=boundaries</query>
+                </item>
+                <item>
+                    <id>14</id>
+                    <name resourceKey="catalog.mdCode.topic.farming">
+                    </name>
+                    <query>dataCategory=farming</query>
+                </item>
+                <item>
+                    <id>15</id>
+                    <name resourceKey="catalog.mdCode.topic.climatologyMeteorologyAtmosphere">
+                    </name>
+                    <query>dataCategory=climatologyMeteorologyAtmosphere</query>
+                </item>
+                <item>
+                    <id>16</id>
+                    <name resourceKey="catalog.mdCode.topic.biota">
+                    </name>
+                    <query>dataCategory=biota</query>
+                </item>
+                <item>
+                    <id>17</id>
+                    <name resourceKey="catalog.mdCode.topic.economy">
+                    </name>
+                    <query>dataCategory=economy</query>
+                </item>
+                <item>
+                    <id>18</id>
+                    <name resourceKey="catalog.mdCode.topic.planningCadastre">
+                    </name>
+                    <query>dataCategory=planningCadastre</query>
+                </item>
+                <item>
+                    <id>19</id>
+                    <name resourceKey="catalog.mdCode.topic.society">
+                    </name>
+                    <query>dataCategory=society</query>
+                </item>
+                <item>
+                    <id>20</id>
+                    <name resourceKey="catalog.mdCode.topic.elevation">
+                    </name>
+                    <query>dataCategory=elevation</query>
+                </item>
+                <item>
+                    <id>21</id>
+                    <name resourceKey="catalog.mdCode.topic.environment">
+                    </name>
+                    <query>dataCategory=environment</query>
+                </item>
+                <item>
+                    <id>22</id>
+                    <name resourceKey="catalog.mdCode.topic.structure">
+                    </name>
+                    <query>dataCategory=structure</query>
+                </item>
+                <item>
+                    <id>23</id>
+                    <name resourceKey="catalog.mdCode.topic.geoscientificInformation">
+                    </name>
+                    <query>dataCategory=geoscientificInformation</query>
+                </item>
+                <item>
+                    <id>24</id>
+                    <name resourceKey="catalog.mdCode.topic.health">
+                    </name>
+                    <query>dataCategory=health</query>
+                </item>
+                <item>
+                    <id>25</id>
+                    <name resourceKey="catalog.mdCode.topic.imageryBaseMapsEarthCover">
+                    </name>
+                    <query>dataCategory=imageryBaseMapsEarthCover</query>
+                </item>
+                <item>
+                    <id>26</id>
+                    <name resourceKey="catalog.mdCode.topic.inlandWaters">
+                    </name>
+                    <query>dataCategory=inlandWaters</query>
+                </item>
+                <item>
+                    <id>27</id>
+                    <name resourceKey="catalog.mdCode.topic.location">
+                    </name>
+                    <query>dataCategory=location</query>
+                </item>
+                <item>
+                    <id>28</id>
+                    <name resourceKey="catalog.mdCode.topic.intelligenceMilitary">
+                    </name>
+                    <query>dataCategory=intelligenceMilitary</query>
+                </item>
+                <item>
+                    <id>29</id>
+                    <name resourceKey="catalog.mdCode.topic.oceans">
+                    </name>
+                    <query>dataCategory=oceans</query>
+                </item>
+                <item>
+                    <id>30</id>
+                    <name resourceKey="catalog.mdCode.topic.transportation">
+                    </name>
+                    <query>dataCategory=transportation</query>
+                </item>
+                <item>
+                    <id>31</id>
+                    <name resourceKey="catalog.mdCode.topic.utilitiesCommunication">
+                    </name>
+                    <query>dataCategory=utilitiesCommunication</query>
+                </item>
+            </item>
+            <!-- END ISO topic categories section -->
+            <!-- INSPIRE data themes section. The section is splitted because there's a limit on 20 items  -->
+            <item>
+                <id>37</id>
+                <name resourceKey="catalog.search.inspire.caption">
+                </name>
+                <query>searchText=INSPIRETheme:*</query>
+                <item>
+                    <id>38</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.atmosphericConditions">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Atmospheric conditions"</query>
+                </item>
+                <item>
+                    <id>39</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.landCover">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Land cover"</query>
+                </item>
+                <item>
+                    <id>40</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.populationDistributionDemography">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Population distribution â€” demography"</query>
+                </item>
+                <item>
+                    <id>41</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.speciesDistribution">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Species distribution"</query>
+                </item>
+                <item>
+                    <id>42</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.buildings">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Buildings"</query>
+                </item>
+                <item>
+                    <id>43</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.meteorologicalGeographicalFeatures">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Meteorological geographical features"</query>
+                </item>
+                <item>
+                    <id>44</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.oceanographicGeographicalFeatures">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Oceanographic geographical features"</query>
+                </item>
+                <item>
+                    <id>45</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.elevation">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Elevation"</query>
+                </item>
+                <item>
+                    <id>46</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.geology">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Geology"</query>
+                </item>
+                <item>
+                    <id>47</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.habitatsAndBiotopes">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Habitats and biotopes"</query>
+                </item>
+                <item>
+                    <id>48</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.hydrography">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Hydrography"</query>
+                </item>
+                <item>
+                    <id>49</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.agriculturalAndAquacultureFacilities">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Agricultural and aquaculture facilities"</query>
+                </item>
+                <item>
+                    <id>50</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.environmentalMonitoringFacilities">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Environmental monitoring facilities"</query>
+                </item>
+                <item>
+                    <id>51</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.addresses">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Addresses"</query>
+                </item>
+                <item>
+                    <id>52</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.geographicalNames">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Geographical names"</query>
+                </item>
+                <item>
+                    <id>53</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.orthoimagery">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Orthoimagery"</query>
+                </item>
+                <item>
+                    <id>54</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.cadastralParcels">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Cadastral parcels"</query>
+                </item>
+                <item>
+                    <id>55</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.productionAndIndustrialFacilities">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Production and industrial facilities"</query>
+                </item>
+                <item>
+                    <id>56</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.bioGeographicalRegions">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Bio-geographical regions"</query>
+                </item>
+                <item>
+                    <id>57</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.seaRegions">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Sea regions"</query>
+                </item>
+                <!-- This label is different because there is a conflict with an ISO topic category -->
+                <item>
+                    <id>58</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.transportNetworks1">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Transport networks"</query>
+                </item>
+                <item>
+                    <id>59</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.energyResources">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Energy resources"</query>
+                </item>
+                <item>
+                    <id>60</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.mineralResources">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Mineral resources"</query>
+                </item>
+                <item>
+                    <id>61</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.humanHealthAndSafety">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Human health and safety"</query>
+                </item>
+                <item>
+                    <id>62</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.utilityAndGovernmentService">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Utility and governmental services"</query>
+                </item>
+                <item>
+                    <id>63</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.coordinateReferenceSystems">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Coordinate reference systems"</query>
+                </item>
+                <item>
+                    <id>64</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.geographicalGridSystems">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Geographical grid systems"</query>
+                </item>
+                <item>
+                    <id>65</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.protectedSites">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Protected sites"</query>
+                </item>
+                <item>
+                    <id>66</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.soil">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Soil"</query>
+                </item>
+                <item>
+                    <id>67</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.administrativeUnits">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Administrative units"</query>
+                </item>
+                <item>
+                    <id>68</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.statisticalUnits">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Statistical units"</query>
+                </item>
+                <item>
+                    <id>69</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.landUser">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Land use"</query>
+                </item>
+                <item>
+                    <id>70</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.naturalRiskZones">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Natural risk zones"</query>
+                </item>
+                <item>
+                    <id>71</id>
+                    <name resourceKey="catalog.mdParam.inspire.keyword.dataTheme.areaManagementRestrictionRegulationZonesAndReportingUnits">
+                    </name>
+                    <query>searchText=INSPIRETheme:"Area management/restriction/regulation zones and reporting units"</query>
+                </item>
+                <!---->
+            </item>
+            <!-- END INSPIRE data themes section -->
+        </item>
+        <!-- END data categories section -->
+        <item>
+            <!-- START Date Section -->
+            <id>72</id>
+            <name resourceKey="catalog.search.date.caption">
+            </name>
+            <query>searchText=apiso.Modified:*</query>
+            <item>
+                <id>73</id>
+                <name resourceKey="catalog.search.date.before2010">
+                </name>
+                <query>searchText=apiso.Modified:[10000101 TO 2009-12-31]</query>
+            </item>
+            <item>
+                <id>74</id>
+                <name resourceKey="catalog.search.date.2010">
+                </name>
+                <query>searchText=apiso.Modified:2010</query>
+            </item>
+            <item>
+                <id>75</id>
+                <name resourceKey="catalog.search.date.2011">
+                </name>
+                <query>searchText=apiso.Modified:2011</query>
+            </item>
+            <item>
+                <id>76</id>
+                <name resourceKey="catalog.search.date.2012">
+                </name>
+                <query>searchText=apiso.Modified:2012</query>
+            </item>
+            <item>
+                <id>77</id>
+                <name resourceKey="catalog.search.date.after2012">
+                </name>
+                <query>searchText=apiso.Modified:[20120101 TO 29991231]</query>
+            </item>
+        </item>
+        <!-- END Date Section -->
+        <item>
+            <!-- START responsible Section -->
+            <id>78</id>
+            <name resourceKey="catalog.search.responsible.caption">
+            </name>
+            <query>searchText=apiso.OrganizationName:*</query>
+            <item>
+                <id>79</id>
+                <name resourceKey="catalog.search.responsible.arpa">
+                </name>
+                <query>searchText=apiso.OrganizationName:*arpa*</query>
+            </item>
+            <item>
+                <id>80</id>
+                <name resourceKey="catalog.search.responsible.liguria">
+                </name>
+                <query>searchText=apiso.OrganizationName:*liguria*</query>
+            </item>
+            <item>
+                <id>81</id>
+                <name resourceKey="catalog.search.responsible.inva">
+                </name>
+                <query>searchText=apiso.OrganizationName:*inva*</query>
+            </item>
+            <item>
+                <id>82</id>
+                <name resourceKey="catalog.search.responsible.other">
+                </name>
+                <query>searchText=apiso.OrganizationName:(* -inva -arpa -liguria)</query>
+            </item>
+        </item>
+        <!-- END responsible Section -->
+	<!--
+		<item>
+                <id>83</id>
+                <name resourceKey="">Valanghe</name>
+                <query>searchText=isPartOf:Valanghe</query>
+        </item>
+-->
+    </item>
+</tree>
