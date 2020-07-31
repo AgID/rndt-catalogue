@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:targetName="gmd:CI_OnLineFunctionCode" 
+           g:i18nBase="catalog.iso19139.CI_OnLineFunctionCode" g:label="$i18nBase"
+           g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
+  <g:body>
+   
+    <!--
+	<g:attribute h:class="gxeDisplayNone" g:targetName="codeList" h:tag="div"
+      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode">
+			<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+		</g:attribute>-->
+		
+		
+		<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml" 
+		      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"/>
+			  
+			  
+    <g:attribute g:extends="$base/schema/gco/gcoBase/codeListValue.xml">
+      <g:body>
+        <g:input g:extends="$base/core/ui/InputSelectOne.xml">
+          <g:options>
+            <g:option g:label="$i18nBase.download" g:value="download" />
+            <g:option g:label="$i18nBase.information" g:value="information"/>
+            <g:option g:label="$i18nBase.offlineAccess" g:value="offlineAccess"/>
+            <g:option g:label="$i18nBase.order" g:value="order"/>
+            <g:option g:label="$i18nBase.search" g:value="search"/>
+          </g:options>
+        </g:input>
+      </g:body>          
+    </g:attribute>     
+     
+  </g:body> 
+</g:element>

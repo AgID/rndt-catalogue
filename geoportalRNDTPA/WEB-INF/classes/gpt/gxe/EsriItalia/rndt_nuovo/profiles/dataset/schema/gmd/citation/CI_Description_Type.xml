@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+		   xmlns:xlink="http://www.w3.org/1999/xlink" 
+		   xmlns:gmx="http://www.isotc211.org/2005/gmx">
+		   
+		   
+		  <g:element g:targetName="gmx:Anchor" g:minOccurs="0" g:maxOccurs="1"
+           g:extends="$base/xtn/ui/UI_Element.xml"
+		   g:label="$i18n.catalog.mdParam.rndt.dataset.description"
+		   g:info="$i18n.catalog.rdnt.dataset.hint.description" g:isIsoXlink="true">  
+				<g:body>
+					<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+						<g:options g:i18nBase="catalog.mdParam.rndt.distribution.onlineResources.onLineDescriptionCode">
+							<g:option g:link="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint" g:value="$i18nBase.accessPoint" g:label="$i18nBase.accessPoint"/>
+							<g:option g:link="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/endPoint" g:value="$i18nBase.endPoint" g:label="$i18nBase.endPoint"/>
+						</g:options>
+					</g:input>
+				</g:body>
+			</g:element>
+</g:element>
