@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<dcat>
+	<!-- RNDT -->
+	<!-- Elimino i servizi -->
+	<fields schema="rndt-services">
+		  <field name="title" index="title" type="string" required="true"/>  
+	</fields>
+	<!-- Dataset, serie e raster -->
+	<fields schema="rndt-dataset,rndt-raster,rndt-series">
+	  <field name="title" index="title" type="string" required="true"/>  
+	  <field name="description" index="abstract" type="string" required="true"/>
+	  <field name="keyword" index="keywords" type="array" required="true"/>
+	  <!--<field name="modified" index="dcat.modified" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>-->
+	  <field name="modified" index="apiso.RevisionDate|apiso.PublicationDate|apiso.CreationDate" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>
+      <!--<field name="issued" index="dcat.issued"  isDate="true" type="date" dateFormat="yyyy-MM-dd" required="false"/>-->
+	  <field name="issued" index="apiso.CreationDate"  isDate="true" type="date" dateFormat="yyyy-MM-dd" required="false"/>	  
+	  <!--<field name="publisher" index="publisher" required="true"/>-->
+	  <field name="publisher" index="apiso.DataOrganizationName" required="true"/> 
+	  <!--<field name="contactPoint" index="dcat.person" required="true"/>-->
+	  <field name="contactPoint" index="apiso.OrganizationName" required="true"/> 
+	  <!-- Esri Italy - Tolto Dicembre 2018
+	  <field name="mbox"	index="dcat.mbox" required="true"/>
+	  -->
+	  <field name="identifier" required="true"/>  
+	  <!-- Esri Italy - Tolto Dicembre 2018
+	  <field name="accessLevel" index="dcat.accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  	  -->
+	  <!-- Esri Italy - Tolto Dicembre 2018
+	  <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  -->
+	  <!--<field name="bureauCode" index="dcat.bureauCode" type="array" required="true"/>-->
+	  <!-- Esri Italy - Tolto Dicembre 2018
+	  <field name="bureauCode" index="dcat.bureauCode" type="array" required="false"/>
+	  -->
+	  <!--<field name="programCode" index="dcat.programCode" type="array" required="true"/>-->
+	  	  <!-- Esri Italy - Tolto Dicembre 2018
+	  <field name="programCode" index="dcat.programCode" type="array" required="false"/>
+	  <field name="dataDictionary" index="dcat.dataDictionary"  />
+	  -->
+	  <field name="webService" index="resource.url" required="false"/> 
+	  <!--<field name="format" index="dcat.format" required="false"/>-->
+	  <field name="format" index="protocol" required="true"/>
+	  <!--<field name="license" index="dcat.license" required="false"/>-->
+	  <field name="license" index="apiso.ConditionApplyingToAccessAndUse" required="true"/>
+	  <field name="accessURL" index="resource.resturl|resource.wcsurl|resource.wmsurl|resource.wmtsurl" required="false"/>
+	  <field name="downloadURL" index="resource.wfsurl" required="true"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="timeperiod.l.0,timeperiod.u.0" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true" delimiter="/"/>
+      <!--<field name="theme" index="dataTheme" required="false" />-->
+      <field name="theme" index="INSPIRETheme" required="true">
+      	<map from="addresses|Addresses|Indirizzi|indirizzi" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="administrative units|Administrative units|unità amministrative|unità amministrative" to="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+		<map from="agricultural and aquaculture facilities|Agricultural and aquaculture facilities|impianti agricoli e di acquacoltura|Impianti agricoli e di acquacoltura" to="http://publications.europa.eu/resource/authority/data-theme/AGRI"/>
+		<map from="area management/restriction/regulation zones and reporting units|Area management/restriction/regulation zones and reporting units|zone sottoposte a gestione/limitazioni/regolamentazione e unità con obbligo di comunicare dati|Zone sottoposte a gestione/limitazioni/regolamentazione e unità con obbligo di comunicare dati" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="atmospheric conditions|Atmospheric conditions|condizioni atmosferiche|Condizioni atmosferiche" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="bio-geographical regions|Bio-geographical regions|regioni biogeografiche|Regioni biogeografiche" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="buildings|Buildings|Edifici|edifici" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="cadastral parcels|Cadastral parcels|parcelle catastali|Parcelle catastali" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="cadastral parcels|Cadastral parcels|parcelle catastali|Parcelle catastali" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="coordinate reference systems|Coordinate reference systems|sistemi di coordinate|Sistemi di coordinate" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="elevation|Elevation|elevazione|Elevazione" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="energy resources|Energy resources|risorse energetiche|Risorse energetiche" to="http://publications.europa.eu/resource/authority/data-theme/ENER"/>
+		<map from="environmental monitoring facilities|Environmental monitoring facilities|impianti di monitoraggio ambientale|Impianti di monitoraggio ambientale" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="geographical grid systems|Geographical grid systems|sistemi di griglie geografiche|Sistemi di griglie geografiche" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="geographical names|Geographical names|Nomi geografici|nomi geografici" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="geology|Geology|geologia|Geologia" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="habitats and biotopes|Habitats and biotopes|habitat e biotopi|Habitat e biotopi" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="human health and safety|Human health and safety|salute umana e sicurezza|Salute umana e sicurezza" to="http://publications.europa.eu/resource/authority/data-theme/HEAL"/>
+		<map from="hydrography|Hydrography|Idrografia|idrografia" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="hydrography|Hydrography|Idrografia|idrografia" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="land cover|Land cover|copertura del suolo|Copertura del suolo" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="land use|Land use|utilizzo del territorio|Utilizzo del territorio" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="land use|Land use|utilizzo del territorio|Utilizzo del territorio" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="meteorological geographical features|Meteorological geographical features|elementi geografici meteorologici|Elementi geografici meteorologici" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="meteorological geographical features|Meteorological geographical features|elementi geografici meteorologici|Elementi geografici meteorologici" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="mineral resources|Mineral resources|risorse minerarie|Risorse minerarie" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="natural risk zones|Natural risk zones|zone a rischio naturale|Zone a rischio naturale" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="oceanographic geographical features|Oceanographic geographical features|elementi geografici oceanografici|Elementi geografici oceanografici" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="orthoimagery|Orthoimagery|orto immagini|Orto immagini" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="population distribution — demography|Population distribution — demography|population distribution - demography|Population distribution - demography|distribuzione della popolazione - demografia|Distribuzione della popolazione - demografia|distribuzione della popolazione — demografia|Distribuzione della popolazione — demografia" to="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
+		<map from="production and industrial facilities|Production and industrial facilities|produzione e impianti industriali|Produzione e impianti industriali" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="protected sites|Protected sites|siti protetti|Siti protetti" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="sea regions|Sea regions|regioni marine|Regioni marine" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="soil|Soil|suolo|Suolo" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="species distribution|Species distribution|distribuzione delle specie|Distribuzione delle specie" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="statistical units|Statistical units|unità statistiche|Unità statistiche" to="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
+		<map from="transport networks|Transport networks|reti di trasporto|Reti di trasporto" to="http://publications.europa.eu/resource/authority/data-theme/TRAN"/>
+		<map from="utility and governmental services|Utility and governmental services|servizi di pubblica utilità e servizi amministrativi|Servizi di pubblica utilità e servizi amministrativi" to="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+      </field>
+      	<!-- ===-->
+      <field name="accrualPeriodicity" index="dcat.accrualPeriodicity"  required="false">
+        <map from="Decennial" to="R/P10Y"/>
+        <map from="Quadrennial" to="R/P4Y"/>
+        <map from="Annual|annually" to="R/P1Y"/>
+        <map from="Bimonthly" to="R/P2M"/>
+        <map from="Semiweekly" to="R/P3.5D"/>
+        <map from="Daily|daily" to="R/P1D"/>
+        <map from="Biweekly" to="R/P2W"/>
+        <map from="Semiannual" to="R/P6M"/>
+        <map from="Biennial|biannually" to="R/P2Y"/>
+        <map from="Triennial" to="R/P3Y"/>
+        <map from="Three times a week" to="R/P0.33W"/>
+        <map from="Three times a month" to="R/P0.33M"/>
+        <map from="Continuously updated|continual|Continually" to="R/PT1S"/>
+        <map from="Monthly|monthly" to="R/P1M"/>
+        <map from="Quarterly|quarterly" to="R/P3M"/>
+        <map from="Semimonthly|fortnightly" to="R/P0.5M"/>
+        <map from="Three times a year" to="R/P4M"/>
+        <map from="Weekly|weekly" to="R/P1W"/>
+        <map from="^R/P[^DWMYS]*[DWMYS]$" to="*"/>
+        <map from="asNeeded|notPlanned|unknown" to="irregular"/>
+        <map from=".*" to="irregular"/>
+      </field>
+	  	  <!-- Esri Italy - Tolto Dicembre 2018
+      <field name="isPartOf" index="sys.parentid"  required="false"/>
+      <field name="primaryITInvestmentUII" index="dcat.primaryITInvestmentUII"  required="false"/>
+      <field name="dataQuality" index="dcat.dataQuality"  required="false"/>
+      <field name="describedBy" index="dcat.describedBy"  required="false"/>
+      <field name="describedByType" index="dcat.describedByType"  required="false"/>
+	  -->
+      <field name="language" index="apiso.ResourceLanguage" type="string" required="false" />
+	  	  	  <!-- Esri Italy - Tolto Dicembre 2018
+      <field name="references" index="dcat.references" type="array" required="false"/>
+      <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  -->
+      <field name="landingPage" index="resource.url"  required="false"/>
+      <!-- distribution -->
+      <field name="distribution" index="resource.url" type="array" required="true"/>
+
+	</fields>
+ <!-- ====== FINE RNDT ===== -->
+    <fields schema="data-gov">
+	  <field name="title" index="title" type="string" required="true"/>  
+	  <field name="description" index="abstract" type="string" required="true"/>
+	  <field name="keyword" index="dataTheme" type="array" required="true"/>
+	  <field name="modified" index="dateModified" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>
+	  <field name="publisher" index="publisher" required="true"/>
+	  <field name="contactPoint" index="dcat.person" required="true"/>
+	  <field name="mbox"	index="dcat.mbox" required="true"/>
+	  <field name="identifier" required="true"/>  
+	  <field name="accessLevel" index="accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  <field name="bureauCode" index="bureauCode" type="array" required="true"/>
+	  <field name="programCode" index="programCode" type="array" required="true"/>
+      <!--
+      webService: deprecated in DCAT1.1; kept for backward compatibility with older version.
+      -->
+	  <field name="dataDictionary" index="dcat.dataDictionary"  />
+	  <field name="webService" index="resource.url" />
+	  <field name="format" index="dcat.format" required="true"/>
+	  <field name="license" index="dcat.license" required="true"/>
+	  <field name="accessURL" index="dcat.accessUrl" required="true"/>
+	  <field name="downloadURL" index="dcat.downloadUrl" required="true"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="timeperiod.l.0,timeperiod.u.0" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true" delimiter="/"/>
+	</fields>
+	<fields schema="others">
+	  <field name="title" index="title" type="string" required="true"/>  
+	  <field name="description" index="abstract" type="string" required="true"/>
+	  <field name="keyword" index="keywords" type="array" required="true"/>
+	  <field name="modified" index="dateModified" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>
+	  <field name="publisher" index="publisher" required="true"/>
+	  <field name="contactPoint" index="dcat.person" required="true"/>
+	  <field name="mbox"	index="dcat.mbox" required="true"/>
+	  <field name="identifier" required="true"/>  
+	  <field name="accessLevel" index="dcat.accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  <field name="bureauCode" index="bureauCode" type="array" required="true"/>
+	  <field name="programCode" index="programCode" type="array" required="true"/>
+	  <field name="dataDictionary" index="dcat.dataDictionary"  />
+      <!--
+      webService: deprecated in DCAT1.1; kept for backward compatibility with older version.
+      -->
+	  <field name="webService" index="resource.url" required="false"/> 
+	  <field name="format" index="dcat.format" required="false"/>
+	  <field name="license" index="dcat.license" required="false"/>
+	  <field name="accessURL" index="dcat.accessUrl" required="false"/>
+	  <field name="downloadURL" index="dcat.downloadUrl" required="true"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="timeperiod.l.0,timeperiod.u.0" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true" delimiter="/"/>
+	</fields>
+	<fields schema="dcat">
+	  <field name="title" index="title" type="string" required="true"/>  
+	  <field name="description" index="abstract" type="string" required="true"/>
+	  <field name="keyword" index="keywords" type="array" required="true"/>
+	  <!--<field name="modified" index="dcat.modified" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>-->
+	  <field name="modified" index="apiso.RevisionDate|apiso.PublicationDate|apiso.CreationDate" isDate="true" dateFormat="yyyy-MM-dd" type="date" delimiter="/" required="true"/>
+      <!--<field name="issued" index="dcat.issued"  isDate="true" type="date" dateFormat="yyyy-MM-dd" required="false"/>-->
+	  <field name="issued" index="apiso.CreationDate"  isDate="true" type="date" dateFormat="yyyy-MM-dd" required="false"/>	  
+	  <!--<field name="publisher" index="publisher" required="true"/>-->
+	  <field name="publisher" index="apiso.DataOrganizationName" required="true"/> <!-- verificare, perchè non inserita in file meanings -->
+	  <!--<field name="contactPoint" index="dcat.person" required="true"/>-->
+	  <field name="contactPoint" index="apiso.OrganizationName" required="true"/> <!-- verificare -->
+	  <field name="mbox"	index="dcat.mbox" required="true"/>
+	  <field name="identifier" required="true"/>  
+	  <field name="accessLevel" index="dcat.accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  <!--<field name="bureauCode" index="dcat.bureauCode" type="array" required="true"/>-->
+	  <field name="bureauCode" index="dcat.bureauCode" type="array" required="false"/>
+	  <!--<field name="programCode" index="dcat.programCode" type="array" required="true"/>-->
+	  <field name="programCode" index="dcat.programCode" type="array" required="false"/>
+	  <field name="dataDictionary" index="dcat.dataDictionary"  />
+	  <field name="webService" index="resource.url" required="false"/> 
+	  <!--<field name="format" index="dcat.format" required="false"/>-->
+	  <field name="format" index="apiso.Format" required="true"/>
+	  <!--<field name="license" index="dcat.license" required="false"/>-->
+	  <field name="license" index="apiso.ConditionApplyingToAccessAndUse" required="true"/>
+	  <field name="accessURL" index="dcat.accessUrl" required="false"/>
+	  <field name="downloadURL" index="dcat.downloadUrl" required="true"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="timeperiod.l.0,timeperiod.u.0" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true" delimiter="/"/>
+      <!--<field name="theme" index="dataTheme" required="false" />-->
+      <field name="theme" index="apiso.inspireSpatialDataThemes" required="true">
+      	<map from="addresses|Addresses|Indirizzi|indirizzi" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="administrative units|Administrative units|unità amministrative|unità amministrative" to="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+		<map from="agricultural and aquaculture facilities|Agricultural and aquaculture facilities|impianti agricoli e di acquacoltura|Impianti agricoli e di acquacoltura" to="http://publications.europa.eu/resource/authority/data-theme/AGRI"/>
+		<map from="area management/restriction/regulation zones and reporting units|Area management/restriction/regulation zones and reporting units|zone sottoposte a gestione/limitazioni/regolamentazione e unità con obbligo di comunicare dati|Zone sottoposte a gestione/limitazioni/regolamentazione e unità con obbligo di comunicare dati" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="atmospheric conditions|Atmospheric conditions|condizioni atmosferiche|Condizioni atmosferiche" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="bio-geographical regions|Bio-geographical regions|regioni biogeografiche|Regioni biogeografiche" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="buildings|Buildings|Edifici|edifici" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="cadastral parcels|Cadastral parcels|parcelle catastali|Parcelle catastali" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="cadastral parcels|Cadastral parcels|parcelle catastali|Parcelle catastali" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="coordinate reference systems|Coordinate reference systems|sistemi di coordinate|Sistemi di coordinate" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="elevation|Elevation|elevazione|Elevazione" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="energy resources|Energy resources|risorse energetiche|Risorse energetiche" to="http://publications.europa.eu/resource/authority/data-theme/ENER"/>
+		<map from="environmental monitoring facilities|Environmental monitoring facilities|impianti di monitoraggio ambientale|Impianti di monitoraggio ambientale" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="geographical grid systems|Geographical grid systems|sistemi di griglie geografiche|Sistemi di griglie geografiche" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="geographical names|Geographical names|Nomi geografici|nomi geografici" to="http://publications.europa.eu/resource/authority/data-theme/REGI"/>
+		<map from="geology|Geology|geologia|Geologia" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="habitats and biotopes|Habitats and biotopes|habitat e biotopi|Habitat e biotopi" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="human health and safety|Human health and safety|salute umana e sicurezza|Salute umana e sicurezza" to="http://publications.europa.eu/resource/authority/data-theme/HEAL"/>
+		<map from="hydrography|Hydrography|Idrografia|idrografia" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="hydrography|Hydrography|Idrografia|idrografia" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="land cover|Land cover|copertura del suolo|Copertura del suolo" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="land use|Land use|utilizzo del territorio|Utilizzo del territorio" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="land use|Land use|utilizzo del territorio|Utilizzo del territorio" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="meteorological geographical features|Meteorological geographical features|elementi geografici meteorologici|Elementi geografici meteorologici" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="meteorological geographical features|Meteorological geographical features|elementi geografici meteorologici|Elementi geografici meteorologici" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="mineral resources|Mineral resources|risorse minerarie|Risorse minerarie" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="natural risk zones|Natural risk zones|zone a rischio naturale|Zone a rischio naturale" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="oceanographic geographical features|Oceanographic geographical features|elementi geografici oceanografici|Elementi geografici oceanografici" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="orthoimagery|Orthoimagery|orto immagini|Orto immagini" to="http://publications.europa.eu/resource/authority/data-theme/TECH"/>
+		<map from="population distribution — demography|Population distribution — demography|population distribution - demography|Population distribution - demography|distribuzione della popolazione - demografia|Distribuzione della popolazione - demografia|distribuzione della popolazione — demografia|Distribuzione della popolazione — demografia" to="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
+		<map from="production and industrial facilities|Production and industrial facilities|produzione e impianti industriali|Produzione e impianti industriali" to="http://publications.europa.eu/resource/authority/data-theme/ECON"/>
+		<map from="protected sites|Protected sites|siti protetti|Siti protetti" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="sea regions|Sea regions|regioni marine|Regioni marine" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="soil|Soil|suolo|Suolo" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="species distribution|Species distribution|distribuzione delle specie|Distribuzione delle specie" to="http://publications.europa.eu/resource/authority/data-theme/ENVI"/>
+		<map from="statistical units|Statistical units|unità statistiche|Unità statistiche" to="http://publications.europa.eu/resource/authority/data-theme/SOCI"/>
+		<map from="transport networks|Transport networks|reti di trasporto|Reti di trasporto" to="http://publications.europa.eu/resource/authority/data-theme/TRAN"/>
+		<map from="utility and governmental services|Utility and governmental services|servizi di pubblica utilità e servizi amministrativi|Servizi di pubblica utilità e servizi amministrativi" to="http://publications.europa.eu/resource/authority/data-theme/GOVE"/>
+      </field>
+      	<!-- ===-->
+		<field name="accrualPeriodicity" index="dcat.accrualPeriodicity"  required="false">
+        <map from="Decennial" to="R/P10Y"/>
+        <map from="Quadrennial" to="R/P4Y"/>
+        <map from="Annual|annually" to="R/P1Y"/>
+        <map from="Bimonthly" to="R/P2M"/>
+        <map from="Semiweekly" to="R/P3.5D"/>
+        <map from="Daily|daily" to="R/P1D"/>
+        <map from="Biweekly" to="R/P2W"/>
+        <map from="Semiannual" to="R/P6M"/>
+        <map from="Biennial|biannually" to="R/P2Y"/>
+        <map from="Triennial" to="R/P3Y"/>
+        <map from="Three times a week" to="R/P0.33W"/>
+        <map from="Three times a month" to="R/P0.33M"/>
+        <map from="Continuously updated|continual|Continually" to="R/PT1S"/>
+        <map from="Monthly|monthly" to="R/P1M"/>
+        <map from="Quarterly|quarterly" to="R/P3M"/>
+        <map from="Semimonthly|fortnightly" to="R/P0.5M"/>
+        <map from="Three times a year" to="R/P4M"/>
+        <map from="Weekly|weekly" to="R/P1W"/>
+        <map from="^R/P[^DWMYS]*[DWMYS]$" to="*"/>
+        <map from="asNeeded|notPlanned|unknown" to="irregular"/>
+        <map from=".*" to="irregular"/>
+      </field>
+      <field name="isPartOf" index="sys.parentid"  required="false"/>
+      <field name="primaryITInvestmentUII" index="dcat.primaryITInvestmentUII"  required="false"/>
+      <field name="dataQuality" index="dcat.dataQuality"  required="false"/>
+      <field name="describedBy" index="dcat.describedBy"  required="false"/>
+      <field name="describedByType" index="dcat.describedByType"  required="false"/>
+      <field name="language" index="dcat.language" type="array" required="false" />
+      <field name="references" index="dcat.references" type="array" required="false"/>
+      <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+      <field name="landingPage" index="dcat.landingPage"  required="false"/>
+      <!-- distribution -->
+      <field name="distribution" index="dcat.distribution" type="array" required="true"/>  <!-- verificare, perchè non inserita in file meanings -->
+      <!-- =========== -->
+	</fields>
+	<fields schema="fgdc">
+	  <field name="title" index="title" required="true"/>  
+	  <field name="description" index="abstract" required="true"/>
+	  <field name="keyword" index="keywords" type="array" required="true"/>
+	  <field name="modified" index="dcat.modified;dcat.metd" isDate="true" type="date" dateFormat="yyyy-MM-dd" delimiter="/" required="true"/>
+	  <field name="publisher" index="dcat.publisher;dcat.org.org+dcat.org.per;dcat.per.org+dcat.per.per;dcat.publisher.origin" required="true" joinOperator=" "/>
+	  <field name="contactPoint" index="dcat.org.org+dcat.org.per;dcat.per.org+dcat.per.per;dcat.metc.org.org+dcat.metc.org.per;dcat.metc.per.org+dcat.metc.per.per" required="true" joinOperator=" "/>
+	  <field name="mbox" index="dcat.mbox;dcat.metc.mbox" required="true"/>
+	  <field name="identifier" required="true"/>  
+	  <field name="accessLevel" index="dcat.accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  <field name="accessLevelComment" index="dcat.accessLevelComment" maxChars="255" required="false"/>
+	  <field name="bureauCode" index="dcat.bureauCode" type="array" required="true"/>
+	  <field name="programCode" index="dcat.programCode" type="array" required="true"/>
+	  <field name="dataDictionary" index="dcat.dataDictionary" />
+      <!--
+      webService: deprecated in DCAT1.1; kept for backward compatibility with older version.
+      -->
+	  <field name="webService" index="dcat.webService" required="false"/> 
+      <!--
+	  <field name="accessURL" index="dcat.accessUrl" required="false"/>
+      -->
+	  <field name="accessURL" index="resource.url" required="false"/>
+	  <field name="downloadURL" index="dcat.downloadUrl" required="false"/>
+	  <field name="format" index="dcat.format" required="false"/>
+	  <field name="license" index="dcat.license" required="false"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="timeperiod.l.0,timeperiod.u.0" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true" delimiter="/"/>
+      <field name="references" index="dcat.references" type="array" required="false"/>
+      <field name="landingPage" index="dcat.landingPage"  required="false"/>
+      <field name="theme" index="dataTheme" required="false" />
+      <field name="accrualPeriodicity" index="dcat.accrualPeriodicity"  required="false">
+        <map from="Decennial" to="R/P10Y"/>
+        <map from="Quadrennial" to="R/P4Y"/>
+        <map from="Annual|annually" to="R/P1Y"/>
+        <map from="Bimonthly" to="R/P2M"/>
+        <map from="Semiweekly" to="R/P3.5D"/>
+        <map from="Daily|daily" to="R/P1D"/>
+        <map from="Biweekly" to="R/P2W"/>
+        <map from="Semiannual" to="R/P6M"/>
+        <map from="Biennial|biannually" to="R/P2Y"/>
+        <map from="Triennial" to="R/P3Y"/>
+        <map from="Three times a week" to="R/P0.33W"/>
+        <map from="Three times a month" to="R/P0.33M"/>
+        <map from="Continuously updated|continual|Continually" to="R/PT1S"/>
+        <map from="Monthly|monthly" to="R/P1M"/>
+        <map from="Quarterly|quarterly" to="R/P3M"/>
+        <map from="Semimonthly|fortnightly" to="R/P0.5M"/>
+        <map from="Three times a year" to="R/P4M"/>
+        <map from="Weekly|weekly" to="R/P1W"/>
+        <map from="^R/P[^DWMYS]*[DWMYS]$" to="*"/>
+        <map from="asNeeded|notPlanned|unknown" to="irregular"/>
+        <map from=".*" to="irregular"/>
+      </field>
+      <field name="isPartOf" index="sys.parentid"  required="false"/>
+	</fields>
+	<fields schema="iso-19115,iso-19119,iso19115-2,gemini-iso-19115,gemini-iso-19119,inspire-iso-19115,inspire-iso-19119"> 
+	  <field name="title" index="title"  required="true"/>  
+	  <field name="description" index="abstract" required="true"/>
+	  <field name="keyword" index="keywords" type="array" required="true"/>
+	  <field name="modified" index="apiso.RevisionDate" isDate="true" type="date" dateFormat="yyyy-MM-dd" required="true"/>
+	  <field name="publisher" index="dcat.publisher" required="true"/>
+	  <field name="contactPoint" index="dcat.person" required="true"/>
+	  <field name="mbox" index="dcat.mbox" required="true"/>
+	  <field name="identifier" required="true"/> 
+	  <field name="accessLevel" index="dcat.accessLevel" required="true">
+        <map from="High Confidentiality|Non-public|Secret|Top Secret" to="non-public"/>
+        <map from="Medium Confidentiality|Restricted|Confidential|Sensitive" to="restricted public"/>
+        <map from="No Confidentiality|Unclassified" to="public"/>
+        <map from=".*" to="public"/>
+      </field>
+	  <field name="accessLevelComment" index="apiso.AccessConstraints;dcat.accessLevelComment" maxChars="255" required="false"/>
+	  <field name="bureauCode" index="dcat.bureauCode" type="array" required="true"/>
+	  <field name="programCode" index="dcat.programCode" type="array" required="true"/>
+	  <field name="dataDictionary" index="dcat.dataDictionary" />
+      <!--
+      webService: deprecated in DCAT1.1; kept for backward compatibility with older version.
+      -->
+	  <field name="webService" index="resource.url" required="false"/>
+      <field name="accessURL" index="dcat.accessUrl" required="false">
+        <!-- examples of MIME type matching
+        <media url=".+(\&|\?)service=.*" mime="application/xml"/>
+        <media url=".+/rest/service.*" mime="application/json"/>
+        -->
+      </field>
+      <field name="downloadURL" index="dcat.downloadUrl" required="false">
+        <!-- examples of MIME type matching
+        <media url=".+\.pdf$" mime="application/pdf"/>
+        <media url=".+\.kmz$" mime="application/vnd.google-earth.kmz"/>
+        <media url=".+\.doc$" mime="application/vnd.ms-word.document.macroEnabled.12"/>
+        -->
+      </field>
+	  <field name="format" index="apiso.Format" required="false"/>
+	  <field name="license" index="dcat.license"  required="false"/>
+	  <field name="spatial" index="envelope.minx,envelope.miny,envelope.maxx,envelope.maxy" required="true"/>
+	  <field name="temporal" index="apiso.TempExtent_begin,apiso.TempExtent_end" required="true" isDate="true" type="date" dateFormat="yyyy-MM-dd" delimiter="/"/>
+      <field name="issued" index="dcat.issued"  isDate="true" type="date" dateFormat="yyyy-MM-dd" required="false"/>	
+      <field name="accrualPeriodicity" index="dcat.accrualPeriodicity"  required="false">
+        <map from="Decennial" to="R/P10Y"/>
+        <map from="Quadrennial" to="R/P4Y"/>
+        <map from="Annual|annually" to="R/P1Y"/>
+        <map from="Bimonthly" to="R/P2M"/>
+        <map from="Semiweekly" to="R/P3.5D"/>
+        <map from="Daily|daily" to="R/P1D"/>
+        <map from="Biweekly" to="R/P2W"/>
+        <map from="Semiannual" to="R/P6M"/>
+        <map from="Biennial|biannually" to="R/P2Y"/>
+        <map from="Triennial" to="R/P3Y"/>
+        <map from="Three times a week" to="R/P0.33W"/>
+        <map from="Three times a month" to="R/P0.33M"/>
+        <map from="Continuously updated|continual|Continually" to="R/PT1S"/>
+        <map from="Monthly|monthly" to="R/P1M"/>
+        <map from="Quarterly|quarterly" to="R/P3M"/>
+        <map from="Semimonthly|fortnightly" to="R/P0.5M"/>
+        <map from="Three times a year" to="R/P4M"/>
+        <map from="Weekly|weekly" to="R/P1W"/>
+        <map from="^R/P[^DWMYS]*[DWMYS]$" to="*"/>
+        <map from="asNeeded|notPlanned|unknown" to="irregular"/>
+        <map from=".*" to="irregular"/>
+      </field>
+      <field name="language" index="dcat.language" type="array" required="false" />
+      <field name="dataQuality" index="dcat.dataQuality"  required="false"/>
+      <field name="theme" index="apiso:Topiccategory" required="false" />
+      <field name="references" index="dcat.references" type="array" required="false"/>
+      <field name="size" index="dcat.size"  required="false"/>
+      <field name="landingPage" index="dcat.landingPage"  required="false"/>
+      <field name="isPartOf" index="sys.parentid"  required="false"/>
+	</fields>
+
+</dcat>

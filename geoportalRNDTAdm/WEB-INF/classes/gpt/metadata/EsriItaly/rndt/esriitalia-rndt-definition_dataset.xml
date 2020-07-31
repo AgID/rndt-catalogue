@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ See the NOTICE file distributed with
+ this work for additional information regarding copyright ownership.
+ Esri Inc. licenses this file to You under the Apache License, Version 2.0
+ (the "License"); you may not use this file except in compliance with
+ the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<schema 
+    key="rndt-dataset" 
+    cswOutputSchema="http://www.isotc211.org/2005/gmd" 
+    cswBriefXslt="gpt/metadata/iso/apiso-brief.xslt" 
+    cswSummaryXslt="gpt/metadata/iso/apiso-summary.xslt"
+    schematronSch="gpt/gxe/EsriItalia/rndt/profiles/dataset/RNDT_schematron_rules_dataset.xml"
+    xsdLocation="http://www.isotc211.org/2005/gmd/metadataEntity.xsd[GML32] http://schemas.opengis.net/iso/19139/20070417/gmd/metadataEntity.xsd"
+    detailsXslt="gpt/metadata/EsriItaly/rndt/rndt-details_dataset.xslt">
+  	
+	<!-- schema label -->
+	<label resourceKey="catalog.mdParam.schema.rndt.dataset"/>
+	
+	<!-- schema namespaces -->
+	<namespace prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
+	<namespace prefix="gco" uri="http://www.isotc211.org/2005/gco"/>
+	<namespace prefix="gml" uri="http://www.opengis.net/gml"/>
+	
+	<!-- schema interrogation -->
+	<!-- <interrogation count="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification)"/> -->
+	<interrogation count="(count(/gmd:MD_Metadata/gmd:metadataStandardName[contains(gco:CharacterString,'RNDT')]) * count(/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode[@codeListValue = 'dataset']) * count(/gmd:MD_Metadata[not(gmd:contentInfo)]))" />
+
+	
+	<!-- indexables -->
+	<indexables fileName="gpt/metadata/EsriItaly/rndt/rndt-apiso-indexables.xml"/>
+	
+  <!-- Geopoprtal XML editor -->
+   <editor fileName="gpt/gxe/EsriItalia/rndt/profiles/dataset/esriitalia-iso19139-dataset-editor.xml"/>
+	
+	
+
+</schema>
+
+
