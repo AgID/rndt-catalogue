@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!--  simplified metadata contact gmd:MD_Metadata/gmd:contact -->      
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+		   xmlns:xlink="http://www.w3.org/1999/xlink" 
+		   xmlns:gmx="http://www.isotc211.org/2005/gmx"
+           g:minOccurs="1" g:maxOccurs="unbounded"
+           g:targetName="transferOptions"
+           g:extends="$base/xtn/ui/UI_Element.xml"> 
+	<g:body>
+		<!-- online transfer options -->
+
+		<g:element g:targetName="gmd:MD_DigitalTransferOptions" g:minOccurs="1" g:maxOccurs="1"
+                           h:tag="div" g:jsClass="gxe.control.Element"> 
+			<g:element g:targetName="gmd:onLine" g:minOccurs="1" g:maxOccurs="1"
+                                   g:extends="$base/xtn/ui/UI_Element.xml">
+				<g:body>
+
+					<g:element g:targetName="gmd:CI_OnlineResource" g:minOccurs="1" g:maxOccurs="1"
+                                                   g:i18nBase="catalog.iso19139.CI_OnlineResource"
+                                                   h:tag="div" g:jsClass="gxe.control.Element"> 
+
+						<g:element g:info="$i18n.catalog.rdnt.dataset.hint.onlineUrlD" g:targetName="gmd:linkage" g:minOccurs="1" g:maxOccurs="1"
+                                                           g:extends="$base/schema/gmd/citation/URL_PropertyType.xml"/>
+
+						<g:element g:targetName="gmd:protocol" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:fixedValue="">
+							<g:element g:label="$i18n.catalog.mdParam.rndt.dataset.protocol" g:info="$i18n.catalog.rdnt.dataset.hint.protocol" g:isIsoXlink="true" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml">
+								<g:body>
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options g:i18nBase="catalog.mdParam.rndt.distribution.onlineResources.protocol">
+											<g:option g:link = "$i18nBase.wmsLink" g:value="$i18nBase.wmsValue" g:label="$i18nBase.wmsLabel"/>
+											<g:option g:link = "$i18nBase.wfsLink" g:value="$i18nBase.wfsValue" g:label="$i18nBase.wfsLabel"/>
+											<g:option g:link = "$i18nBase.cswLink" g:value="$i18nBase.cswValue" g:label="$i18nBase.cswLabel"/>
+											<g:option g:link = "$i18nBase.atomLink" g:value="$i18nBase.atomValue" g:label="$i18nBase.atomLabel"/>
+											<g:option g:link = "$i18nBase.wcsLink" g:value="$i18nBase.wcsValue" g:label="$i18nBase.wcsLabel"/>
+											<g:option g:link = "$i18nBase.sosLink" g:value="$i18nBase.sosValue" g:label="$i18nBase.sosLabel"/>
+											<g:option g:link = "$i18nBase.wmtsLink" g:value="$i18nBase.wmtsValue" g:label="$i18nBase.wmtsLabel"/>
+											<g:option g:link = "$i18nBase.downloadLink" g:value="$i18nBase.downloadValue" g:label="$i18nBase.downloadLabel"/>
+											<g:option g:link = "$i18nBase.linkLink" g:value="$i18nBase.linkValue" g:label="$i18nBase.linkLabel"/>
+										</g:options>
+									</g:input>
+								</g:body>
+							</g:element>
+						</g:element>						
+						
+						<g:element g:targetName="gmd:applicationProfile" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:fixedValue="">
+							<g:element g:label="$i18n.catalog.mdParam.rndt.dataset.applicationProfile" g:info="$i18n.catalog.rdnt.dataset.hint.applicationProfile" g:isIsoXlink="true" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml">
+								<g:body>
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options g:i18nBase="catalog.mdParam.rndt.distribution.onlineResources.spatialDataServiceType">
+											<g:option g:link="$i18nBase.otherLink" g:value="$i18nBase.otherValue" g:label="$i18nBase.otherLabel"/>
+											<g:option g:link="$i18nBase.viewLink" g:value="$i18nBase.viewValue" g:label="$i18nBase.viewLabel"/>
+											<g:option g:link="$i18nBase.transformationLink" g:value="$i18nBase.transformationValue" g:label="$i18nBase.transformationLabel"/>
+											<g:option g:link="$i18nBase.discoveryLink" g:value="$i18nBase.discoveryValue" g:label="$i18nBase.discoveryLabel"/>
+											<g:option g:link="$i18nBase.downloadLink" g:value="$i18nBase.downloadValue" g:label="$i18nBase.downloadLabel"/>
+										</g:options>
+									</g:input>
+								</g:body>
+							</g:element>
+						</g:element>
+
+						<g:element g:targetName="gmd:description" h:tag="div" g:minOccurs="1" g:maxOccurs="1" g:fixedValue="">
+							<g:element g:label="$i18n.catalog.mdParam.rndt.dataset.description" g:info="$i18n.catalog.rdnt.dataset.hint.description" g:isIsoXlink="true" g:targetName="gmx:Anchor" g:extends="$base/xtn/ui/UI_Element.xml">
+								<g:body>
+									<g:input g:extends="$base/core/ui/InputSelectOne.xml">
+										<g:options g:i18nBase="catalog.mdParam.rndt.distribution.onlineResources.onLineDescriptionCode">
+											<g:option g:link="$i18nBase.accessPointLink" g:value="$i18nBase.accessPointValue" g:label="$i18nBase.accessPointLabel"/>
+											<g:option g:link="$i18nBase.endPointLink" g:value="$i18nBase.endPointValue" g:label="$i18nBase.endPointLabel"/>
+										</g:options>
+									</g:input>
+								</g:body>
+							</g:element>
+						</g:element>
+					</g:element>
+				</g:body>
+			</g:element>
+		</g:element>
+
+	</g:body>
+</g:element>
+

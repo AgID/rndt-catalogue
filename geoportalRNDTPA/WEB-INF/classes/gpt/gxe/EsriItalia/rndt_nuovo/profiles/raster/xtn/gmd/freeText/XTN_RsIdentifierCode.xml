@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+    xmlns:h="http://www.esri.com/geoportal/gxe/html"
+    g:targetName="gmd:code" 
+    g:i18nBase="catalog.mdCode.MD_ReferenceSystemCode" g:label="$i18nBase.code"
+    g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
+    <g:body>
+        
+        <g:attribute g:extends="$base/schema/gco/gcoBase/codeSpace.xml" g:value=""/>
+		
+        <g:attribute g:extends="$base/schema/gco/gcoBase/codeListValue.xml">
+            <g:body>
+                <g:input g:extends="$base/core/ui/InputSelectOne.xml">
+                    <g:options g:i18nBase="catalog.mdCode.MD_ReferenceSystemCode">
+                        <g:option g:value="WGS84" g:label="$i18nBase.wgs84" g:selected="true"/>
+                        <g:option g:value="ETRS89"  
+                            g:label="$i18nBase.etrs89"/>
+                        <g:option g:value="ETRS89/ETRS-LAEA"  
+                            g:label="$i18nBase.etrs89_etrs-laea"/>
+                        <g:option g:value="ETRS89/ETRS-LCCA"  
+                            g:label="$i18nBase.etrs89_etrs-lcc"/>          
+                        <g:option g:value="ETRS89/ETRS-TM32"  
+                            g:label="$i18nBase.etrs89_etrs-tm32"/>
+                        <g:option g:value="ETRS89/ETRS-TM33"  
+                            g:label="$i18nBase.etrs89_etrs-tm33"/>
+                        <g:option g:value="ROMA40/EST"  
+                            g:label="$i18nBase.roma40_est"/>
+                        <g:option g:value="ROMA40/OVEST"  
+                            g:label="$i18nBase.roma40_ovest"/>
+                        <g:option g:value="ED50/UTM 32N"  
+                            g:label="$i18nBase.ed50_utm32n"/>
+                        <g:option g:value="ED50/UTM 33N"  
+                            g:label="$i18nBase.ed50_utm33n"/>
+                        <g:option g:value="IGM95/UTM 32N"  
+                            g:label="$i18nBase.igm95_utm32n"/>
+                        <g:option g:value="IGM95/UTM 33N"  
+                            g:label="$i18nBase.igm95_utm33n"/>
+                        <g:option g:value="WGS84/UTM 32N"  
+                            g:label="$i18nBase.wgs84_utm32n"/>
+                        <g:option g:value="WGS84/UTM 33N"  
+                            g:label="$i18nBase.wgs84_utm33n"/>
+                        <g:option g:value="WGS84/UTM 34N"  
+                            g:label="$i18nBase.wgs84_utm34n"/>        
+                        <g:option g:value="BESSEL/Cassini-Soldner"  
+                            g:label="$i18nBase.bessel_cassini-soldner"/>   
+                        <g:option g:value="BESSEL/Sanson-Flamsteed"  
+                            g:label="$i18nBase.bessel_sanson-flamsteed"/>
+                        <g:option g:value="CATASTO/Locale"  
+                            g:label="$i18nBase.catasto_locale"/>
+                        <g:option g:value="ROMA40"  
+                            g:label="$i18nBase.roma40"/>
+                        <g:option g:value="ROMA40/ROMA"  
+                            g:label="$i18nBase.roma40_roma"/>
+                        <g:option g:value="ED50"  
+                            g:label="$i18nBase.ed50"/>
+                        <g:option g:value="IGM95"  
+                            g:label="$i18nBase.igm95"/>
+                        <g:option g:value="Rete Altimetrica Nazionale"  
+                            g:label="$i18nBase.rete_altimetrica_nazionale"/>
+                        <g:option g:value="WGS84/3D"  
+                            g:label="$i18nBase.wgs84_3d"/>
+                        <g:option g:value="ITRS"  
+                            g:label="$i18nBase.itrs"/>
+                        <g:option g:value="ITRFxx"  
+                            g:label="$i18nBase.itrfxx"/>
+                        <g:option g:value="IGSxx"  
+                            g:label="$i18nBase.igsxx"/>
+                        <g:option g:value="IGb00"  
+                            g:label="$i18nBase.igb00"/>
+                        <g:option g:value="ETRF89"  
+                            g:label="$i18nBase.etrf89"/>
+                        <g:option g:value="ETRF00"  
+                            g:label="$i18nBase.etrf00"/>
+                        <g:option g:value="ETRS89/UTM-zone32N"  
+                            g:label="$i18nBase.etrs89_utm-zone32N"/>
+                        <g:option g:value="ETRS89/UTM-zone33N"  
+                            g:label="$i18nBase.etrs89_utm-zone33N"/>
+                        <g:option g:value="Livello medio delle basse maree sizigiali"  
+                            g:label="$i18nBase.livellomediobassemareesigiziali"/>
+                        <g:option g:value="Livello medio delle alte maree sizigiali"  
+                            g:label="$i18nBase.livellomedioaltemareesigiziali"/>
+                        <g:option g:value="Livello medio lago"  
+                            g:label="$i18nBase.livellomediolago"/>
+                    </g:options>
+                </g:input>
+            </g:body>          
+        </g:attribute>     
+        
+    </g:body> 
+</g:element>
