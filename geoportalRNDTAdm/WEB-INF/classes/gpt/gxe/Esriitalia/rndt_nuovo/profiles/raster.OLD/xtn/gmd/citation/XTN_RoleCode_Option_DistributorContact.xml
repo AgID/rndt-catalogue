@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?> 
-<g:options xmlns:g="http://www.esri.com/geoportal/gxe" 
-           xmlns:h="http://www.esri.com/geoportal/gxe/html"
-           g:i18nBase="catalog.iso19139.CI_RoleCode">
-	<g:option g:label="$i18nBase.distributor" g:value="distributor" g:selected="true"/>
-</g:options>
- 
