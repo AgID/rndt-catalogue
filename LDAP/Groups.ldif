@@ -1,0 +1,26 @@
+version: 1
+
+dn: cn=gpt_administrators,ou=Groups,ou=People,dc=RNDT,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: gpt_administrators
+uniqueMember: cn=gptadmin,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=utente1nome.utente1cognome,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=admin,ou=Users,ou=People,dc=RNDT,dc=com
+
+dn: cn=gpt_publishers,ou=Groups,ou=People,dc=RNDT,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: gpt_publishers
+uniqueMember: cn=utente1nome.utente1cognome,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=utente2nome.utente2cognome,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=admin,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=gptpublisher,ou=Users,ou=People,dc=RNDT,dc=com
+
+
+dn: cn=gpt_registeredUsers,ou=Groups,ou=People,dc=RNDT,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+cn: gpt_registeredUsers
+uniqueMember: cn=gptuser,ou=Users,ou=People,dc=RNDT,dc=com
+

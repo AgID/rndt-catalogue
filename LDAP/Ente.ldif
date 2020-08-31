@@ -1,0 +1,20 @@
+version: 1
+
+dn: cn=esempioente1,ou=Ente,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: esempioente1
+uniqueMember: cn=utente1nome.utente1cognome,ou=Users,ou=People,dc=RNDT,dc=com
+uniqueMember: cn=utente2nome.utente2cognome,ou=Users,ou=People,dc=RNDT,dc=com
+o: CODENTE1
+ou: NOME ENTE 1
+uniqueMember: cn=utente1nome.utente1cognome,ou=Users,ou=People,dc=RNDT,dc=com
+
+dn: cn=esempioente2,ou=Ente,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: groupOfUniqueNames
+cn: esempioente2
+uniqueMember: cn=admin,ou=Users,ou=People,dc=RNDT,dc=com
+o: CODENTE2
+ou: NOME ENTE 2
+uniqueMember: cn=admin,ou=Users,ou=People,dc=RNDT,dc=com

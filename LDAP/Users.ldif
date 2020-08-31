@@ -1,0 +1,84 @@
+version: 1
+
+dn: cn=utente1nome.utente1cognome,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: utente1nome.utente1cognome
+sn: utente1cognome
+businessCategory: Settore Esempio
+displayName: utente1nome
+l: Roma
+labeledURI: http://sitoweb.esempio.it
+mail: utente1@mail.it
+o: NOME ENTE 1
+st: ROMA
+street: Via di esempio
+telephoneNumber: 5678
+title: Dott.
+uid: utente1nome utente1cognome
+userPassword:: cHJvdmE=
+
+dn: cn=utente2nome.utente2cognome,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: utente2nome.utente2cognome
+sn: utente2cognome
+displayName: utente2nome
+mail: utente2@mail.it
+uid: utente2nome utente2cognome
+userPassword:: ttJ7a7avdmE=
+
+dn: cn=admin,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: admin
+sn: Sistema
+displayName: Amministratore
+mail: admin@info.it
+o: NOME ENTE 2
+uid: Amministratore Sistema
+userPassword:: ZXNyaWffffl0YWxpYQ==
+
+dn: cn=gptadmin,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+cn: gptadmin
+sn: gptadmin
+mail: gptadmin@info.it
+o: gptadmin
+uid: gptadmin
+userPassword:: e1NIsdfs48addddsasjkasd6aG89
+
+dn: cn=gptpublisher,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+cn: gptpublisher
+sn: gptpublisher
+mail: gptpublisher@info.it
+o: ESRI gptpublisher
+uid: gptpublisher
+userPassword:: e1NIsdfs48asassasjkasd6assssjassRmhoZG89
+
+dn: cn=gptuser,ou=Users,ou=People,dc=RNDT,dc=com
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: organizationalPerson
+cn: gptuser
+sn: gptuser
+mail: gptuser@info.it
+o: ESRI gptuser
+uid: gptuser
+userPassword:: e1NIsdssssssssssjassRmhoZG89
+
+
