@@ -1,4 +1,4 @@
-# Manuale di installazione
+# Manuale di installazione e configurazione
 
 Questo manuale fornisce tutte le indicazioni utili per l'installazione e la configurazione dell'applicazione RNDT.
 
@@ -53,3 +53,60 @@ Le webapps da installare sotto Tomcat sono le seguenti:
 
 L&#39;installazione consiste nella copia delle webapp nella cartella ```&lt;tomcat&gt;/webapps```. La copia deve essere effettuata quando Tomcat è in stato di stop.
 
+## Configurazione Tomcat
+
+Tomcat non necessita di configurazioni particolari, ma sono da considerare le seguenti:
+
+- Tomcat 8.5 verifica continuamente la cache ed effettua di default molte segnalazioni nei log. Per evitarle va aumentata la dimensione della cache e messo a **SEVERE** il livello di segnalazione:
+
+  - in ```conf/context.xml```:
+  
+    ```xml
+    <Resources cachingAllowed="true" cacheMaxSize="100000"/>
+    ```
+  - in ```conf/logging.properties```:
+  
+    ```txt
+    org.apache.catalina.webresources.Cache.level = SEVERE
+    ```
+    
+- Per gestire le chiamate ad altri siti in Tomcat va abilitato il CORS su tutti i metodi.
+  - ```conf/web.xml```:
+  
+```xml
+<filter>
+  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+  <init-param>
+    <param-name>cors.allowed.origins</param-name>
+    <param-value>*</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.allowed.methods</param-name>
+    <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+  </init-param>
+</filter>
+```
+
+## Configurazione webapps
+
+Le webapp applicative sono il motore di gestione dei metadati. Le due webapp, [```geoportalRNDTPA```](../geoportalRNDTPA/) e [```geoportalRNDTAdm```](../geoportalRNDTAdm/), sono uguali, a parte le seguenti differenze:
+
+- ```META-INF/context.xml``` per il nome della webapp;
+- ```WEB-INF/classes/logging.properties``` per il nome del log file (ed eventualmente il livello);
+- ```WEB-INF/classes/gpt/config/gpt.xml``` per il parametro catalog.list.version, il reverseproxy e i protocolli attivati;
+- ```WEB-INF/classes/gpt/metadata/schemas.xml``` per gli schemi attivati;
+- ```WEB-INF/classes/gpt/metadata/dc/dc-definition.xml``` per l&#39;editabilità dello schema;
+- ```catalog/harvest/harvestBody.jsp``` per le differenti opzioni sui cataloghi.
+
+La scelta di quale webapp lanciare dipende dal ruolo collegato al login: se il ruolo è di tipo amministrativo, allora viene lanciata [```geoportalRNDTAdm```](../geoportalRNDTAdm/), altrimenti [```geoportalRNDTPA```](../geoportalRNDTPA/).
+
+Dato che la webapp [```geoportalRNDTAdm```](../geoportalRNDTAdm/) è più completa, se non si ha la necessità di separare la parte amministrativa da quella per gli Enti che devono documentare i metadati nel catalogo, è possibile utilizzare anche solo questa applicazione, modificando opportunamente il file ```configuration.php``` di Joomla e il file di configurazione ```gpt.xml``` settando a _true_ il parametro di aggiornamento dell&#39;indice Lucene.
+
+I file da configurare sono:
+
+- ```&lt;geoportalwebapp&gt;/WEB-INF/classes/gpt/config/gpt.xml```:
+  Contiene tutti i parametri di configurazione, tra cui l&#39;accesso al server LDAP
+- ```&lt;geoportalwebapp&gt;/META-INF/context.xml```:
+  Contiene i parametri di connessione al DB
+
+Nel seguito verranno descritti solo i parametri che sono specifici nell&#39;ambito del progetto RNDT2; per tutti gli altri, così come per tutte le altre configurazioni, si rimanda alla documentazione presente sul sito [https://github.com/Esri/geoportal-server](https://github.com/Esri/geoportal-server).
