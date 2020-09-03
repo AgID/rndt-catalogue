@@ -46,10 +46,10 @@ Si consiglia di creare un utente specifico per il DB dei metadati, ad esempio un
 
 ## Installazione webapp
 
-Le webapps da installare sotto tomcat sono le seguenti:
+Le webapps da installare sotto Tomcat sono le seguenti:
 
 - [```geoportalRNDTPA```](../geoportalRNDTPA/)
 - [```geoportalRNDTAdm```](../geoportalRNDTAdm/)
 
-L&#39;installazione consiste nella copia delle webapp nella cartella &lt;tomcat&gt;/webapps. La copia deve essere effettuata quando Tomcat è in stato di stop.
+L&#39;installazione consiste nella copia delle webapp nella cartella ```&lt;tomcat&gt;/webapps```. La copia deve essere effettuata quando Tomcat è in stato di stop.
 
