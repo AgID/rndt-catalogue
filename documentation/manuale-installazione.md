@@ -129,10 +129,10 @@ Si consiglia di scorrere con attenzione il file ```<geoportalwebapp>/WEB-INF/cla
     
  - **Indice Lucene** (percorso assoluto o relativo):
 
-  ``` txt
-  <lucene
-    indexLocation="C:\geoportale\LuceneIndex\catalog"
-  ```
+    ``` txt
+    <lucene
+      indexLocation="C:\geoportale\LuceneIndex\catalog"
+    ```
   
   ### context.xml
 
