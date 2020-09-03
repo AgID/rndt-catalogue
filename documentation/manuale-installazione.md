@@ -146,12 +146,58 @@ Nel file ```context.xml``` sono presenti i parametri per la connessione al DB:
 
 dove:
 
-```docBase```="<nome della webapp>"
+```docBase```="&lt;nome della webapp&gt;"
 
-```path```="/<nome della webapp>"
+```path```="/&lt;nome della webapp&gt;"
 
 ```password```="<password di connessione al db per l&#39;utente gestore dei metadati>"
 
-```url```= …3306/<nome dello schema del db>
+```url```= …3306/<nome dello schema del db&gt;
 
 ``username``="<nome dell&#39;utente gestore dei metadati>"
+
+## Test
+
+Ogni componente può essere testato separatamente, in modo da individuare eventuali errori.
+
+### PHP
+
+Per il test del PHP è di uso comune utilizzare la seguente funzione:
+
+```php
+<?php
+// Show all information, defaults to INFO\_ALL
+phpinfo();
+?>
+```
+
+Creando un file testPHP.php e lanciandolo da browser, il browser deve mostrare una pagina con tuti i settaggi del PHP.
+
+### Webapps
+
+Per le webapp, si consiglia di effettuare i test richiamando direttamente Tomcat sulla porta 8080, richiamando le pagine:
+
+geoportalRNDT*/catalog/identity/login.page
+
+Deve apparire la pagina di login:
+
+
+
+Inserire delle credenziali valide, registrate in LDAP; viene, quindi, visualizzata una pagina vuota.
+
+Richiamare, sulla stessa scheda del browser, la seguente pagina:
+
+geoportalRNDT*/catalog/publication/manageMetadata.page
+
+Deve apparire la pagina di gestione del catalogo:
+
+
+
+In questo caso il catalogo è correttamente configurato.
+
+Se appare il messaggio
+
+**Attenzione il catalogo risulta scollegato; effettuare un logout e poi nuovamente un Login**
+
+vuol dire che il login non ha avuto successo e questo può essere dovuto ad un login/password errato o ad un problema di comunicazione con LDAP.
+
