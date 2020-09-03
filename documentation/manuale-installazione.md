@@ -102,11 +102,38 @@ La scelta di quale webapp lanciare dipende dal ruolo collegato al login: se il r
 
 Dato che la webapp [```geoportalRNDTAdm```](../geoportalRNDTAdm/) è più completa, se non si ha la necessità di separare la parte amministrativa da quella per gli Enti che devono documentare i metadati nel catalogo, è possibile utilizzare anche solo questa applicazione, modificando opportunamente il file ```configuration.php``` di Joomla e il file di configurazione ```gpt.xml``` settando a _true_ il parametro di aggiornamento dell&#39;indice Lucene.
 
+Nel seguito verranno descritti solo i parametri che sono specifici nell&#39;ambito del progetto RNDT; per tutti gli altri, così come per tutte le altre configurazioni, si rimanda alla documentazione presente sul sito [https://github.com/Esri/geoportal-server](https://github.com/Esri/geoportal-server).
+
 I file da configurare sono i seguenti:
 
-- ```&lt;geoportalwebapp&gt;/WEB-INF/classes/gpt/config/gpt.xml```:
+- ```<geoportalwebapp>/WEB-INF/classes/gpt/config/gpt.xml```:
   Contiene tutti i parametri di configurazione, tra cui l&#39;accesso al server LDAP
-- ```&lt;geoportalwebapp&gt;/META-INF/context.xml```:
+- ```<geoportalwebapp>/META-INF/context.xml```:
   Contiene i parametri di connessione al DB
+  
+  ### gpt.xml
+  
+Si consiglia di scorrere con attenzione il file ```<geoportalwebapp>/WEB-INF/classes/gpt/config/gpt.xml``` per verificare le configurazioni presenti. Si riportano di seguito quelle che maggiormente dipendono dall&#39;applicazione che viene installata:
 
-Nel seguito verranno descritti solo i parametri che sono specifici nell&#39;ambito del progetto RNDT; per tutti gli altri, così come per tutte le altre configurazioni, si rimanda alla documentazione presente sul sito [https://github.com/Esri/geoportal-server](https://github.com/Esri/geoportal-server).
+- **Server di posta** utilizzato per le notifiche di harvesting completato: sostituire i valori dei parametri relativi ai dati del server (```smtpHost```), l&#39;utente mittente (```siteEmailAddress```) e le credenziali (```username``` e ```password``` in ```smtpAuth```):
+
+    ``` txt
+    smtpHost="server-posta.dominio.it"
+    smtpPort="25"
+    siteEmailAddress="posta@dominio.it"
+    <smtpAuth
+      username="user"
+      password="pass"
+      encrypted="false"/>
+    ```
+    
+ - **Indice Lucene** (percorso assoluto o relativo):
+
+  ``` txt
+  <lucene
+    indexLocation="C:\geoportale\LuceneIndex\catalog"
+  ```
+  
+  ### context.xml
+
+
