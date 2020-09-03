@@ -136,4 +136,22 @@ Si consiglia di scorrere con attenzione il file ```<geoportalwebapp>/WEB-INF/cla
   
   ### context.xml
 
+Nel file ```context.xml``` sono presenti i parametri per la connessione al DB:
 
+  ```xml
+  <Context crossContext="true" debug="0" docBase="geoportalRNDTAdm" path="/geoportalRNDTAdm" reloadable="true">
+    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1&" name="jdbc/gpt" password="xxxxxxxxx" type="javax.sql.DataSource" url="jdbc:mysql://macchinaDB:3306/geoportal?zeroDateTimeBehavior=convertToNull" username="user"/>
+  </Context>
+  ```
+
+dove:
+
+```docBase```="<nome della webapp>"
+
+```path```="/<nome della webapp>"
+
+```password```="<password di connessione al db per l&#39;utente gestore dei metadati>"
+
+```url```= …3306/<nome dello schema del db>
+
+``username``="<nome dell&#39;utente gestore dei metadati>"
