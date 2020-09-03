@@ -51,7 +51,7 @@ Le webapps da installare sotto Tomcat sono le seguenti:
 - [```geoportalRNDTPA```](../geoportalRNDTPA/)
 - [```geoportalRNDTAdm```](../geoportalRNDTAdm/)
 
-L&#39;installazione consiste nella copia delle webapp nella cartella ```&lt;tomcat&gt;/webapps```. La copia deve essere effettuata quando Tomcat è in stato di stop.
+L&#39;installazione consiste nella copia delle webapp nella cartella ```<tomcat>/webapps```. La copia deve essere effettuata quando Tomcat è in stato di stop.
 
 ## Configurazione Tomcat
 
@@ -102,11 +102,11 @@ La scelta di quale webapp lanciare dipende dal ruolo collegato al login: se il r
 
 Dato che la webapp [```geoportalRNDTAdm```](../geoportalRNDTAdm/) è più completa, se non si ha la necessità di separare la parte amministrativa da quella per gli Enti che devono documentare i metadati nel catalogo, è possibile utilizzare anche solo questa applicazione, modificando opportunamente il file ```configuration.php``` di Joomla e il file di configurazione ```gpt.xml``` settando a _true_ il parametro di aggiornamento dell&#39;indice Lucene.
 
-I file da configurare sono:
+I file da configurare sono i seguenti:
 
 - ```&lt;geoportalwebapp&gt;/WEB-INF/classes/gpt/config/gpt.xml```:
   Contiene tutti i parametri di configurazione, tra cui l&#39;accesso al server LDAP
 - ```&lt;geoportalwebapp&gt;/META-INF/context.xml```:
   Contiene i parametri di connessione al DB
 
-Nel seguito verranno descritti solo i parametri che sono specifici nell&#39;ambito del progetto RNDT2; per tutti gli altri, così come per tutte le altre configurazioni, si rimanda alla documentazione presente sul sito [https://github.com/Esri/geoportal-server](https://github.com/Esri/geoportal-server).
+Nel seguito verranno descritti solo i parametri che sono specifici nell&#39;ambito del progetto RNDT; per tutti gli altri, così come per tutte le altre configurazioni, si rimanda alla documentazione presente sul sito [https://github.com/Esri/geoportal-server](https://github.com/Esri/geoportal-server).
