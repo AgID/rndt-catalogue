@@ -32,6 +32,6 @@ La cartella di distribuzione contiene i seguenti file e cartelle:
   - [```geoportalRNDTAdm```](../geoportalRNDTAdm/)
     Webapp per la gestione amministrativa (ruolo di tipo &quot;administrator&quot;)
 
-**NOTA**: tutte le applicazioni sono in formato leggibile (PHP, Javascript, XML) quindi gli unici sorgenti necessari sono quelli java che costituiscono la libreria ```geoportalRNDT\*/WEB-INF/lib/geoportalRNDT.jar```.
+**NOTA**: tutte le applicazioni sono in formato leggibile (PHP, Javascript, XML) quindi gli unici sorgenti necessari sono quelli java che costituiscono la libreria ```geoportalRNDT*/WEB-INF/lib/geoportalRNDT.jar```.
 
 ## Creazione DB
