@@ -43,3 +43,13 @@ Gli script includono la creazione del database con nome **geoportal**; questo no
 Si consiglia di creare un utente specifico per il DB dei metadati, ad esempio un utente _geoportaluser_ con permessi &quot;full&quot; sullo schema. L&#39;utente e la password devono poi essere inserite nella configurazione delle webapp.
 
 **NOTA**: per funzionare correttamente, il database sistema deve contenere almeno un Ente e un Tipo Ente.
+
+## Installazione webapp
+
+Le webapps da installare sotto tomcat sono le seguenti:
+
+- [```geoportalRNDTPA```](../geoportalRNDTPA/)
+- [```geoportalRNDTAdm```](../geoportalRNDTAdm/)
+
+L&#39;installazione consiste nella copia delle webapp nella cartella &lt;tomcat&gt;/webapps. La copia deve essere effettuata quando Tomcat è in stato di stop.
+
