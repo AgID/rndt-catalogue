@@ -197,7 +197,7 @@ In questo caso il catalogo è correttamente configurato.
 
 Se appare il messaggio
 
-```**Attenzione il catalogo risulta scollegato; effettuare un logout e poi nuovamente un Login**```
+**```Attenzione il catalogo risulta scollegato; effettuare un logout e poi nuovamente un Login```**
 
 vuol dire che il login non ha avuto successo e questo può essere dovuto ad un login/password errato o ad un problema di comunicazione con LDAP.
 
