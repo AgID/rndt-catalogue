@@ -177,7 +177,7 @@ Creando un file testPHP.php e lanciandolo da browser, il browser deve mostrare u
 
 Per le webapp, si consiglia di effettuare i test richiamando direttamente Tomcat sulla porta 8080, richiamando le pagine:
 
-geoportalRNDT*/catalog/identity/login.page
+```geoportalRNDT*/catalog/identity/login.page```
 
 Deve apparire la pagina di login:
 
