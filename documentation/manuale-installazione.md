@@ -191,7 +191,7 @@ geoportalRNDT*/catalog/publication/manageMetadata.page
 
 Deve apparire la pagina di gestione del catalogo:
 
-
+![alt-text](images/login.png "login")
 
 In questo caso il catalogo è correttamente configurato.
 
