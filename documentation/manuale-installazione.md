@@ -181,7 +181,7 @@ geoportalRNDT*/catalog/identity/login.page
 
 Deve apparire la pagina di login:
 
-
+![alt-text](images/login.png "login")
 
 Inserire delle credenziali valide, registrate in LDAP; viene, quindi, visualizzata una pagina vuota.
 
@@ -191,13 +191,13 @@ geoportalRNDT*/catalog/publication/manageMetadata.page
 
 Deve apparire la pagina di gestione del catalogo:
 
-![alt-text](images/login.png "login")
+![alt-text](images/gestione-catalogo.png "gestione catalogo")
 
 In questo caso il catalogo è correttamente configurato.
 
 Se appare il messaggio
 
-**Attenzione il catalogo risulta scollegato; effettuare un logout e poi nuovamente un Login**
+```**Attenzione il catalogo risulta scollegato; effettuare un logout e poi nuovamente un Login**```
 
 vuol dire che il login non ha avuto successo e questo può essere dovuto ad un login/password errato o ad un problema di comunicazione con LDAP.
 
