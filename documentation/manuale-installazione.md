@@ -187,7 +187,7 @@ Inserire delle credenziali valide, registrate in LDAP; viene, quindi, visualizza
 
 Richiamare, sulla stessa scheda del browser, la seguente pagina:
 
-geoportalRNDT*/catalog/publication/manageMetadata.page
+```geoportalRNDT*/catalog/publication/manageMetadata.page```
 
 Deve apparire la pagina di gestione del catalogo:
 
