@@ -12,7 +12,7 @@ I requisiti minimi per eseguire il software sono i seguenti:
 
 ## Contenuto
 
-La cartella di distribuzione contiene i seguenti file e cartelle:
+Il repository contiene i seguenti file e cartelle:
 
 - DB
   - [```Database.sql```](../DB/Database.sql)
@@ -31,6 +31,8 @@ La cartella di distribuzione contiene i seguenti file e cartelle:
     Webapp per la gestione delle PA (ruolo di tipo &quot;publisher&quot;)
   - [```geoportalRNDTAdm```](../geoportalRNDTAdm/)
     Webapp per la gestione amministrativa (ruolo di tipo &quot;administrator&quot;)
+- [```documentation```](../documentation) 
+    Manuale di installazione e configurazione
 
 **NOTA**: tutte le applicazioni sono in formato leggibile (PHP, Javascript, XML) quindi gli unici sorgenti necessari sono quelli java che costituiscono la libreria ```geoportalRNDT*/WEB-INF/lib/geoportalRNDT.jar```.
 
@@ -128,7 +130,7 @@ Sono opzionali i seguenti campi:
 
 La password su LDAP deve essere settata in plain text.
 
-Nella cartella ```[LDAP](../LDAP)``` sono disponibili i file:
+Nella cartella [```LDAP```](../LDAP) sono disponibili i file:
 
 - ```Users.LDIF```
 - ```Enti.LDIF```
