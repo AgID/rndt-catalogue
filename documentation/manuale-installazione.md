@@ -136,7 +136,7 @@ Nella cartella ```[LDAP](../LDAP)``` sono disponibili i file:
 
 che contengono alcuni utenti ed enti di prova. Il caricamento di file LDIF può essere fatto da un client di amministrazione come ad esempio Apache Directory Studio opportunamente configurato. Gli utenti *gptadmin*, *gptpubisher*, *gptuser* sono utenti di default dell&#39;Esri Geoportal Server e non sono utilizzati dal geoportale. Possono essere utilizzati direttamente collegandosi al catalogo per verificarne la funzionalità.
 
-**NOTA** : il caricamento di questi dati va considerato solo come prova relativa ad LDAP. Va sempre utilizzato il sistema per la creazione di enti e utenti. Per i ruoli invece (Groups), possono essere utilizzati i dati forniti in quanto coerenti con il file di configurazione ```geoportalRNDT*/WEB-INF/classes/gpt/config/gpt.xml```.
+**NOTA** : il caricamento di questi dati va considerato solo come prova relativa ad LDAP. Va sempre utilizzato il sistema per la creazione di enti e utenti. Per i ruoli (Groups), invece, possono essere utilizzati i dati forniti in quanto coerenti con il file di configurazione ```geoportalRNDT*/WEB-INF/classes/gpt/config/gpt.xml```.
 
 
 ## Configurazione Tomcat
