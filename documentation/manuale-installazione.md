@@ -53,6 +53,92 @@ Le webapps da installare sotto Tomcat sono le seguenti:
 
 L&#39;installazione consiste nella copia delle webapp nella cartella ```<tomcat>/webapps```. La copia deve essere effettuata quando Tomcat è in stato di stop.
 
+## Configurazione LDAP
+
+L&#39;installazione di LDAP consiste nella creazione di un albero contenenti gli utenti, i ruoli e gli enti.
+
+La struttura di LDAP è la seguente (il ramo People è utilizzato solo come radice, non è necessario):
+
+![alt-text](images/ldap.png "ldap")
+
+Se ad esempio la root di LDAP è &quot;dc=RNDT, dc=com&quot;, il dn di un utente sarà:
+
+```DN: cn=utente,ou=Users,ou=People,dc=RNDT,dc=com```
+
+Il ramo Ente contiene gli Enti definiti.
+
+Il ramo Groups contiene i ruoli possibili, ed è costituito dalle entries:
+
+- ```gpt\_administrators```
+- ```gpt\_publishers```
+- ```gpt\_registeredUsers```
+
+Tutti gli utenti registrati devono essere nel gruppo ```gpt\_publishers```, mentre gli amministratori saranno **anche** nel gruppo ```gpt\_administrators```.
+
+Negli Enti sono obbligatorie le seguenti classi:
+
+- ```bjectClass: groupOfUniqueNames```
+- ```bjectClass: top```
+
+e i seguenti campi:
+
+- dn: distinguished name
+- cn: codice dell&#39;Ente
+- o: tipo di ente
+- uniqueMember (1..n): che contiene gli utenti di un ente
+- wner (1,1): responsabile di un ente.
+
+Nei Gruppi sono obbligatorie le seguenti classi:
+
+- ```bjectClass: groupOfUniqueNames```
+- ```bjectClass: top```
+
+e i seguenti campi:
+
+- dn: distinguished name
+- cn: codice del gruppo
+- uniqueMember (1..n): che contiene gli utenti di un gruppo
+
+Negli Utenti sono obbligatorie le seguenti classi:
+
+- ```bjectClass: organizationalPerson```
+- ```bjectClass: person```
+- ```bjectClass: inetOrgPerson```
+- ```bjectClass: top```
+
+e i seguenti campi:
+
+- dn: distinguished name
+- cn: login
+- sn: Cognome
+- mail: email (univoca)
+- o: Nome dell&#39;ente
+- uid: Nome completo
+- userPassword:: password
+
+Sono opzionali i seguenti campi:
+
+- title: Titolo
+- businessCategory: Settore
+- labeledURI: Sito Web
+- telephoneNumber: Telefono
+- street: Indirizzo
+- st: Provincia
+- l: Comune
+
+La password su LDAP deve essere settata in plain text.
+
+Nella cartella ```[LDAP](../LDAP)``` sono disponibili i file:
+
+- ```Users.LDIF```
+- ```Enti.LDIF```
+- ```Groups.LDIF```
+
+che contengono alcuni utenti ed enti di prova. Il caricamento di file LDIF può essere fatto da un client di amministrazione come ad esempio Apache Directory Studio opportunamente configurato. Gli utenti *gptadmin*, *gptpubisher*, *gptuser* sono utenti di default dell&#39;Esri Geoportal Server e non sono utilizzati dal geoportale. Possono essere utilizzati direttamente collegandosi al catalogo per verificarne la funzionalità.
+
+**NOTA** : il caricamento di questi dati va considerato solo come prova relativa ad LDAP. Va sempre utilizzato il sistema per la creazione di enti e utenti. Per i ruoli invece (Groups), possono essere utilizzati i dati forniti in quanto coerenti con il file di configurazione ```geoportalRNDT*/WEB-INF/classes/gpt/config/gpt.xml```.
+
+
 ## Configurazione Tomcat
 
 Tomcat non necessita di configurazioni particolari, ma sono da considerare le seguenti:
