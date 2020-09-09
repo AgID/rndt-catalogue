@@ -84,11 +84,11 @@ Negli Enti sono obbligatorie le seguenti classi:
 
 e i seguenti campi:
 
-- dn: distinguished name
-- cn: codice dell&#39;Ente
-- o: tipo di ente
-- uniqueMember (1..n): che contiene gli utenti di un ente
-- wner (1,1): responsabile di un ente.
+- ```dn```: distinguished name
+- ```cn```: codice dell&#39;Ente
+- ```o```: tipo di ente
+- ```uniqueMember (1..n)```: che contiene gli utenti di un ente
+- ```wner (1,1)```: responsabile di un ente.
 
 Nei Gruppi sono obbligatorie le seguenti classi:
 
@@ -97,9 +97,9 @@ Nei Gruppi sono obbligatorie le seguenti classi:
 
 e i seguenti campi:
 
-- dn: distinguished name
-- cn: codice del gruppo
-- uniqueMember (1..n): che contiene gli utenti di un gruppo
+- ```dn```: distinguished name
+- ```cn```: codice del gruppo
+- ```uniqueMember (1..n)```: che contiene gli utenti di un gruppo
 
 Negli Utenti sono obbligatorie le seguenti classi:
 
@@ -110,23 +110,23 @@ Negli Utenti sono obbligatorie le seguenti classi:
 
 e i seguenti campi:
 
-- dn: distinguished name
-- cn: login
-- sn: Cognome
-- mail: email (univoca)
-- o: Nome dell&#39;ente
-- uid: Nome completo
-- userPassword:: password
+- ```dn```: distinguished name
+- ```cn```: login
+- ```sn```: Cognome
+- ```mail```: email (univoca)
+- ```o```: Nome dell&#39;ente
+- ```uid```: Nome completo
+- ```userPassword```: password
 
 Sono opzionali i seguenti campi:
 
-- title: Titolo
-- businessCategory: Settore
-- labeledURI: Sito Web
-- telephoneNumber: Telefono
-- street: Indirizzo
-- st: Provincia
-- l: Comune
+- ```title```: Titolo
+- ```businessCategory```: Settore
+- ```labeledURI```: Sito Web
+- ```telephoneNumber```: Telefono
+- ```street```: Indirizzo
+- ```st```: Provincia
+- ```l```: Comune
 
 La password su LDAP deve essere settata in plain text.
 
