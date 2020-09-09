@@ -71,11 +71,11 @@ Il ramo Ente contiene gli Enti definiti.
 
 Il ramo Groups contiene i ruoli possibili, ed è costituito dalle entries:
 
-- ```gpt\_administrators```
-- ```gpt\_publishers```
-- ```gpt\_registeredUsers```
+- ```gpt_administrators```
+- ```gpt_publishers```
+- ```gpt_registeredUsers```
 
-Tutti gli utenti registrati devono essere nel gruppo ```gpt\_publishers```, mentre gli amministratori saranno **anche** nel gruppo ```gpt\_administrators```.
+Tutti gli utenti registrati devono essere nel gruppo ```gpt_publishers```, mentre gli amministratori saranno **anche** nel gruppo ```gpt_administrators```.
 
 Negli Enti sono obbligatorie le seguenti classi:
 
