@@ -1,4 +1,4 @@
-# Catalogo RNDT
+# Catalogo metadati RNDT
 
 Soluzione RNDT per la gestione, la pubblicazione e la ricerca dei metadati dei dati territoriali e relativi servizi secondo il [profilo italiano RNDT](https://github.com/AgID/rndt-guidance) coerente con le regole [INSPIRE](https://inspire.ec.europa.eu/).
 
