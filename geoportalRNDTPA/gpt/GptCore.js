@@ -17,8 +17,8 @@
   window.GptCore = {
 
     config: {
-      "GptCore.clientContextPath": "/geoportal1_2_7_EsriItaly",
-      "GptCore.serverContextPath": "/geoportal1_2_7_EsriItaly",
+      "GptCore.clientContextPath": "/geoportalRNDTPA",
+      "GptCore.serverContextPath": "/geoportalRNDTPA",
       
       "GptCore.allowDynamicClients": true,
       "GptCore.clientVersion": "1.2.1",
