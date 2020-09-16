@@ -1010,56 +1010,39 @@
 			</sch:report>
 		</sch:rule>
 
-				<!-- Specifiche di conformità. Possono essere n a me interessa la molteplicità di gmd:DQ_ConformanceResult, ma ognuna è diversa. 
+		<!-- Specifiche di conformità. Possono essere n a me interessa la molteplicità di gmd:DQ_ConformanceResult, ma ognuna è diversa. 
 		Ci deve essere obbligatoriamente la citazione del regolamento 1089/2010. 
-		Dato che si possono usare Anchor oppure Character, per fare queste verifiche per fare queste verifiche mi metto ad un livello superiore  -->
-		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[starts-with(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*/text(), 'REGOLAMENTO (UE) N. 1089/2010')]">
+		Dato che si possono usare Anchor oppure Character, per fare queste verifiche mi metto ad un livello superiore  -->
+		<sch:rule context="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality[starts-with(gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/*/text(), 'REGOLAMENTO (UE) N. 1089/2010')]/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult">
 
-			<sch:let name="titoloChar" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString/text()"/>
-					<sch:let name="titoloAnchor" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor[text()]"/>
-					<sch:let name="titoloLink" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
-					<sch:let name="data" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date/text()"/>
-					<sch:let name="tipodata" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
-					<sch:let name="pass" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean/text()"/>
-					<sch:let name="passNIL" value="gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass/@gco:nilReason"/>
+			<sch:let name="titolo" value="gmd:specification/gmd:CI_Citation/gmd:title/*/text()"/>
+			<sch:let name="titoloLink" value="gmd:specification/gmd:CI_Citation/gmd:title/gmx:Anchor/@xlink:href"/>
+			<sch:let name="data" value="gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date/gco:Date/text()"/>
+			<sch:let name="tipodata" value="gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
+			<sch:let name="pass" value="gmd:pass/gco:Boolean/text()"/>
+			<sch:let name="passNIL" value="gmd:pass/@gco:nilReason"/>
 			
-			<!--<sch:assert test="($titoloChar ='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') or 
-							(($titoloAnchor='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and ($titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
-							and
-							($data = '2010-12-08')
-							and
-							($tipodata = 'publication')
-							and
-							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Il valore della conformità relativo al regolamento N. 1089/2010 è assente o errato (il testo, il link, la data o il tipo data o il valore pass)</sch:assert>
+			<sch:let name="titoloInizio" value="'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'"/>
+			<sch:let name="titoloFine" value="'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali'"/>
 			
-			<sch:report role="INFO" test="($titoloChar ='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') or 
-							(($titoloAnchor='REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l&#8217;interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and ($titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
-							and
-							($data = '2010-12-08')
-							and
-							($tipodata = 'publication')
-							and
-							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Valore conformità (REGOLAMENTO (UE) N. 1089/2010): <sch:value-of select="$titoloChar"/>
-			</sch:report>-->
+			<sch:assert test="(							
+									starts-with($titolo, $titoloInizio) 
+									and 
+									(substring($titolo, string-length($titoloInizio) + 2) = $titoloFine)
+									and 
+									string-length($titolo) = 255
+									and
+									(not($titoloLink) or $titoloLink = 'http://data.europa.eu/eli/reg/2010/1089')
+							)">Il testo o il link del valore della conformità relativo al regolamento N. 1089/2010 è assente o errato</sch:assert>
 			
-			<sch:assert test="((starts-with($titoloChar, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloChar, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloChar) = 255) or 
-							(starts-with($titoloAnchor, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloAnchor, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloAnchor) = 255 and $titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
-							and
-							($data = '2010-12-08')
-							and
-							($tipodata = 'publication')
-							and
-							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Il valore della conformità relativo al regolamento N. 1089/2010 è assente o errato (il testo, il link, la data o il tipo data o il valore pass)</sch:assert>
-			
-			<sch:report role="INFO" test="((starts-with($titoloChar, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloChar, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloChar) = 255) or 
-							(starts-with($titoloAnchor, 'REGOLAMENTO (UE) N. 1089/2010 DELLA COMMISSIONE del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l') and ends-with($titoloAnchor, 'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali') and string-length($titoloAnchor) = 255 and $titoloLink = 'http://data.europa.eu/eli/reg/2010/1089'))
-							and
-							($data = '2010-12-08')
-							and
-							($tipodata = 'publication')
-							and
-							($pass = 'true' or $pass = 'false' or $passNIL = 'unknown')">Valore conformità (REGOLAMENTO (UE) N. 1089/2010): <sch:value-of select="$titoloChar"/>
-			</sch:report>
+			<sch:assert test="$data = '2010-12-08'">Il valore della data conformità relativo al regolamento N. 1089/2010 deve essere 2010-12-08</sch:assert>
+			<sch:assert test="$tipodata = 'publication'">Il valore del tipo della data conformità relativo al regolamento N. 1089/2010 deve essere 'publication'</sch:assert>
+			<sch:assert test="$pass = 'true' or $pass = 'false' or $passNIL = 'unknown' or not($pass)">Il valore campo 'pass' della conformità relativo al regolamento N. 1089/2010 è errato</sch:assert>
+
+			<sch:report role="INFO" test="$titolo">Valore conformità (REGOLAMENTO (UE) N. 1089/2010): <sch:value-of select="$titolo"/> </sch:report>
+			<sch:report role="INFO" test="$data">Valore della data conformità relativo al regolamento N. 1089/2010: <sch:value-of select="$data"/></sch:report>
+			<sch:report role="INFO" test="$tipodata">Valore del tipo della data conformità relativo al regolamento N. 1089/2010: <sch:value-of select="$tipodata"/> </sch:report>
+			<sch:report role="INFO" test="$pass">Valore campo 'pass' della conformità relativo al regolamento N. 1089/2010: <sch:value-of select="$pass"/></sch:report>
 
 		</sch:rule>
 
