@@ -13,7 +13,7 @@ La soluzione è basata su [ESRI Geoportal Server](https://github.com/Esri/geopor
 
 ## Sorgenti
 
-Le applicazioni rese disponibili sono direttamente eseguibili. Viene tuttavia reso disponibile anche il [**codice sorgente**](Sorgenti) per eventuali modifiche e personalizzazioni da parte degli utenti che lo riusano.
+Le applicazioni distribuite in questo repository sono direttamente eseguibili. Viene tuttavia reso disponibile anche il [**codice sorgente**](Sorgenti) per eventuali modifiche e personalizzazioni da parte degli utenti che lo riusano.
 
 ## Licenza
 
