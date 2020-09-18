@@ -1,6 +1,6 @@
 # Catalogo metadati RNDT
 
-[![License: EUPL 1.2](https://img.shields.io/badge/License-EUPL1.2-blue.svg)](https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_it.pdf)
+[![License: EUPL 1.2](https://img.shields.io/badge/License-EUPL&nbsp;1.2-blue.svg)](https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_it.pdf)
 
 Soluzione RNDT per la gestione, la pubblicazione e la ricerca dei metadati dei dati territoriali e relativi servizi secondo il [profilo italiano RNDT](https://github.com/AgID/rndt-guidance) coerente con le regole [INSPIRE](https://inspire.ec.europa.eu/).
 
