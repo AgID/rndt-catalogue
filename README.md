@@ -1,5 +1,7 @@
 # Catalogo metadati RNDT
 
+[![License: EUPL 1.2](https://img.shields.io/badge/License-EUPL 1.2-blue.svg)](https://joinup.ec.europa.eu/sites/default/files/custom-page/attachment/eupl_v1.2_it.pdf)
+
 Soluzione RNDT per la gestione, la pubblicazione e la ricerca dei metadati dei dati territoriali e relativi servizi secondo il [profilo italiano RNDT](https://github.com/AgID/rndt-guidance) coerente con le regole [INSPIRE](https://inspire.ec.europa.eu/).
 
 La soluzione è basata su [ESRI Geoportal Server](https://github.com/Esri/geoportal-server/wiki/What-is-a-geoportal-and-the-geoportal-server) v. 1.2.7, alla quale sono state comunque apportate diverse modifiche (alcune incluse nella versione 1.2.9) e personalizzazioni per garantire la conformità alle regole RNDT e INSPIRE. 
