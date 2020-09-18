@@ -11,7 +11,7 @@ La soluzione è basata su [ESRI Geoportal Server](https://github.com/Esri/geopor
 - [Manuale di installazione e configurazione](documentation/manuale-installazione.md)
 - [Documentazione ESRI Geoportal Server](https://github.com/Esri/geoportal-server/wiki)
 
-## Sorgenti
+## Codice sorgente
 
 Le applicazioni distribuite in questo repository sono direttamente eseguibili. Viene tuttavia reso disponibile anche il [**codice sorgente**](Sorgenti) per eventuali modifiche e personalizzazioni da parte degli utenti che lo riusano.
 
