@@ -21,7 +21,7 @@ description:
       La soluzione è basata su [ESRI Geoportal Server](https://github.com/Esri/geoportal-server/wiki/What-is-a-geoportal-and-the-geoportal-server) v. 1.2.7, alla quale sono state comunque apportate diverse modifiche (alcune incluse nella versione 1.2.9) e personalizzazioni per garantire la conformità alle regole RNDT e INSPIRE.
     screenshots:
       - >-
-        https://raw.githubusercontent.com/AgID/rndt-catalogue/master/documentation/images/homepage.png
+        https://raw.githubusercontent.com/AgID/rndt-catalogue/master/documentation/images/rndt-catalogue.png
     shortDescription: >-
       Soluzione per la gestione, pubblicazione e ricerca dei metadati di dati e servizi territoriali secondo il profilo italiano RNDT.
 developmentStatus: stable
