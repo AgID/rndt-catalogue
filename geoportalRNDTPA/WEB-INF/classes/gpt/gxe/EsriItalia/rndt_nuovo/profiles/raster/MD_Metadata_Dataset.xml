@@ -157,6 +157,13 @@
 																	<g:option g:link="$i18nBase.MSL" g:label="$i18nBase.MSLLabel" g:value="$i18nBase.MSLLabel"/>
 																	<g:option g:link="$i18nBase.ISA" g:label="$i18nBase.ISALabel" g:value="$i18nBase.ISALabel"/>
 																	<g:option g:link="$i18nBase.ETRS89-GRS80-EVRS" g:label="$i18nBase.ETRS89-GRS80-EVRSLabel" g:value="$i18nBase.ETRS89-GRS80-EVRSLabel"/>
+												                                        <g:option g:link="$i18nBase.WGS84" g:label="$i18nBase.WGS84Label" g:value="$i18nBase.WGS84Label"/>
+												                                        <g:option g:link="$i18nBase.WGS84/UTM32N" g:label="$i18nBase.WGS84/UTM32NLabel" g:value="$i18nBase.WGS84/UTM32NLabel"/>
+												                                        <g:option g:link="$i18nBase.WGS84/UTM33N" g:label="$i18nBase.WGS84/UTM33NLabel" g:value="$i18nBase.WGS84/UTM33NLabel"/>
+												                                        <g:option g:link="$i18nBase.WGS84/UTM34N" g:label="$i18nBase.WGS84/UTM34NLabel" g:value="$i18nBase.WGS84/UTM34NLabel"/>
+												                                        <g:option g:link="$i18nBase.ETRS89/UTM32N" g:label="$i18nBase.ETRS89/UTM32NLabel" g:value="$i18nBase.ETRS89/UTM32NLabel"/>
+												                                        <g:option g:link="$i18nBase.ETRS89/UTM33N" g:label="$i18nBase.ETRS89/UTM33NLabel" g:value="$i18nBase.ETRS89/UTM33NLabel"/>
+												                                        <g:option g:link="$i18nBase.MonteMarioEmiliaRomagna" g:label="$i18nBase.MonteMarioEmiliaRomagnaLabel" g:value="$i18nBase.MonteMarioEmiliaRomagnaLabel"/>
 																</g:options>
 															</g:input>
 														</g:body>          
