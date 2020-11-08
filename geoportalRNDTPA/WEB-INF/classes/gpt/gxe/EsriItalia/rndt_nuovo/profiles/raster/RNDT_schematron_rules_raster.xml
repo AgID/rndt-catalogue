@@ -945,23 +945,23 @@
 		<!-- In questa prima parte si testano tutti gli xPath delle altre regole, per essere sicuri che ci entri -->
 		<sch:rule context="/gmd:MD_Metadata">
 			<sch:assert
-				test="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement"
+				test="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox"
 				>La struttura dell'xml è errata: sezione
-				//gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement
+				//gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox
 				non presente </sch:assert>
 		</sch:rule>
 
 		<!-- Geographic Extent -->
 		<sch:rule
-			context="/gmd:MD_Metadata/gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement">
+			context="/gmd:MD_Metadata/gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 			<sch:let name="west"
-				value="number(gmd:EX_GeographicBoundingBox/gmd:westBoundLongitude/gco:Decimal)"/>
+				value="number(gmd:westBoundLongitude/gco:Decimal)"/>
 			<sch:let name="east"
-				value="number(gmd:EX_GeographicBoundingBox/gmd:eastBoundLongitude/gco:Decimal)"/>
+				value="number(gmd:eastBoundLongitude/gco:Decimal)"/>
 			<sch:let name="north"
-				value="number(gmd:EX_GeographicBoundingBox/gmd:northBoundLatitude/gco:Decimal)"/>
+				value="number(gmd:northBoundLatitude/gco:Decimal)"/>
 			<sch:let name="south"
-				value="number(gmd:EX_GeographicBoundingBox/gmd:southBoundLatitude/gco:Decimal)"/>
+				value="number(gmd:southBoundLatitude/gco:Decimal)"/>
 
 			<!-- assertions and report -->
 			<sch:assert test="(-180.00 &lt;= $west) and ($west &lt;= 180.00)">L'elemento
@@ -1218,6 +1218,13 @@
 				$RS_Code = 'lat' or
 				$RS_Code = 'msl' or
 				$RS_Code = 'isa' or
+				$RS_Code = 'wgs84' or
+				$RS_Code = 'etrs89/etrs-tm32' or
+				$RS_Code = 'etrs89/etrs-tm33' or
+				$RS_Code = 'wgs84/utm 32n' or
+				$RS_Code = 'wgs84/utm 33n' or
+				$RS_Code = 'wgs84/utm 34n' or
+				$RS_Code = 'monte mario / tm emilia-romagna' or
 				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4936' or
 				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4937' or
 				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4258' or
@@ -1251,7 +1258,14 @@
 				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5861' or
 				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5715' or
 				$RS_Code = 'http://codes.wmo.int/grib2/codeflag/4.2/_0-3-3' or
-				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/7409'"/>
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/7409' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/4326' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3044' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/3045' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/32632' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/32633' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/32634' or
+				$RS_Code = 'http://www.opengis.net/def/crs/epsg/0/5659'"/>
 			
 			<!-- Se c'è il codespace allora il codice può essere solo il numero -->
 			<sch:let name="RS_codeSpace"
@@ -1289,7 +1303,15 @@
 				$RS_Code = '5730' or
 				$RS_Code = '5861' or
 				$RS_Code = '5715' or
-				$RS_Code = '7409'"/>
+				$RS_Code = '7409' or
+				$RS_Code = '4326' or
+				$RS_Code = '3044' or
+				$RS_Code = '3045' or
+				$RS_Code = '32632' or
+				$RS_Code = '32633' or
+				$RS_Code = '32634' or
+				$RS_Code = '7409' or
+				$RS_Code = '5659'"/>
 			
 			<!-- Infine ci potrebbe essere il link -->
 			<sch:let name="RS_Link" value="translate(gmd:code/gmx:Anchor/@xlink:href, $uppercase, $lowercase)"/>
@@ -1326,7 +1348,14 @@
 				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5861' or
 				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5715' or
 				$RS_Link = 'http://codes.wmo.int/grib2/codeflag/4.2/_0-3-3' or
-				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/7409'"/>
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/7409' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/4326' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3044' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/3045' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/32632' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/32633' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/32634' or
+				$RS_Link = 'http://www.opengis.net/def/crs/epsg/0/5659'"/>
 			
 			
 			<!-- assertions and report. Per ogni elemento se c'è allora lo devo testare. Se c'è il link iol resto no mi importa -->
