@@ -825,7 +825,7 @@
 				$topicCategory = 'elevation' or
 				$topicCategory = 'environment' or
 				$topicCategory = 'geoscientificInformation' or
-				$topicCategory = 'Health' or
+				$topicCategory = 'health' or
 				$topicCategory = 'imageryBaseMapsEarthCover' or
 				$topicCategory = 'intelligenceMilitary' or
 				$topicCategory = 'inlandWaters' or
