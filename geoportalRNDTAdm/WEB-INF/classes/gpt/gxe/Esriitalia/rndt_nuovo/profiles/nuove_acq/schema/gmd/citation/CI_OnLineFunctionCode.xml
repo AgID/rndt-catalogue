@@ -8,13 +8,13 @@
    
     <!--
 	<g:attribute h:class="gxeDisplayNone" g:targetName="codeList" h:tag="div"
-      g:value="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode">
+      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode">
 			<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
 		</g:attribute>-->
 		
 		
 		<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml" 
-		      g:value="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_OnLineFunctionCode"/>
+		      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"/>
 			  
 			  
     <g:attribute g:extends="$base/schema/gco/gcoBase/codeListValue.xml">
