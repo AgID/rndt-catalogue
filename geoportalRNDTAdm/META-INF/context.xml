@@ -9,9 +9,9 @@
 		name="jdbc/gpt" 
 		password="" 
 		type="javax.sql.DataSource" 
-		url="" 
-		connectionProperties="useSSL=false;requireSSL=false"
-		username="geoportal"
+		url="jdbc:mysql://URL:PORT/geoportal?zeroDateTimeBehavior=convertToNull" 
+ 		connectionProperties="useSSL=false;requireSSL=false;allowPublicKeyRetrieval=true"
+		username=""
 	/>
 </Context>
 
