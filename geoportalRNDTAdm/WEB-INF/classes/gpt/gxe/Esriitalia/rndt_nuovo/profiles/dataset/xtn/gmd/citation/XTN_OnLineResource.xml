@@ -50,9 +50,9 @@
 										<g:options g:i18nBase="catalog.mdParam.rndt.distribution.onlineResources.spatialDataServiceType">
 											<g:option g:link="$i18nBase.otherLink" g:value="$i18nBase.otherValue" g:label="$i18nBase.otherLabel"/>
 											<g:option g:link="$i18nBase.viewLink" g:value="$i18nBase.viewValue" g:label="$i18nBase.viewLabel"/>
-											<g:option g:link="transformationLink" g:value="$i18nBase.transformationValue" g:label="$i18nBase.transformationLabel"/>
-											<g:option g:link="discoveryLink" g:value="$i18nBase.discoveryValue" g:label="$i18nBase.discoveryLabel"/>
-											<g:option g:link="downloadLink" g:value="$i18nBase.downloadValue" g:label="$i18nBase.downloadLabel"/>
+											<g:option g:link="$i18nBase.transformationLink" g:value="$i18nBase.transformationValue" g:label="$i18nBase.transformationLabel"/>
+											<g:option g:link="$i18nBase.discoveryLink" g:value="$i18nBase.discoveryValue" g:label="$i18nBase.discoveryLabel"/>
+											<g:option g:link="$i18nBase.downloadLink" g:value="$i18nBase.downloadValue" g:label="$i18nBase.downloadLabel"/>
 										</g:options>
 									</g:input>
 								</g:body>
