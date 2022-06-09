@@ -6,14 +6,6 @@
            g:extends="$base/schema/gco/gcoBase/CodeListValue_Type.xml">
 	<g:body>
 
-
-<!--
-		<g:attribute h:class="gxeDisplayNone" g:targetName="codeList" h:tag="div" g:jsClass="gxe.control.Attribute"
-      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode">
-			<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
-		</g:attribute>
-		-->
-		
 		<g:attribute g:extends="$base/schema/gco/gcoBase/codeList.xml" 
 		      g:value="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_OnLineFunctionCode"/>
 
