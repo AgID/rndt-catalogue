@@ -20,7 +20,7 @@
     cswBriefXslt="gpt/metadata/iso/apiso-brief.xslt" 
     cswSummaryXslt="gpt/metadata/iso/apiso-summary.xslt"
     schematronSch="gpt/gxe/EsriItalia/rndt/profiles/dataset/RNDT_schematron_rules_dataset.xml"
-    xsdLocation="http://www.isotc211.org/2005/gmd/metadataEntity.xsd[GML32]http://schemas.opengis.net/iso/19139/20070417/gmd/metadataEntity.xsd"
+    xsdLocation="http://www.isotc211.org/2005/gmd/metadataEntity.xsd[GML32]http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/metadataEntity.xsd"
     detailsXslt="gpt/metadata/EsriItaly/rndt/rndt-details_dataset.xslt">
   	
 	<!-- schema label -->

@@ -15,16 +15,16 @@
  limitations under the License.
 -->
 <schema 
-    key="rndt-dataset" 
-    cswOutputSchema="http://www.isotc211.org/2005/gmd" 
-    cswBriefXslt="gpt/metadata/iso/apiso-brief.xslt" 
-    cswSummaryXslt="gpt/metadata/iso/apiso-summary.xslt"
-    schematronSch="gpt/gxe/EsriItalia/rndt/profiles/dataset/RNDT_schematron_rules_dataset.xml"
-    xsdLocation="http://www.isotc211.org/2005/gmd/metadataEntity.xsd[GML32]http://schemas.opengis.net/iso/19139/20070417/gmd/metadataEntity.xsd"
-    detailsXslt="gpt/metadata/EsriItaly/rndt/rndt-details_dataset.xslt">
+	      key="rndt-series" 
+	        cswOutputSchema="http://www.isotc211.org/2005/gmd" 
+		    cswBriefXslt="gpt/metadata/iso/apiso-brief.xslt" 
+		    cswSummaryXslt="gpt/metadata/iso/apiso-summary.xslt"
+                    schematronSch="gpt/gxe/EsriItalia/rndt/profiles/series/RNDT_schematron_rules_series.xml"
+	      xsdLocation="http://www.isotc211.org/2005/gmd/metadataEntity.xsd[GML32]http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/metadataEntity.xsd"
+        detailsXslt="gpt/metadata/EsriItaly/rndt/rndt-details_series.xslt">
   	
 	<!-- schema label -->
-	<label resourceKey="catalog.mdParam.schema.rndt.dataset"/>
+	<label resourceKey="catalog.mdParam.schema.rndt.series"/>
 	
 	<!-- schema namespaces -->
 	<namespace prefix="gmd" uri="http://www.isotc211.org/2005/gmd"/>
@@ -33,14 +33,14 @@
 	
 	<!-- schema interrogation -->
 	<!-- <interrogation count="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification)"/> -->
-	<interrogation count="(count(/gmd:MD_Metadata/gmd:metadataStandardName[contains(gco:CharacterString,'RNDT')]) * count(/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode[@codeListValue = 'dataset']) * count(/gmd:MD_Metadata[not(gmd:contentInfo)]))" />
+	<interrogation count="(count(/gmd:MD_Metadata/gmd:metadataStandardName[contains(gco:CharacterString,'RNDT')]) * count(/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode[@codeListValue = 'series']) * count(/gmd:MD_Metadata[not(gmd:contentInfo)]))" />
 
 	
 	<!-- indexables -->
 	<indexables fileName="gpt/metadata/EsriItaly/rndt/rndt-apiso-indexables.xml"/>
 	
   <!-- Geopoprtal XML editor -->
-   <editor fileName="gpt/gxe/EsriItalia/rndt/profiles/dataset/esriitalia-iso19139-dataset-editor.xml"/>
+   <editor fileName="gpt/gxe/EsriItalia/rndt/profiles/series/esriitalia-iso19139-series-editor.xml"/>
 	
 	
 
