@@ -511,6 +511,11 @@ public class QueryFilterParser extends DiscoveryAdapter implements IFilterParser
 
     // add the clause if the envelope is not empty
     if (!envelope.isEmpty()) {
+        // Esri Italy: adjusting for 4326 axis ordering
+      if (spatialClause.getSrsName().toLowerCase().equals("urn:ogc:def:crs:epsg::4326")){
+          LOGGER.finer("Found ogc 4326 SRS in bbox: swapping x and y");
+          envelope.put(envelope.getMinY(), envelope.getMinX(), envelope.getMaxY(), envelope.getMaxX());
+      }
       logicalClause.getClauses().add(spatialClause);
     } else {
       String msg = sErr+" - the geometry of the spatial operand was not valid.";
