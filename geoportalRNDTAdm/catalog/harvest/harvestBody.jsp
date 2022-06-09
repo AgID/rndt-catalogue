@@ -1243,7 +1243,7 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 
 <%-- username name --%>
 <h:outputLabel styleClass="waf" for="wafImsUserName" value="#{gptMsg['catalog.harvest.manage.edit.userName']}"/>
-<h:inputText   styleClass="form-control waf" size="30" value="#{HarvestController.editor.attrs['waf.username']}" id="wafImsUserName"/>
+<h:inputText styleClass="form-control waf" size="30" value="#{HarvestController.editor.attrs['waf.username']}" id="wafImsUserName"/>
 
 <%-- username password --%>
 <h:outputLabel styleClass="waf" for="wafImsUserPassword" value="#{gptMsg['catalog.harvest.manage.edit.userPassword']}"/>
@@ -1255,6 +1255,9 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 <h:selectOneMenu styleClass="form-control csw" value="#{HarvestController.editor.attrs['profile']}" id="cswProfile">
 <f:selectItems value="#{HarvestController.editor.allProfiles}"/>
 </h:selectOneMenu>
+
+<h:outputLabel styleClass="csw" for="filter" value="#{gptMsg['catalog.harvest.manage.edit.filter']}"/>
+<h:inputText styleClass="form-control csw" size="30" value="#{HarvestController.editor.repository.filterCSW}" id="cswFilter"/>
 
 <%-- ArcGIS Portal specific properties ---------------------------------------%>
 
