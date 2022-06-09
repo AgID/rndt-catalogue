@@ -15,6 +15,7 @@
 package com.esri.gpt.control.webharvest.client.csw;
 
 import com.esri.gpt.control.webharvest.IterationContext;
+import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.isodate.IsoDateFormat;
 import com.esri.gpt.framework.resource.api.Resource;
 import com.esri.gpt.framework.resource.query.Criteria;
