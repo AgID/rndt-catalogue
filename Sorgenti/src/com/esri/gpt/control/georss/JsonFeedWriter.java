@@ -22,6 +22,8 @@ import com.esri.gpt.framework.jsf.MessageBroker;
 import com.esri.gpt.framework.util.Val;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * JSON feed writer.
@@ -29,6 +31,7 @@ import java.util.Date;
  */
 public class JsonFeedWriter implements FeedWriter {
 
+protected static final Logger LOG = Logger.getLogger(JsonFeedWriter.class.getCanonicalName());
 /** tab size */
 private final static int TAB_SIZE = 2;
 /** ISO date format */
@@ -192,31 +195,62 @@ private void printRecord(IFeedRecord r, boolean more) {
 /**
  * ADDED BY ESRI ITALY **
  * Prints keywords
- * @param keywords aray of keywords (string)
+ * @param keywords array of keywords (string)
  * @param more flag to indicate if there will be more arguments
  */
 private void printKeywords(String[] keywords, boolean more) {
-  int i;
+  int i,j;
   // Will print keywords line only if there is at least one non empty keyword 
   boolean printIt = false;
+  
+/** Old version. If keywords are empty there's a mismatch with quotes
   for (i = 0; i < keywords.length; i++) {
       if (keywords[i] != "") {
         if (!printIt) {
             printIt = true;
             println("\"keywords\"" +sp()+ ":" +sp()+ "[");
-              levelUp();
+            levelUp();
         }
         // If next is not empty add a comma 
         if (i<keywords.length-1 && keywords[i + 1] != "")
             println("\"" + keywords[i]+"\",");
         else
-            println("\"" + keywords[i]+"\"");
+            println("\"" + keywords[i]+"\""); 
       }
    }
+   * **/
+
+  for (i = 0; i < keywords.length; i++) {
+      if (keywords[i] != "") {
+        if (!printIt) {
+            printIt = true;
+            println("\"keywords\"" +sp()+ ":" +sp()+ "[");
+            levelUp();
+        }
+        // If at the end write without commma and exit
+        if (i == keywords.length-1){
+           println("\"" + keywords[i]+"\"");
+           break;
+        }
+        
+        // We are not at end but maybe all next keyword are empty
+        for (j = i+1; j < keywords.length && keywords[j] == ""; j++);
+        
+        // If there's at least one more non empty item write comma otherwise no comma and break
+        if (j < keywords.length)
+            println("\"" + keywords[i]+"\",");
+        else{
+            println("\"" + keywords[i]+"\"");
+            break;
+        }
+      }
+   }
+
    levelDown();
    //ESri Italia 14/03/2017 
    //If no keywords json was wrong....
    if (printIt) println("],");
+
 }
 /** 09/01/2017  Update Administration Data **/
 private void printRespData(IFeedRecord r){
