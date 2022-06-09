@@ -54,16 +54,16 @@ window.gxe = {
    * with an editor definition.
    * @static
    * @name gxe.cfg
-   * @property {String} pfxGxe the GXE namespace prefix 
+   * @property {String} pfxGxe the GXE namespace prefix
    *   <br/>(="g")
-   * @property {String} pfxHtml the GXE HTML namespace prefix 
+   * @property {String} pfxHtml the GXE HTML namespace prefix
    *   <br/>(="h")
-   * @property {String} uriGxe the GXE namespace URI 
+   * @property {String} uriGxe the GXE namespace URI
    *   <br/>(="http://www.esri.com/geoportal/gxe")
-   * @property {String} uriGxeHtml the GXE HTML namespace URI 
+   * @property {String} uriGxeHtml the GXE HTML namespace URI
    *   <br/>(="http://www.esri.com/geoportal/gxe/html")
    */
- 
+
   cfg: {
     considerGML3andGML32: true,
     pfxGxe: "g",
@@ -72,12 +72,12 @@ window.gxe = {
     uriGxeHtml: "http://www.esri.com/geoportal/gxe/html",
     arrayAl: new Array(),
 
-  
+
     /**
      * Finds an immediate child of a configuration object.
      * @example Example:
      * gxe.cfg.findChild(cfgObject,"http://www.esri.com/geoportal/gxe","options");
-     * @function 
+     * @function
      * @name findChild
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -97,13 +97,13 @@ window.gxe = {
       }
       return null;
     },
-    
+
     /**
      * Finds an immediate child of a configuration object within the GXE namespace.
      * <br/>(i.e. namespace "http://www.esri.com/geoportal/gxe")
      * @example Example:
      * gxe.cfg.findGxeChild(cfgObject,"options");
-     * @function 
+     * @function
      * @name findGxeChild
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -119,13 +119,13 @@ window.gxe = {
      * <br/>
      * <br/>The callback function will have the following signature: function(cfgChild) {}
      * <br/>The callback function can return the String "break" to terminate the loop.
-     * @function 
+     * @function
      * @name forEachChild
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
      * @param {String} namespace the configuration namesapce to match (* to match any)
      * @param {String} name the configuration name to match (* to match any)
-     * @param {function} callback the callback function 
+     * @param {function} callback the callback function
      */
     forEachChild: function(cfgObject,namespace,name,callback) {
       var children = cfgObject.children;
@@ -148,11 +148,11 @@ window.gxe = {
      * <br/>
      * <br/>The callback function will have the following signature: function(cfgAttribute) {}
      * <br/>The callback function can return the String "break" to terminate the loop.
-     * @function 
+     * @function
      * @name forEachHtmlAttribute
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
-     * @param {function} callback the callback function 
+     * @param {function} callback the callback function
      */
     forEachHtmlAttribute: function(cfgObject,callback) {
       var attributes = cfgObject.attributes;
@@ -166,12 +166,12 @@ window.gxe = {
         }
       }
     },
-  
+
     /**
      * Gets an attribute value.
      * @example Example:
      * gxe.cfg.getAttributeValue(cfgObject,"http://www.esri.com/geoportal/gxe","minOccurs");
-     * @function 
+     * @function
      * @name getAttributeValue
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -191,13 +191,13 @@ window.gxe = {
       }
       return null;
     },
-  
+
     /**
      * Gets an attribute value within the GXE namespace.
      * <br/>(i.e. namespace "http://www.esri.com/geoportal/gxe")
      * @example Example:
      * gxe.cfg.getGxeAttributeValue(cfgObject,"minOccurs");
-     * @function 
+     * @function
      * @name getGxeAttributeValue
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -208,53 +208,53 @@ window.gxe = {
       return this.getAttributeValue(cfgObject,this.uriGxe,name);
     },
     getAllGxeChildAttributeValue: function(cfgObject,name) {
-        var objRit=  {"valoreRit": "", "objInput": null, "objNode":null};
-        try {
-            objRit.valoreRit=this.getAttributeValue(cfgObject.cfgObject,this.uriGxe,name);
-            if ((objRit.valoreRit!="")&& (objRit.valoreRit!=null)){
-                objRit.objInput=cfgObject.getInputControl();
-                objRit.objNode=cfgObject;
-                
-                gxe.cfg.arrayAl.push(objRit);
-            }
-            if (cfgObject.children != null){
-                for (var i=0; i<cfgObject.children.getLength(); i++) {        
-                    this.getAllGxeChildAttributeValue(cfgObject.children.getItem(i),name);
-                }
-            }
-        }catch (err) {
-            objRit.valoreRit="";
+      var objRit=  {"valoreRit": "", "objInput": null, "objNode":null};
+      try {
+        objRit.valoreRit=this.getAttributeValue(cfgObject.cfgObject,this.uriGxe,name);
+        if ((objRit.valoreRit!="")&& (objRit.valoreRit!=null)){
+          objRit.objInput=cfgObject.getInputControl();
+          objRit.objNode=cfgObject;
+
+          gxe.cfg.arrayAl.push(objRit);
         }
-        return objRit;
+        if (cfgObject.children != null){
+          for (var i=0; i<cfgObject.children.getLength(); i++) {
+            this.getAllGxeChildAttributeValue(cfgObject.children.getItem(i),name);
+          }
+        }
+      }catch (err) {
+        objRit.valoreRit="";
+      }
+      return objRit;
     },
 
     getGxeChildAttributeValue: function(cfgObject,name) {
-        var objRit=  {"valoreRit": "", "objInput": null};
-        try {
-            objRit.valoreRit=this.getAttributeValue(cfgObject.cfgObject,this.uriGxe,name);
-            if ((objRit.valoreRit=="")|| (objRit.valoreRit==null)){
-                if (cfgObject.children != null){
-                    for (var i=0; i<cfgObject.children.getLength(); i++) {        
-                        objRit = this.getGxeChildAttributeValue(cfgObject.children.getItem(i),name);
-                        if ((objRit.valoreRit!="")&& (objRit.valoreRit!=null)){
-                            i=cfgObject.children.getLength();
-                        }
-                    }
-                }
-            } else {
-               objRit.objInput= cfgObject.getInputControl();
+      var objRit=  {"valoreRit": "", "objInput": null};
+      try {
+        objRit.valoreRit=this.getAttributeValue(cfgObject.cfgObject,this.uriGxe,name);
+        if ((objRit.valoreRit=="")|| (objRit.valoreRit==null)){
+          if (cfgObject.children != null){
+            for (var i=0; i<cfgObject.children.getLength(); i++) {
+              objRit = this.getGxeChildAttributeValue(cfgObject.children.getItem(i),name);
+              if ((objRit.valoreRit!="")&& (objRit.valoreRit!=null)){
+                i=cfgObject.children.getLength();
+              }
             }
-        }catch (err) {
-            objRit.valoreRit="";
+          }
+        } else {
+          objRit.objInput= cfgObject.getInputControl();
         }
-        return objRit;
+      }catch (err) {
+        objRit.valoreRit="";
+      }
+      return objRit;
     },
     /**
      * Gets an attribute value within the GXE HTML namespace.
      * <br/>(i.e. namespace "http://www.esri.com/geoportal/gxe/html")
      * @example Example:
      * gxe.cfg.getGxeHtmlAttributeValue(cfgObject,"maxlength");
-     * @function 
+     * @function
      * @name getGxeHtmlAttributeValue
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -264,15 +264,15 @@ window.gxe = {
     getGxeHtmlAttributeValue: function(cfgObject,name) {
       return this.getAttributeValue(cfgObject,this.uriGxeHtml,name);
     },
-    
+
     /**
      * Gets the g:label attribute value associated with a configuration object.
      * <br/>If null, the associated XML target name will be returned.
-     * @function 
+     * @function
      * @name getLabelText
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
-     * @return {String} the attribute value (null if not found) 
+     * @return {String} the attribute value (null if not found)
      */
     getLabelText: function(cfgObject) {
       var sLabel = this.getGxeAttributeValue(cfgObject,"label");
@@ -282,14 +282,14 @@ window.gxe = {
         return null;//NICOL modifica pe rnon far vedere le etichette this.getGxeAttributeValue(cfgObject,"targetName");
       }
     },
-    
+
     /**
      * Gets the g:maxOccurs attribute value associated with a configuration object.
-     * @function 
+     * @function
      * @name getMaxOccurs
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
-     * @return {String} the attribute value (null if not found) 
+     * @return {String} the attribute value (null if not found)
      */
     getMaxOccurs: function(cfgObject) {
       return this.getGxeAttributeValue(cfgObject,"maxOccurs");
@@ -297,11 +297,11 @@ window.gxe = {
 
     /**
      * Gets the g:minOccurs attribute value associated with a configuration object.
-     * @function 
+     * @function
      * @name getMinOccurs
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
-     * @return {String} the attribute value (null if not found) 
+     * @return {String} the attribute value (null if not found)
      */
     getMinOccurs: function(cfgObject) {
       return this.getGxeAttributeValue(cfgObject,"minOccurs");
@@ -309,7 +309,7 @@ window.gxe = {
 
     /**
      * Gets the name for the XML target associated with a configuration object.
-     * @function 
+     * @function
      * @name getTargetName
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -323,9 +323,9 @@ window.gxe = {
     /**
      * Gets the namespace for the XML target associated with a configuration object.
      * <br/>If the supplied configuration object was not directly configured
-     * with a g:targetNS attribute, then the value will be inherited from the first 
+     * with a g:targetNS attribute, then the value will be inherited from the first
      * applicable ancestor.
-     * @function 
+     * @function
      * @name getTargetNS
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgObject the configuration object to process
@@ -340,10 +340,10 @@ window.gxe = {
         cfgCheck = cfgCheck.parent;
       }
     },
-    
+
     /**
-     * Initializes the configured definition for an editor. 
-     * @function 
+     * Initializes the configured definition for an editor.
+     * @function
      * @name initialize
      * @memberOf gxe.cfg
      * @param {cfgObject} cfgDefinition the configured editor definition (JSON)
@@ -387,7 +387,7 @@ window.gxe = {
         this._initializeObjectNS(child);
         if (bRecurse) this._initializeObject(child,cfgObject,gxeNamespaces,true);
       }
-      this._initializeTargetNS(cfgObject,gxeNamespaces);     
+      this._initializeTargetNS(cfgObject,gxeNamespaces);
     },
 
     // initializes a configuration object name and namespace
@@ -409,7 +409,7 @@ window.gxe = {
           cfgObject.namespace = this.uriGxeHtml;
           cfgObject.name = localName;
         }
-      }      
+      }
     },
 
     // initializes the XML target name  and namespace associated with a configuration object
@@ -435,27 +435,27 @@ window.gxe = {
     }
 
   }
-  
+
 };
 
 /**
- * @class Provides client functionality for executing AJAX calls to the server. 
+ * @class Provides client functionality for executing AJAX calls to the server.
  * @name gxe.Client
  */
 dojo.provide("gxe.Client");
 dojo.declare("gxe.Client",null,{
-  
+
   /**
    * Loads a JSON based editor definition through XML interrogation.
    * <br/><br/>This method is geared towards the Geoportal Server end-point
    * for loading an editor definition:<br/>[context path]/gxe/definition<br/>
-   * @function 
+   * @function
    * @name interrogateDefinition
    * @memberOf gxe.Client#
-   * @param {gxe.Context} context the editor context  
+   * @param {gxe.Context} context the editor context
    * @param {String} sXml the XML to interrogate
-   * @param {function} callback function to call once the definition has been 
-   *   successfully retrieved 
+   * @param {function} callback function to call once the definition has been
+   *   successfully retrieved
    *   <br/>signature: function(responseObject,ioArgs)
    *   <br/>--- where responseObject is the JSON definition for the editor
    */
@@ -473,16 +473,16 @@ dojo.declare("gxe.Client",null,{
       })
     });
   },
-  
+
   /**
    * Handles an error condition.
-   * @function 
+   * @function
    * @name onError
    * @memberOf gxe.Client#
-   * @param {Error} error the error 
-   * @param {Object} ioArgs the Dojo i/o arguments 
+   * @param {Error} error the error
+   * @param {Object} ioArgs the Dojo i/o arguments
    */
-  onError: function(error,ioArgs) {  
+  onError: function(error,ioArgs) {
     var msg = null;
     if (ioArgs == null) {
       msg = error.message;
@@ -495,21 +495,21 @@ dojo.declare("gxe.Client",null,{
     }
     if (msg != null) alert(msg);
   },
-  
+
   /**
    * Loads a JSON based editor definition.
    * <br/><br/>This method is geared towards the Geoportal Server end-point
    * for loading an editor definition:<br/>[context path]/gxe/definition<br/>
-   * @function 
+   * @function
    * @name queryDefinition
    * @memberOf gxe.Client#
-   * @param {gxe.Context} context the editor context  
+   * @param {gxe.Context} context the editor context
    * @param {String} sParam a URL parameter name (key|loc)
-   * @param {String} sParamValue a URL parameter value 
+   * @param {String} sParamValue a URL parameter value
    *   <br/>when sParam="key", use the key for the standard (e.g. "fgdc")
    *   <br/>when sParam="loc", use the location (e.g. "gpt/gxe/fgdc/fgdc-editor.xml")
-   * @param {function} callback function to call once the definition has been 
-   *   successfully retrieved 
+   * @param {function} callback function to call once the definition has been
+   *   successfully retrieved
    *   <br/>signature: function(responseObject,ioArgs)
    *   <br/>--- where responseObject is the JSON definition for the editor
    */
@@ -526,19 +526,19 @@ dojo.declare("gxe.Client",null,{
       })
     });
   },
-  
+
   /**
    * Loads an XML document.
    * <br/><br/>This method is geared towards the Geoportal Server rest end-point
    * for document management:<br/>[context path]/rest/manage/document<br/>
-   * @function 
+   * @function
    * @name queryDocument
    * @memberOf gxe.Client#
-   * @param {gxe.Context} context the editor context  
-   * @param {String} id the document identifier 
-   * @param {function} callback function to call once the document has been 
-   *   successfully retrieved 
-   *   <br/>signature: function(responseObject,ioArgs) 
+   * @param {gxe.Context} context the editor context
+   * @param {String} id the document identifier
+   * @param {function} callback function to call once the document has been
+   *   successfully retrieved
+   *   <br/>signature: function(responseObject,ioArgs)
    *   <br/>--- where responseObject is the XML DOM
    */
   queryDocument: function(context,id,callback) {
@@ -550,25 +550,26 @@ dojo.declare("gxe.Client",null,{
       error: dojo.hitch(this,"onError"),
       load: dojo.hitch(this,function(responseObject,ioArgs) {
         context.openDocumentId = id;
+        window.xmlDocument = responseObject;
         callback(responseObject,ioArgs);
       })
     });
   },
-  
+
   /**
    * Saves an XML document.
    * <br/><br/>This method is geared towards the Geoportal Server rest end-point
    * for document management:<br/>[context path]/rest/manage/document<br/>
-   * @function 
+   * @function
    * @name saveDocument
    * @memberOf gxe.Client#
-   * @param {gxe.Context} context the editor context  
-   * @param {String} id the document identifier 
+   * @param {gxe.Context} context the editor context
+   * @param {String} id the document identifier
    *   (can be null for documents that are internally identified)
-   * @param {String} sXml the XML to save 
+   * @param {String} sXml the XML to save
    * @param {boolean} asDraft true if document is being saved as a draft
-   * @param {function} callback optional function to call once the save has 
-   *   successfully executed 
+   * @param {function} callback optional function to call once the save has
+   *   successfully executed
    *   <br/>signature: function(responseObject,ioArgs)
    */
   saveDocument: function(context,id,sXml,asDraft,callback) {
@@ -577,7 +578,7 @@ dojo.declare("gxe.Client",null,{
     if (id == null) id = context.newDocumentId;
     if ((id != null) && (id.length > 0)) u += "&id="+encodeURIComponent(id);
     if (asDraft) u += "&asDraft=true";
-   
+
     var nd = document.createElement("p");
     nd.appendChild(document.createTextNode("..."));
     var dialog = new dijit.Dialog({
@@ -587,17 +588,76 @@ dojo.declare("gxe.Client",null,{
     });
     dojo.addClass(dialog.domNode,"tundra");
     dialog.show();
-    
+
     dojo.xhrPut({
       handleAs: "text",
       preventCache: true,
       url: u,
       putData: sXml,
       error: dojo.hitch(this,function(errorObject,ioArgs) {
+        var destr = function() {
+          dialog.destroy();
+        };
+        dialog.hide().then(destr,destr);
+        this.onError(errorObject,ioArgs);
+      }),
+      load: dojo.hitch(this,function(responseObject,ioArgs) {
+        setTimeout(function(){
           var destr = function() {
             dialog.destroy();
           };
           dialog.hide().then(destr,destr);
+        },2000);
+        try {
+          if (responseObject!=null) {
+            jErr = null;
+            eval(responseObject);
+            if (jErr!=null) {
+              if (jErr.errors!=null && jErr.errors.length>0) {
+                for (var m=0; m<jErr.errors.length; m++) {
+                  context.messageArea.addError(jErr.errors[m]);
+                }
+              } else {
+                context.messageArea.addError(jErr.message);
+              }
+              jErr = null;
+            }
+          }
+        } catch (err) {
+          // handle eval error
+        }
+        if (typeof(callback) == "function") callback(responseObject,ioArgs);
+      })
+    });
+  },
+
+  verifyDocument: function(context,id,sXml,validate,callback) {
+    var u = context.contextPath+"/rest/manage/document?publicationMethod=editor&errorsAsJson=jErr";
+    if (id == null) id = context.openDocumentId;
+    if (id == null) id = context.newDocumentId;
+    if ((id != null) && (id.length > 0)) u += "&id="+encodeURIComponent(id);
+	u += "&validate=true";
+
+    var nd = document.createElement("p");
+    nd.appendChild(document.createTextNode("..."));
+    var dialog = new dijit.Dialog({
+      title: context.getI18NString("client.verify.title"),
+      style: "width: 300px; display: none;",
+      content: nd
+    });
+    dojo.addClass(dialog.domNode,"tundra");
+    dialog.show();
+
+    dojo.xhrPut({
+      handleAs: "text",
+      preventCache: true,
+      url: u,
+      putData: sXml,
+      error: dojo.hitch(this,function(errorObject,ioArgs) {
+        var destr = function() {
+          dialog.destroy();
+        };
+        dialog.hide().then(destr,destr);
         this.onError(errorObject,ioArgs);
       }),
       load: dojo.hitch(this,function(responseObject,ioArgs) {
@@ -629,11 +689,11 @@ dojo.declare("gxe.Client",null,{
       })
     });
   }
-  
+
 });
 
 /**
- * @class Provides a context for the editor. 
+ * @class Provides a context for the editor.
  * @name gxe.Context
  * @property {String} contextPath the wep-app context path
  * @property {cfgObject} cfgContext the g:context portion configured editor definition (JSON)
@@ -662,7 +722,7 @@ dojo.declare("gxe.Context",null,{
 
   /**
    * Builds the editor user interface.
-   * @function 
+   * @function
    * @name buildUI
    * @memberOf gxe.Context#
    * @param {cfgObject} cfgDefinition the configured editor definition (JSON)
@@ -679,13 +739,13 @@ dojo.declare("gxe.Context",null,{
     var elMessageArea = dojo.byId("gxeMessageArea");
     this.messageArea = new gxe.control.MessageArea();
     this.messageArea.context = this;
-    this.messageArea.build(dojo.byId(elMessageArea),null,null);    
-    
+    this.messageArea.build(dojo.byId(elMessageArea),null,null);
+
     this.xmlDocument = new gxe.xml.XmlDocument();
     var xmlRoot = this.xmlDocument.initializeRoot(this,cfgDefinition);
     var domProcessor = null;
     var domRoot = null;
-	
+
     if (domDocument != null) {
       var ndRoot = domDocument.documentElement;
       var processor = new gxe.xml.DomProcessor();
@@ -702,11 +762,11 @@ dojo.declare("gxe.Context",null,{
     ctl.xmlNode = xmlRoot;
     ctl.build(htmlParentElement,domProcessor,domRoot);
   },
-  
+
   /**
    * Generates a unique ID.
    * <br/>(String, prefixed with this.idPrefix).
-   * @function 
+   * @function
    * @name generateUniqueId
    * @memberOf gxe.Context#
    * @return {String} the ID
@@ -715,10 +775,10 @@ dojo.declare("gxe.Context",null,{
     this._uniqueId++;
     return this.idPrefix+this._uniqueId;
   },
-  
+
   /**
    * Gets a localized message string associated with the editor context.
-   * @function 
+   * @function
    * @name getI18NString
    * @memberOf gxe.Context#
    * @param {String} sKey the key for the message string
@@ -741,10 +801,10 @@ dojo.declare("gxe.Context",null,{
   /**
    * Makes a GXE HTML based user interface control.
    * <br/>By default, a new gxe.control.Control object will be instantiated. If the supplied
-   * configuration object has a configured g:jsClass attribute, the attribute value will be used 
+   * configuration object has a configured g:jsClass attribute, the attribute value will be used
    * to instantiatethe control object (it is assumed that any supplied g:jsClass will extend from
    * gxe.control.control).
-   * @function 
+   * @function
    * @name makeXhtmlControl
    * @memberOf gxe.Context#
    * @param {cfgObject} cfgObject the associated editor configuration object
@@ -766,7 +826,7 @@ dojo.declare("gxe.Context",null,{
     }
     return ctl;
   }
-  
+
 });
 
 
@@ -788,7 +848,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Appends an object to the collection (same as push()).
-   * @function 
+   * @function
    * @name add
    * @memberOf gxe.util.ArrayList#
    * @param {Object} obj the object to add
@@ -799,7 +859,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Gets the item at the specified index.
-   * @function 
+   * @function
    * @name getItem
    * @memberOf gxe.util.ArrayList#
    * @param {Integer} nIndex the index
@@ -811,7 +871,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Gets the length of the array.
-   * @function 
+   * @function
    * @name getLength
    * @memberOf gxe.util.ArrayList#
    * @returns {Integer} the length
@@ -822,7 +882,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Inserts an object at a specified index.
-   * @function 
+   * @function
    * @name insertAt
    * @memberOf gxe.util.ArrayList#
    * @param {Integer} nIndex the index (same as JavaScript Array.splice)
@@ -834,7 +894,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Appends an object to the collection.
-   * @function 
+   * @function
    * @name push
    * @memberOf gxe.util.ArrayList#
    * @param {Object} obj the object to add
@@ -845,7 +905,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Removes the object at the specified index from the collection.
-   * @function 
+   * @function
    * @name removeIndex
    * @memberOf gxe.util.ArrayList#
    * @param {Integer} nIndex the index of the object to remove
@@ -856,7 +916,7 @@ dojo.declare("gxe.util.ArrayList",null,{
 
   /**
    * Swaps the positions of two objects within the collection.
-   * @function 
+   * @function
    * @name swapPosition
    * @memberOf gxe.util.ArrayList#
    * @param {Integer} nFromIndex the from index
@@ -895,7 +955,7 @@ dojo.declare("gxe.util.StringBuffer",null,{
 
   /**
    * Appends a string.
-   * @function 
+   * @function
    * @name append
    * @memberOf gxe.util.StringBuffer#
    * @param {String} s the string to append
@@ -908,7 +968,7 @@ dojo.declare("gxe.util.StringBuffer",null,{
 
   /**
    * Returns the associated string.
-   * @function 
+   * @function
    * @name toString
    * @memberOf gxe.util.StringBuffer#
    * @returns {String} this string
@@ -941,7 +1001,7 @@ dojo.declare("gxe.html.HtmlAttributes",gxe.util.ArrayList,{
   /**
    * Applies the attribute collection to an HTML DOM Element.
    * (i.e. sets all attribute values)
-   * @function 
+   * @function
    * @name apply
    * @memberOf gxe.html.HtmlAttributes#
    * @param {Element} elHtml the corresponding HTML DOM Element
@@ -962,22 +1022,22 @@ dojo.declare("gxe.html.HtmlAttributes",gxe.util.ArrayList,{
               elHtml.setAttribute(attr.name,value);
               if (dojo.isIE <= 8) {
                 if (attr.name == "class") {
-                  elHtml.className = value; 
+                  elHtml.className = value;
                   //
                 } else if (attr.name = "readonly")  {
                   //elHtml.readOnly = true;
                 }
               }
             }
-          }  
-        } 
+          }
+        }
       }
     }
   },
 
   /**
    * Finds an attribute with given name.
-   * @function 
+   * @function
    * @name find
    * @memberOf gxe.html.HtmlAttributes#
    * @param {String} name the name of the attribute to find
@@ -994,18 +1054,18 @@ dojo.declare("gxe.html.HtmlAttributes",gxe.util.ArrayList,{
           if (attr != null) {
             if ((attr.name != null) && (attr.name.toLowerCase() == lc)) {
               return attr;
-            } 
+            }
           }
         }
       }
     }
     return null;
-  }, 
+  },
 
   /**
    * Adds an HTML attribute to the collection.
    * If an attribute with the supplied name previously exists, its value will be updated.
-   * @function 
+   * @function
    * @name set
    * @memberOf gxe.html.HtmlAttributes#
    * @param {String} name the name of the attribute
@@ -1026,7 +1086,7 @@ dojo.declare("gxe.html.HtmlAttributes",gxe.util.ArrayList,{
         }
       }
     }
-  } 
+  }
 });
 
 
@@ -1039,7 +1099,7 @@ dojo.declare("gxe.html.HtmlAttributes",gxe.util.ArrayList,{
  */
 dojo.provide("gxe.xml.DomProcessor");
 dojo.declare("gxe.xml.DomProcessor",null,{
-  
+
   // some new methods have been added that can be fully leveraged at a later date
   // forEachElementNode, forEachMatchingElementNode, splitQualifiedName
 
@@ -1058,7 +1118,7 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     DOCUMENT_FRAGMENT_NODE: 11,
     NOTATION_NODE: 12
   },
-  
+
   // this function is not in use, development only
   buildUI: function(context,cfgDefinition,htmlParentElement,sXml) {
     if (window.DOMParser) {
@@ -1072,16 +1132,16 @@ dojo.declare("gxe.xml.DomProcessor",null,{
       context.buildUI(cfgDefinition,htmlParentElement,dom);
     }
   },
-  
+
   /**
-   * Attempts to find the attribute of a DOM Node that matches the XML target 
+   * Attempts to find the attribute of a DOM Node that matches the XML target
    * associated with an editor configuration object.
    * @see gxe.xml.DomProcessor#isMatching
-   * @function 
+   * @function
    * @name findMatchingChildAttribute
    * @memberOf gxe.xml.DomProcessor#
    * @param {Node} domParentNode the DOM node whose attributes will be searched
-   * @param {Object} cfgChild the editor configuration object that 
+   * @param {Object} cfgChild the editor configuration object that
    *   will be used to determine a match
    * @returns {Node} a matching DOM attribute (null if no match)
    */
@@ -1098,14 +1158,14 @@ dojo.declare("gxe.xml.DomProcessor",null,{
   },
 
   /**
-   * Attempts to find an immediate child element of a DOM Node that matches 
+   * Attempts to find an immediate child element of a DOM Node that matches
    * the XML target associated with an editor configuration object.
    * @see gxe.xml.DomProcessor#isMatching
-   * @function 
+   * @function
    * @name findMatchingChildElement
    * @memberOf gxe.xml.DomProcessor#
    * @param {Node} domParentNode the DOM node whose children will be searched
-   * @param {Object} cfgChild the editor configuration object that 
+   * @param {Object} cfgChild the editor configuration object that
    *   will be used to determine a match
    * @returns {Node} a matching DOM element (null if no match)
    */
@@ -1124,14 +1184,14 @@ dojo.declare("gxe.xml.DomProcessor",null,{
   },
 
   /**
-   * Attempts to find the immediate child elements of a DOM Node that match 
+   * Attempts to find the immediate child elements of a DOM Node that match
    * the XML target associated with an editor configuration object.
    * @see gxe.xml.DomProcessor#isMatching
-   * @function 
+   * @function
    * @name findMatchingChildElements
    * @memberOf gxe.xml.DomProcessor#
    * @param {Node} domParentNode the DOM node whose children will be searched
-   * @param {Object} cfgChild the editor configuration object that 
+   * @param {Object} cfgChild the editor configuration object that
    *   will be used to determine a match
    * @returns {Node[]} the matching DOM elements (null if no match)
    */
@@ -1152,18 +1212,18 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     }
     return matches;
   },
-  
+
   /**
    * Executes a function for each immediate child element of a DOM Node.
    * <br/>Only child elements of nodeType=1 (ELEMENT_NODE) will be considered.
    * <br/>
    * <br/>The callback function will have the following signature: function(domChildNode) {}
    * <br/>The callback function can return the String "break" to terminate the loop.
-   * @function 
+   * @function
    * @name forEachElementNode
    * @memberOf gxe.xml.DomProcessor#
    * @param {Node} domParentNode the DOM node whose children will be searched
-   * @param {function} callback the callback function 
+   * @param {function} callback the callback function
    */
   forEachElementNode: function(domParentNode,callback) {
     var children = domParentNode.childNodes;
@@ -1178,8 +1238,8 @@ dojo.declare("gxe.xml.DomProcessor",null,{
       }
     }
   },
-  
-  
+
+
   /**
    * Executes a function for each immediate child element of a DOM Node that matches
    * a supplied namespace and loca name.
@@ -1187,19 +1247,19 @@ dojo.declare("gxe.xml.DomProcessor",null,{
    * <br/>
    * <br/>The callback function will have the following signature: function(domChildNode) {}
    * <br/>The callback function can return the String "break" to terminate the loop.
-   * @function 
+   * @function
    * @name forEachMatchingElementNode
    * @memberOf gxe.xml.DomProcessor#
    * @param {Node} domParentNode the DOM node whose children will be searched
    * @param {String} sNamespaceUri the namespace URI to match (can be null)
    * @param {String} sLocalName the local node name to match (i.e unqualified name)
-   * @param {function} callback the callback function 
+   * @param {function} callback the callback function
    */
-  forEachMatchingElementNode: function(domParentNode,sNamespaceUri,sLocalName,callback) {  
+  forEachMatchingElementNode: function(domParentNode,sNamespaceUri,sLocalName,callback) {
     var targetNS = sNamespaceUri;
     if ((targetNS != null) && (targetNS.length == 0)) targetNS = null;
     this.forEachElementNode(domParentNode,dojo.hitch(this,function(domChildNode) {
-      
+
       var bCheckGML = gxe.cfg.considerGML3andGML32;
       var bNSMatches = (targetNS == "*");
       if (!bNSMatches) {
@@ -1212,7 +1272,7 @@ dojo.declare("gxe.xml.DomProcessor",null,{
           bNSMatches = (domChildNode.namespaceURI == "http://www.opengis.net/gml/3.2");
         }
       }
-      
+
       if (bNSMatches) {
         var pfxPlusLocal = this.splitQualifiedName(domChildNode.nodeName);
         if ((pfxPlusLocal.localName == sLocalName) || (sLocalName == "*")) {
@@ -1225,10 +1285,10 @@ dojo.declare("gxe.xml.DomProcessor",null,{
 
   /**
    * Gets the text content of a DOM Node (element or attribute).
-   * @function 
+   * @function
    * @name getNodeText
    * @memberOf gxe.xml.DomProcessor#
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    * @returns {String} the text content (can be null)
    */
   getNodeText: function(domNode) {
@@ -1251,16 +1311,16 @@ dojo.declare("gxe.xml.DomProcessor",null,{
       s = domNode.nodeValue;
       if (s != null) s = dojo.trim(s);
       return s;
-    }  
+    }
     return null;
   },
-  
+
   /**
    * Determines if a DOM Node has either: attributes, child elements or element text.
-   * @function 
+   * @function
    * @name hasChildrenOrAttributes
    * @memberOf gxe.xml.DomProcessor#
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    * @returns {boolean} true if there is a match
    */
   hasChildrenOrAttributes: function(domNode) {
@@ -1282,27 +1342,27 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     }
     return false;
   },
-  
+
   /**
-   * Determines if the qualified name associated with a DOM Node matches the XML target 
+   * Determines if the qualified name associated with a DOM Node matches the XML target
    * associated with an editor configuration object.
    * <br/>Editor configuration example for referencing a target XML element:<br/>
    * &lt;g:element g:targetName="pfx:name" ..
-   * @function 
+   * @function
    * @name isMatching
    * @memberOf gxe.xml.DomProcessor#
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    * @param {Object} cfgObject the associated editor configuration object
    * @returns {boolean} true if there is a match
    */
   isMatching: function(domNode,cfgObject) {
     var targetNS = gxe.cfg.getTargetNS(cfgObject);
     if ((targetNS != null) && (targetNS.length == 0)) targetNS = null;
-    
+
     if (dojo.isIE <= 8) {
       if (targetNS == null) targetNS = "";
-    } 
-    
+    }
+
     var bCheckGML = gxe.cfg.considerGML3andGML32;
     var bNSMatches = (domNode.namespaceURI == targetNS);
     if (!bNSMatches && bCheckGML) {
@@ -1312,7 +1372,7 @@ dojo.declare("gxe.xml.DomProcessor",null,{
         bNSMatches = (domNode.namespaceURI == "http://www.opengis.net/gml/3.2");
       }
     }
-    
+
     if (bNSMatches) {
       var targetName = gxe.cfg.getTargetName(cfgObject);
       var nodeName = domNode.nodeName;
@@ -1327,24 +1387,35 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     }
     return false;
   },
-  
+
+  controlEvaluate: function(xpath, xmlDocument, nsResolver) {
+    var result = document.evaluate(xpath, xmlDocument, nsResolver, XPathResult.ANY_TYPE, null);
+    var thisNode = result.iterateNext();
+    var node = thisNode;
+
+    if(result.iterateNext()){
+      alert("Errore XPATH ritorna troppi valori");
+    }
+    return node;
+  },
+
   /**
    * Determines if there is a match between a supplied DOM Node and a descendant condition.
    * <br/><br/>Note: matchTopElement does not support full XPath expressions
-   * @function 
+   * @function
    * @name matchTopElement
    * @memberOf gxe.xml.DomProcessor#
    * @param {gxe.xml.XmlNamespaces} xmlNamespaces a configured list of target namespaces
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    * @param {String} sMatchPath the relative path for the element to match
    *   (a simple path relative to the supplied parent DOM node)
-   * @param {String} sMatchTextNodeValue the text node value to match 
-   *   (null indicates no test should be made) 
-   * @param {boolean} bMust true indicates that there must be a match 
+   * @param {String} sMatchTextNodeValue the text node value to match
+   *   (null indicates no test should be made)
+   * @param {boolean} bMust true indicates that there must be a match
    *   (false indicates must not)
    * @returns {boolean} true if there is a match
    */
-  
+
   //
   matchTopElement: function(xmlNamespaces,domNode,sMatchPath,sMatchTextNodeValue,bMust,bRegx, bXPATH) {
     var tokens = sMatchPath.split("/");
@@ -1352,20 +1423,20 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     var domFinalMatches = new Array();
     var domCurrentNodes = new Array();
     domCurrentNodes.push(domNode);
-	
-	//Esri italia Novembre 2019 controllo se l'xPath è assoluto (inizia con '/') 
-	if(tokens[0] == ""){
-		while (domCurrentNodes[0].parentElement != null){
-			domCurrentNodes[0] = domCurrentNodes[0].parentElement;
-		}
-		for (var j = 0;j<tokens.length-2; j++){
-			tokens[j] = tokens[j+2];
-		}
-		tokens.length = tokens.length-2;
-		nTokens = tokens.length;
-	}
-	// fine modifiche
-	
+
+    //Esri italia Novembre 2019 controllo se l'xPath è assoluto (inizia con '/')
+    if(tokens[0] == ""){
+      while (domCurrentNodes[0].parentElement != null){
+        domCurrentNodes[0] = domCurrentNodes[0].parentElement;
+      }
+      for (var j = 0;j<tokens.length-2; j++){
+        tokens[j] = tokens[j+2];
+      }
+      tokens.length = tokens.length-2;
+      nTokens = tokens.length;
+    }
+    // fine modifiche
+
     for (var i=0; i<nTokens; i++) {
       var bIsLast = (i == (nTokens - 1));
       var uri = null;
@@ -1378,65 +1449,71 @@ dojo.declare("gxe.xml.DomProcessor",null,{
       var domCurrentMatches = new Array();
       for (var j=0; j<domCurrentNodes.length; j++) {
         this.forEachMatchingElementNode(domCurrentNodes[j],uri,localName,
-          dojo.hitch(this,function(domChildNode) {
-            if (bIsLast) {
-              if (sMatchTextNodeValue == null) {
-                domCurrentMatches.push(domChildNode);
-              } else {
-                var s = this.getNodeText(domChildNode);
-				//Modifica per rimplementazione stringa RegExp 01/02/2017
-				//Nuova modifica per implmentare il metodo che verifica un XPATH 28/11/2019
-				if (bRegx){
-					var re = new RegExp(sMatchTextNodeValue);
-					if (re.test(s)) {
-						domCurrentMatches.push(domChildNode);
-					}
-				} else if (bXPATH) {
-					xpathResult = document.evaluate( sMatchTextNodeValue, domChildNode, this.nsResolver, XPathResult.STRING_TYPE, null );
-					
-					if(xpathResult.stringValue != "")
-						domCurrentMatches.push(domChildNode);
-				} else{
-					if (s == sMatchTextNodeValue) {
-						domCurrentMatches.push(domChildNode);
-					}
-				}
-              }
-            } else {
-              domCurrentMatches.push(domChildNode);
-            }
-          }
-        ));
+            dojo.hitch(this,function(domChildNode) {
+                  if (bIsLast) {
+                    if (sMatchTextNodeValue == null) {
+                      domCurrentMatches.push(domChildNode);
+                    } else {
+                      var s = this.getNodeText(domChildNode);
+                      //Modifica per rimplementazione stringa RegExp 01/02/2017
+                      //Nuova modifica per implmentare il metodo che verifica un XPATH 28/11/2019
+                      if (bRegx){
+                        var re = new RegExp(sMatchTextNodeValue);
+                        if (re.test(s)) {
+                          domCurrentMatches.push(domChildNode);
+                        }
+                      } else if (bXPATH) {
+                        //domNode xml document
+                        var nsResolver = document.createNSResolver( window.xmlDocument.ownerDocument == null ? window.xmlDocument.documentElement : window.xmlDocument.ownerDocument.documentElement )
+                        xpathResult = this.controlEvaluate(sMatchTextNodeValue,window.xmlDocument.documentElement,nsResolver);
+                        //document.evaluate( sMatchTextNodeValue, domChildNode, this.nsResolver, XPathResult.STRING_TYPE, null );
+
+
+                        if(xpathResult.textContent != ""){
+                          console.log(xpathResult);
+                          domCurrentMatches.push(xpathResult);
+                        }
+                      } else{
+                        if (s == sMatchTextNodeValue) {
+                          domCurrentMatches.push(domChildNode);
+                        }
+                      }
+                    }
+                  } else {
+                    domCurrentMatches.push(domChildNode);
+                  }
+                }
+            ));
       }
       domCurrentNodes = domCurrentMatches;
       if (domCurrentNodes.length == 0) break;
       if (bIsLast) domFinalMatches = domCurrentNodes;
     }
-    
+
     if (bMust) return (domFinalMatches.length > 0);
     else return (domFinalMatches.length == 0);
   },
-  
+
   /**
-   * Verifica che l'xPath passato come parametro 2 sia valido a partire 
+   * Verifica che l'xPath passato come parametro 2 sia valido a partire
    * dal nodo passato come parametro 1, navigando su parent e child
-   * @function 
+   * @function
    * @name matchXPATH
    * @param {Node} domChildNode: il nodo di partenza
    * @param {string} sMatchTextNodeValue: l'xPath da verificare
    * @returns true: l'xPath esiste; false: l'xPath non esiste
    */
-	nsResolver: function(prefix) {
-	  var ns = {
-		'gmd' : 'http://www.isotc211.org/2005/gmd',
-		'gmx': 'http://www.isotc211.org/2005/gmx'
-	  };
-	  return ns[prefix] || null;
-	},
-  
+  nsResolver: function(prefix) {
+    var ns = {
+      'gmd' : 'http://www.isotc211.org/2005/gmd',
+      'gmx': 'http://www.isotc211.org/2005/gmx'
+    };
+    return ns[prefix] || null;
+  },
+
   /**
-   * Splits a qualified name into a prefix plus localName pair. 
-   * @function 
+   * Splits a qualified name into a prefix plus localName pair.
+   * @function
    * @name splitQualifiedName
    * @memberOf gxe.xml.DomProcessor#
    * @param {String} sQualifiedName the qualified name
@@ -1451,13 +1528,13 @@ dojo.declare("gxe.xml.DomProcessor",null,{
     }
     return prefixPlusLocalName;
   }
-  
+
 });
 
 /**
  * @class Serializes an XML document.
  * @name gxe.xml.Generator
- * @property {gxe.Context} context the editor context 
+ * @property {gxe.Context} context the editor context
  * @property {String} documentTitle the document title
  * @property {boolean} hadValidationErrors true if validation errors were encountered
  * @property {boolean} isValidating true if all content should be validated
@@ -1472,10 +1549,10 @@ dojo.declare("gxe.xml.Generator",null,{
   isValidating: false,
   isValidatingTitleOnly: false,
   isSaveAsDraft: false,
-  
+
   /**
-   * Executes the text content of an XML attribute. 
-   * @function 
+   * Executes the text content of an XML attribute.
+   * @function
    * @name escAttribute
    * @memberOf gxe.xml.Generator#
    * @param {String} s the string to escape
@@ -1484,10 +1561,10 @@ dojo.declare("gxe.xml.Generator",null,{
   escAttribute: function(s) {
     return this._execEscape(s,true);
   },
-  
+
   /**
-   * Executes the text content of an XML element. 
-   * @function 
+   * Executes the text content of an XML element.
+   * @function
    * @name escElement
    * @memberOf gxe.xml.Generator#
    * @param {String} s the string to escape
@@ -1496,14 +1573,14 @@ dojo.declare("gxe.xml.Generator",null,{
   escElement: function(s) {
     return this._execEscape(s,true);
   },
-  
+
   /**
-   * Executes and XML escape against a string. 
-   * @function 
+   * Executes and XML escape against a string.
+   * @function
    * @name _execEscape
    * @memberOf gxe.xml.Generator#
    * @param {String} s the string to escape
-   * @param {boolean} bEscapeApostrophe true if apostrophies should be escaped 
+   * @param {boolean} bEscapeApostrophe true if apostrophies should be escaped
    * @returns {String} the escaped string
    */
   _execEscape: function(s,bEscapeApostrophe) {
@@ -1529,12 +1606,12 @@ dojo.declare("gxe.xml.Generator",null,{
   },
 
   /**
-   * Serializes an XML document. 
-   * @function 
+   * Serializes an XML document.
+   * @function
    * @name generate
    * @memberOf gxe.xml.Generator#
    * @param {gxe.Context} context the editor context
-   * @param {boolean} asDraft true if the serialization is for a draft document 
+   * @param {boolean} asDraft true if the serialization is for a draft document
    *   (minimal validation)
    * @returns {String} the serialized string
    */
@@ -1549,20 +1626,20 @@ dojo.declare("gxe.xml.Generator",null,{
     context.xmlDocument.rootElement.echo(this,stringBuffer,0);
     if (!asDraft) this.findAlmostOne(context.xmlDocument.rootElement);
     var sXml = stringBuffer.toString();
-    sXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+sXml; 
+    sXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+sXml;
     return sXml;
   },
-    /**
-   * Serializes an XML document. 
-   * @function 
+  /**
+   * Serializes an XML document.
+   * @function
    * @name generateNoValidation
    * @memberOf gxe.xml.Generator#
    * @param {gxe.Context} context the editor context
-   * @param {boolean} asDraft true if the serialization is for a draft document 
+   * @param {boolean} asDraft true if the serialization is for a draft document
    *   (minimal validation)
    * @returns {String} the serialized string
    */
-  
+
   generateNoValidation: function(context,asDraft) {
     this.context = context;
     this.documentTitle = null;
@@ -1571,29 +1648,29 @@ dojo.declare("gxe.xml.Generator",null,{
     this.isSaveAsDraft = asDraft;
     var stringBuffer = new gxe.util.StringBuffer();
     context.xmlDocument.rootElement.echo(this,stringBuffer,0);
-      
+
     var sXml = stringBuffer.toString();
-    sXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+sXml; 
+    sXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+sXml;
     return sXml;
   },
   findAlmostOne:function(cfgObj){
-    gxe.cfg.arrayAl.length=0;  
+    gxe.cfg.arrayAl.length=0;
     var arrayObjError= new Array();
     gxe.cfg.getAllGxeChildAttributeValue(cfgObj,"almostOne");
     for (var i=0;i<gxe.cfg.arrayAl.length;i++){
-        if ((gxe.cfg.arrayAl[i].objInput.getInputValue()=="")|| (gxe.cfg.arrayAl[i].objInput.getInputValue()==null)){
-            if ((gxe.cfg.arrayAl[i+1].objInput.getInputValue()=="")|| (gxe.cfg.arrayAl[i+1].objInput.getInputValue()==null)){
-                var status = {"isValid": true, "message": "?ok"};
-                status.isValid = false;
-                //status.message = "?invalid "+sLabel+" "+pattern;
-                arrayObjError.push(gxe.cfg.arrayAl[i].objInput);
-                arrayObjError.push(gxe.cfg.arrayAl[i+1].objInput);
-                status.message = gxe.cfg.arrayAl[i+1].objNode.formatValidationMessage(gxe.cfg.arrayAl[i+1].objInput,"almostOne.notvalid");
-                this.handleValidationErrorMultiple(status.message,gxe.cfg.arrayAl[i+1].objNode,arrayObjError);
-                
-            }
+      if ((gxe.cfg.arrayAl[i].objInput.getInputValue()=="")|| (gxe.cfg.arrayAl[i].objInput.getInputValue()==null)){
+        if ((gxe.cfg.arrayAl[i+1].objInput.getInputValue()=="")|| (gxe.cfg.arrayAl[i+1].objInput.getInputValue()==null)){
+          var status = {"isValid": true, "message": "?ok"};
+          status.isValid = false;
+          //status.message = "?invalid "+sLabel+" "+pattern;
+          arrayObjError.push(gxe.cfg.arrayAl[i].objInput);
+          arrayObjError.push(gxe.cfg.arrayAl[i+1].objInput);
+          status.message = gxe.cfg.arrayAl[i+1].objNode.formatValidationMessage(gxe.cfg.arrayAl[i+1].objInput,"almostOne.notvalid");
+          this.handleValidationErrorMultiple(status.message,gxe.cfg.arrayAl[i+1].objNode,arrayObjError);
+
         }
-        i++;
+      }
+      i++;
     }
 //    if ((objReturn.valoreRit !="") && (objReturn.valoreRit  != null)){
 //        var xmlGenerator2 =  gxe.xml.Generator().generateNoValidation(gxeContext,true);
@@ -1607,12 +1684,12 @@ dojo.declare("gxe.xml.Generator",null,{
 //            xmlGenerator.handleValidationError(status.message,this,objReturn.objInput);
 //        }
 //    }
- 
+
   },
-  
+
   //NICOL Funzione di copia da 06/02/2017
-getXMLValueByPath: function(nodepath, xml)
-{
+  getXMLValueByPath: function(nodepath, xml)
+  {
     var doc = new DOMParser().parseFromString(xml,'text/xml');
     var resolver = doc.createNSResolver(doc.documentElement);
     var result="";
@@ -1625,47 +1702,47 @@ getXMLValueByPath: function(nodepath, xml)
       while (thisNode) {
         result=thisNode.textContent;
         thisNode = iterator.iterateNext();
-      }	
+      }
     }
     catch (e) {
       dump( 'Error: Document tree modified during iteration ' + e );
     }
     return result;
-},
-getXMLValueByPathIE: function(nodepath, xml)
-{
+  },
+  getXMLValueByPathIE: function(nodepath, xml)
+  {
     var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-	var objNodeList;
-	xmlDoc.loadXML(xml);
-	//xmlDoc.loadXML("<customer><first_name>Joe</first_name><last_name>Smith</last_name></customer>");
-	if (xmlDoc.parseError.errorCode != 0) {
-	   var myErr = xmlDoc.parseError;
-	   console.log(myErr);
-	} else {
-	   //xmlDoc.setProperty("SelectionLanguage", "XPath");
-	   var node = xmlDoc.documentElement.selectSingleNode(nodepath);
-	   return node.nodeTypedValue;
-	   
-	}
+    var objNodeList;
+    xmlDoc.loadXML(xml);
+    //xmlDoc.loadXML("<customer><first_name>Joe</first_name><last_name>Smith</last_name></customer>");
+    if (xmlDoc.parseError.errorCode != 0) {
+      var myErr = xmlDoc.parseError;
+      console.log(myErr);
+    } else {
+      //xmlDoc.setProperty("SelectionLanguage", "XPath");
+      var node = xmlDoc.documentElement.selectSingleNode(nodepath);
+      return node.nodeTypedValue;
 
-},
+    }
+
+  },
   //NICOL Funzione di copia da 06/02/2017
-getFormElement: function (pathToFind,context){
-      var stringa = this.generateNoValidation(context,true);
-	  
-	  if(navigator.userAgent.indexOf('MSIE')!==-1 || navigator.appVersion.indexOf('Trident/') > 0){
-		  //if ie 6 -> 11
-		  var stringaRet = this.getXMLValueByPathIE(pathToFind,stringa);
-	  }else{
-		  var stringaRet = this.getXMLValueByPath(pathToFind,stringa);
-	  }
-      
-      return stringaRet;
+  getFormElement: function (pathToFind,context){
+    var stringa = this.generateNoValidation(context,true);
+
+    if(navigator.userAgent.indexOf('MSIE')!==-1 || navigator.appVersion.indexOf('Trident/') > 0){
+      //if ie 6 -> 11
+      var stringaRet = this.getXMLValueByPathIE(pathToFind,stringa);
+    }else{
+      var stringaRet = this.getXMLValueByPath(pathToFind,stringa);
+    }
+
+    return stringaRet;
   },
 
   /**
-   * Handles a validation error. 
-   * @function 
+   * Handles a validation error.
+   * @function
    * @name handleValidationError
    * @memberOf gxe.xml.Generator#
    * @param {sMessage} sMessage the message
@@ -1697,7 +1774,7 @@ getFormElement: function (pathToFind,context){
     } else {
       var bIsTitle = xmlNode.nodeInfo.isDocumentTitle;
       if ((bIsTitle) && (this.isValidating)){
-          
+
         this.hadValidationErrors = true;
         this.context.messageArea.addValidationError(sMessage,xmlNode,inputControl);
       }
@@ -1712,7 +1789,7 @@ getFormElement: function (pathToFind,context){
 /**
  * @class A target XML document.
  * @name gxe.xml.XmlDocument
- * @property {gxe.Context} context the editor context 
+ * @property {gxe.Context} context the editor context
  * @property {gxe.xml.XmlNamespaces} namespaces the namespaces associated with the document
  * @property {gxe.xml.XmlElement} rootElement the root element for the document
  */
@@ -1728,23 +1805,23 @@ dojo.declare("gxe.xml.XmlDocument",null,{
   },
 
   /**
-   * Initializes the root element and XML namespaces. 
-   * @function 
+   * Initializes the root element and XML namespaces.
+   * @function
    * @name initializeRoot
    * @memberOf gxe.xml.XmlDocument#
-   * @param {gxe.Context} context the editor context 
+   * @param {gxe.Context} context the editor context
    * @param {Object} cfgDefinition the configured editor definition (JSON)
    * @returns {gxe.xml.XmlElement} the root element for the document
    */
   initializeRoot: function(context,cfgDefinition) {
     this.context = context;
     this.namespaces = new gxe.xml.XmlNamespaces();
-    
+
     var cfgRoot = gxe.cfg.findGxeChild(cfgDefinition,"rootElement");
     if (cfgRoot == null) {
       throw new Error("The editor definition contains no g:rootElement.");
     }
-    
+
     var cfgItems = gxe.cfg.findChild(cfgRoot,gxe.cfg.uriGxe,"namespaces");
     if (cfgItems != null) {
       gxe.cfg.forEachChild(cfgItems,gxe.cfg.uriGxe,"namespace",dojo.hitch(this,function(cfgNS) {
@@ -1773,21 +1850,21 @@ dojo.declare("gxe.xml.XmlDocument",null,{
         var attr = new gxe.xml.XmlAttribute(this,this.rootElement,null);
         attr.nodeInfo = ni;
         this.rootElement.attributes.add(attr);
-      }                           
+      }
     }
-    
+
     return this.rootElement;
   }
-  
+
 });
 
 /**
  * @class A target XML node (element or attribute).
  * @name gxe.xml.XmlNode
  * @property {Object} cfgObject the associated editor configuration object
- * @property {boolean} isOptionalPlaceHolder true if this node is an optional place holder only 
+ * @property {boolean} isOptionalPlaceHolder true if this node is an optional place holder only
  *   (no serialization)
- * @property {boolean} isPlaceHolder true if this node is a place holder only 
+ * @property {boolean} isPlaceHolder true if this node is a place holder only
  *   (no serialization)
  * @property {gxe.xml.XmlNodeInfo} nodeInfo the node information
  * @property {gxe.xml.XmlDocument} parentDocument the parent XML document
@@ -1803,10 +1880,10 @@ dojo.declare("gxe.xml.XmlNode",null,{
   nodeInfo: null,
   parentDocument: null,
   parentElement: null,
-  
+
   /**
-   * Constructor. 
-   * @function 
+   * Constructor.
+   * @function
    * @name constructor
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.xml.XmlDocument} parentDocument the parent XML document
@@ -1821,8 +1898,8 @@ dojo.declare("gxe.xml.XmlNode",null,{
   },
 
   /**
-   * Serializes XML content. 
-   * @function 
+   * Serializes XML content.
+   * @function
    * @name echo
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.xml.Generator} xmlGenerator the XML generator
@@ -1830,10 +1907,10 @@ dojo.declare("gxe.xml.XmlNode",null,{
    * @param {Integer} nDepth the indentation depth
    */
   echo: function(xmlGenerator,stringBuffer,nDepth) {},
-  
+
   /**
    * Formats a validation message.
-   * @function 
+   * @function
    * @name formatValidationMessage
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.control.InputBase} inputControl the associated input control
@@ -1850,7 +1927,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
         s = f.replace("{label}",l).replace("{message}",m);
       }
     }
-    
+
     /*
     if ((i18nContextKey != "validate.ok") && (inputControl.htmlElement != null)) {
       var sTip = inputControl.htmlElement.title;
@@ -1860,14 +1937,14 @@ dojo.declare("gxe.xml.XmlNode",null,{
       }
     }
     */
-    
+
     return s;
   },
 
   /**
    * Indicates if this node should be serialized even if its content is empty.
    * <br/>Based upon cfg attribute g:serializeIfEmpty.
-   * @function 
+   * @function
    * @name getSerializeIfEmpty
    * @memberOf gxe.xml.XmlNode#
    * @returns {boolean} true if this node should be serialized when empty
@@ -1885,16 +1962,16 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Gets the input control associated with this node.
-   * @function 
+   * @function
    * @name getInputControl
    * @memberOf gxe.xml.XmlNode#
    * @returns {gxe.control.InputBase} the input control (can be null)
    */
   getInputControl: function() {return this._dataInputControl;},
-  
+
   /**
    * Sets the input control associated with this node.
-   * @function 
+   * @function
    * @name setInputControl
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.control.InputBase} ctl the input control
@@ -1903,7 +1980,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Gets the default label text for the node.
-   * @function 
+   * @function
    * @name getLabelText
    * @memberOf gxe.xml.XmlNode#
    * @returns {String} the label text
@@ -1915,7 +1992,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
   /**
    * Gets the qualified URI for the node.
    * <br/>Format: namespaceURI#localName
-   * @function 
+   * @function
    * @name getQualifiedUri
    * @memberOf gxe.xml.XmlNode#
    * @returns {String} the qualified URI
@@ -1926,7 +2003,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Initializes the node info.
-   * @function 
+   * @function
    * @name intitalizeNodeInfo
    * @memberOf gxe.xml.XmlNode#
    */
@@ -1934,7 +2011,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
     this.nodeInfo = new gxe.xml.XmlNodeInfo();
     if (this.cfgObject == null) return;
     if (this.parentDocument == null) return;
-    
+
     var ni = this.nodeInfo;
     ni.namespaceURI = gxe.cfg.getTargetNS(this.cfgObject);
     ni.namespacePrefix = this.parentDocument.namespaces.getPrefix(ni.namespaceURI);
@@ -1944,7 +2021,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
     if (sIsTitle == "true") ni.isDocumentTitle = true;
     var isIsoCLV = gxe.cfg.getGxeAttributeValue(this.cfgObject,"isIsoCLV");
     if (isIsoCLV == "true") ni.isIsoCodeListValue = true;
-	var isIsoXlink = gxe.cfg.getGxeAttributeValue(this.cfgObject,"isIsoXlink");
+    var isIsoXlink = gxe.cfg.getGxeAttributeValue(this.cfgObject,"isIsoXlink");
     if (isIsoXlink == "true") ni.isIsoXlink = true;
     var isIsoWMVL = gxe.cfg.getGxeAttributeValue(this.cfgObject,"isIsoWMVL");
     if (isIsoWMVL == "true") ni.isIsoWrappedMultiValueList = true;
@@ -1952,25 +2029,25 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Determines if the node represents an XML attribute.
-   * @function 
+   * @function
    * @name isAttribute
    * @memberOf gxe.xml.XmlNode#
    * @returns {boolean} true if the node is an attribute
    */
   isAttribute: function() {return false;},
-  
+
   /**
    * Determines if the node is repeatable.
-   * @function 
+   * @function
    * @name isRepeatable
    * @memberOf gxe.xml.XmlNode#
    * @returns {boolean} true if the node is repeatable
    */
   isRepeatable: function() {return false;},
-  
+
   /**
    * Resolves the minimum number of occurrences for the node.
-   * @function 
+   * @function
    * @name resolveMinOccurs
    * @memberOf gxe.xml.XmlNode#
    * @returns {Integer} the minimum number of occurrences
@@ -2010,7 +2087,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Validates the content of an input control.
-   * @function 
+   * @function
    * @name validateInput
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.control.InputBase} inputControl the input control
@@ -2027,7 +2104,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Validates an input value associated with a control.
-   * @function 
+   * @function
    * @name validateInputValue
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.control.InputBase} inputControl the input control that generated the value
@@ -2037,15 +2114,15 @@ dojo.declare("gxe.xml.XmlNode",null,{
   validateInputValue: function(inputControl,value) {
     var regexp;
     var status = {"isValid": true, "message": "?ok"};
-    
+
     var sLabel = inputControl.findParentLabelText(this);
     status.message = this.formatValidationMessage(inputControl,"validate.ok");
 
     // check for empty input
     if ((value == null) || (dojo.trim(value).length == 0)) {
-      var nMinOccurs = this.resolveMinOccurs();   
+      var nMinOccurs = this.resolveMinOccurs();
       if ((nMinOccurs >= 1) && !this.getSerializeIfEmpty()) {
-        
+
         var xln = this.nodeInfo.localName;
         if ((xln == "beginPosition") || (xln == "endPosition")) {
           if ((typeof(this.attributes) != "undefined") && (this.attributes != null)) {
@@ -2067,7 +2144,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
             }
           }
         }
-        
+
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl,"validate.empty");
         return status;
@@ -2078,13 +2155,13 @@ dojo.declare("gxe.xml.XmlNode",null,{
     //NICOL Check if exist regex Expression
     var objReturn = gxe.cfg.getGxeChildAttributeValue(this.cfgObject,"regexp");
     if ((objReturn.valoreRit !="") && (objReturn.valoreRit  != null)){
-        regexp = new RegExp(objReturn.valoreRit );
-        if (!regexp.test(value)) {
-          status.isValid = false;
-          //status.message = "?invalid "+sLabel+" "+pattern;
-          status.message = this.formatValidationMessage(inputControl,"validate.other");
-          return status;
-        }  
+      regexp = new RegExp(objReturn.valoreRit );
+      if (!regexp.test(value)) {
+        status.isValid = false;
+        //status.message = "?invalid "+sLabel+" "+pattern;
+        status.message = this.formatValidationMessage(inputControl,"validate.other");
+        return status;
+      }
     }
     // check for acceptable alternate values
     if (!status.isValid) return status;
@@ -2096,12 +2173,12 @@ dojo.declare("gxe.xml.XmlNode",null,{
         if ((sAlternate.length > 0) && (sAlternate == value)) return status;
       }
     }
-    
+
     // check types, TODO not all xs: types are implemented
     if (!status.isValid) return status;
     var sType = gxe.cfg.getGxeAttributeValue(this.cfgObject,"valueType");
     if (sType != null) sType = dojo.trim(sType);
-   
+
     if ((sType == "integer") || (sType == "xs:integer") || (sType == "xsd:integer")) {
       // the expression is not definitive
       //regexp = /^[-]?[0-9]+$/;
@@ -2111,11 +2188,11 @@ dojo.declare("gxe.xml.XmlNode",null,{
         status.message = this.
         formatValidationMessage(inputControl,"validate.integer");
       }
-      
+
     } else if ((sType == "decimal") || (sType == "xs:decimal") || (sType == "xsd:decimal") ||
-               (sType == "double") || (sType == "xs:double") || (sType == "xsd:double") ||
-               (sType == "float") || (sType == "xs:float") || (sType == "xsd:float") ||
-               (sType == "number")) {
+        (sType == "double") || (sType == "xs:double") || (sType == "xsd:double") ||
+        (sType == "float") || (sType == "xs:float") || (sType == "xsd:float") ||
+        (sType == "number")) {
       // same expression for any non-integer type, should be more explicit
       // the expression is not definitive
       regexp = /(^-?\d\d*\.\d*$)|(^-?\d\d*$)|(^-?\.\d\d*$)/;
@@ -2123,7 +2200,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl,"validate.number");
       }
-      
+
     } else if ((sType == "date") || (sType == "xs:date") || (sType == "xsd:date")) {
 
       // allows yyyy-mm-ddZ or yyyy-mm-dd or yyyy-mm or yyyy
@@ -2131,7 +2208,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
       var regexp1 = /^(\d{4})$/;
       var regexp2 = /^(\d{2})$/;
       var parts = value.split("-");
-            
+
       if (regexp1.test(parts[0])) {
         if (parts.length > 1) {
           if (regexp2.test(parts[1])) {
@@ -2151,15 +2228,15 @@ dojo.declare("gxe.xml.XmlNode",null,{
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl,"validate.date");
       }
-      
+
     } else if ((sType == "dateTime") || (sType == "xs:dateTime") || (sType == "xsd:dateTime")) {
       // ISO 8601
       regexp = /^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[0-1]|0[1-9]|[1-2][0-9])T(2[0-3]|[0-1][0-9]):([0-5][0-9]):([0-5][0-9])(\.[0-9]+)?(Z|[+-](?:2[0-3]|[0-1][0-9]):[0-5][0-9])?$/;
       if (!regexp.test(value)) {
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl, "validate.iso8601");
-      } 
-      
+      }
+
     } else if (sType == "fgdc:date") {
 
       // allows yyyymmdd or yyyymm or yyyy
@@ -2175,7 +2252,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
         parts[0] = value.substring(0,4);
         parts[1] = value.substring(4,6);
       } else if (value.length == 4) {
-        parts[0] = value.substring(0,4); 
+        parts[0] = value.substring(0,4);
       }
       if (parts.length > 0) {
         if (regexp1.test(parts[0])) {
@@ -2199,8 +2276,8 @@ dojo.declare("gxe.xml.XmlNode",null,{
       }
 
     } else if (sType == "fgdc:time") {
-      
-      // (hours minutes seconds) examples: hh hhmm hhmmss 
+
+      // (hours minutes seconds) examples: hh hhmm hhmmss
       // (offset from GMT) examples: hh+hhmm hhmmss-hhmm
       // (suffixed with Z for Zulu time) examples: hhZ hhmmZ hhmmssZ
       // (decimal seconds are ssssssss)
@@ -2211,13 +2288,13 @@ dojo.declare("gxe.xml.XmlNode",null,{
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl,"validate.other");
       }
-      
+
     }
 
     // check restrictions, TODO not all xs: restrictions are implemented
     if (!status.isValid) return status;
     gxe.cfg.forEachChild(this.cfgObject,gxe.cfg.uriGxe,"restriction",dojo.hitch(this,function(cfgRestriction) {
-      gxe.cfg.forEachChild(cfgRestriction,gxe.cfg.uriGxe,"*",dojo.hitch(this,function(cfgChild) {        
+      gxe.cfg.forEachChild(cfgRestriction,gxe.cfg.uriGxe,"*",dojo.hitch(this,function(cfgChild) {
 
         if (cfgChild.name == "pattern") {
           var pattern = gxe.cfg.getGxeAttributeValue(cfgChild,"value");
@@ -2232,15 +2309,15 @@ dojo.declare("gxe.xml.XmlNode",null,{
                 //status.message = "?invalid "+sLabel+" "+pattern;
                 status.message = this.formatValidationMessage(inputControl,"validate.other");
                 return "break";
-              }  
+              }
             } catch (err) {
               console.log(err+", "+gxe.cfg.getGxeAttributeValue(this.cfgObject,"targetName")+
                   ", the g:"+cfgChild.name+" is incorrectly defined, "+pattern);
             }
           }
         }
-        
-        if ((cfgChild.name == "minExclusive") || (cfgChild.name == "minInclusive") || 
+
+        if ((cfgChild.name == "minExclusive") || (cfgChild.name == "minInclusive") ||
             (cfgChild.name == "maxExclusive") || (cfgChild.name == "maxInclusive")) {
           var nValue = new Number(value);
           var sBound = gxe.cfg.getGxeAttributeValue(cfgChild,"value");
@@ -2257,7 +2334,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
                 if (nValue > nBound) status.isValid = false;
               }
               if (!status.isValid) {
-               status.message = this.formatValidationMessage(inputControl,"validate.other");
+                status.message = this.formatValidationMessage(inputControl,"validate.other");
               }
             } else {
               console.log(gxe.cfg.getGxeAttributeValue(this.cfgObject,"targetName")+
@@ -2268,8 +2345,8 @@ dojo.declare("gxe.xml.XmlNode",null,{
             status.message = this.formatValidationMessage(inputControl,"validate.other");
           }
         }
-        
-        if ((cfgChild.name == "length") ||  
+
+        if ((cfgChild.name == "length") ||
             (cfgChild.name == "minLength") || (cfgChild.name == "maxLength")) {
           var nLength = value.length;
           var sBound = gxe.cfg.getGxeAttributeValue(cfgChild,"value");
@@ -2283,15 +2360,15 @@ dojo.declare("gxe.xml.XmlNode",null,{
               if (nLength > nBound) status.isValid = false;
             }
             if (!status.isValid) {
-             status.message = this.formatValidationMessage(inputControl,"validate.other");
+              status.message = this.formatValidationMessage(inputControl,"validate.other");
             }
           } else {
             console.log(gxe.cfg.getGxeAttributeValue(this.cfgObject,"targetName")+
                 ", the g:"+cfgChild.name+" bound is incorrectly defined, "+sBound);
           }
         }
-        
-      })); 
+
+      }));
       if (!status.isValid) return "break";
     }));
 
@@ -2300,7 +2377,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
 
   /**
    * Validates multiple input values associated with a control.
-   * @function 
+   * @function
    * @name validateInputValues
    * @memberOf gxe.xml.XmlNode#
    * @param {gxe.control.InputBase} inputControl the input control that generated the values
@@ -2310,7 +2387,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
   validateInputValues: function(inputControl,values) {
     var status = {"isValid": false, "message": null};
     if ((values == null) || (values.length == 0)) {
-      var nMinOccurs = this.resolveMinOccurs(); 
+      var nMinOccurs = this.resolveMinOccurs();
       if ((nMinOccurs >= 1) && !this.getSerializeIfEmpty()) {
         status.isValid = false;
         status.message = this.formatValidationMessage(inputControl,"validate.empty");
@@ -2322,11 +2399,11 @@ dojo.declare("gxe.xml.XmlNode",null,{
     }
     return status;
   },
-  
+
   /**
    * Determines if this element wraps an ISO19139 multi-value list.
    * <br/>(e.g. MD_TopicCategoryCode - InputSelectMany)
-   * @function 
+   * @function
    * @name wrapsIsoMultiValueList
    * @memberOf gxe.xml.XmlNode#
    * @returns {boolean}
@@ -2334,7 +2411,7 @@ dojo.declare("gxe.xml.XmlNode",null,{
   wrapsIsoMultiValueList: function() {
     return false;
   }
-  
+
 });
 
 /**
@@ -2348,7 +2425,7 @@ dojo.declare("gxe.xml.XmlAttribute",gxe.xml.XmlNode,{
   /** Override gxe.xml.XmlNode.echo() */
   echo: function(xmlGenerator,stringBuffer,nDepth) {
     if (this.isPlaceHolder || this.isOptionalPlaceHolder) return;
-    
+
     var bSerialize = true;
     var bValidating = xmlGenerator.isValidating;
     var bIsTitle = this.nodeInfo.isDocumentTitle;
@@ -2375,7 +2452,7 @@ dojo.declare("gxe.xml.XmlAttribute",gxe.xml.XmlNode,{
       }
     }
     if (bIsTitle) xmlGenerator.documentTitle = sNodeValue;
-    
+
     if (bSerialize && (!bIsEmpty || bSerializeIfEmpty)) {
       var sNodeName = this.nodeInfo.localName;
       if (this.nodeInfo.namespacePrefix != null) {
@@ -2388,7 +2465,7 @@ dojo.declare("gxe.xml.XmlAttribute",gxe.xml.XmlNode,{
 
   /** Override gxe.xml.XmlNode.isAttribute() */
   isAttribute: function() {return true;},
-  
+
   /** Override gxe.xml.XmlNode.isRepeatable() */
   isRepeatable: function() {return false;}
 });
@@ -2402,8 +2479,8 @@ dojo.provide("gxe.xml.XmlAttributes");
 dojo.declare("gxe.xml.XmlAttributes",gxe.util.ArrayList,{
 
   /**
-   * Serializes XML content. 
-   * @function 
+   * Serializes XML content.
+   * @function
    * @name echo
    * @memberOf gxe.xml.XmlAttributes#
    * @param {gxe.xml.Generator} xmlGenerator the XML generator
@@ -2437,7 +2514,7 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
   /** Override gxe.xml.XmlNode.echo() */
   echo: function(xmlGenerator,stringBuffer,nDepth) {
     if (this.isPlaceHolder || this.isOptionalPlaceHolder) return;
-    
+
     var pfx = "\r\n";
     for (var i=0; i<nDepth; i++) pfx += "\t";
     if (this.exclusiveChoiceControl != null) {
@@ -2453,21 +2530,21 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
     if (inputControl != null) {
       this.nodeInfo.nodeValue = null;
       if (inputControl.getSupportsMultipleValues()) {
-		//Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
-		if(this.nodeInfo.localName == "Anchor"){
-			inputValues = inputControl.getInputValues();
-		}else{
-			inputValues = inputControl.getInputValuesNoLabel();
-		}
-        if ((inputValues != null) && (inputValues.length > 0)) {
-			//Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
-			if(this.nodeInfo.localName == "Anchor"){
-				this.nodeInfo.nodeValue = inputValues;
-			}else{
-				this.nodeInfo.nodeValue = inputValues[0];
-			}
+        //Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
+        if(this.nodeInfo.localName == "Anchor"){
+          inputValues = inputControl.getInputValues();
+        }else{
+          inputValues = inputControl.getInputValuesNoLabel();
         }
-		
+        if ((inputValues != null) && (inputValues.length > 0)) {
+          //Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
+          if(this.nodeInfo.localName == "Anchor"){
+            this.nodeInfo.nodeValue = inputValues;
+          }else{
+            this.nodeInfo.nodeValue = inputValues[0];
+          }
+        }
+
 
         if (bValidating || (bIsTitle && xmlGenerator.isValidatingTitleOnly)) {
           var status = this.validateInputValues(inputControl,inputValues);
@@ -2478,10 +2555,10 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
             xmlGenerator.handleValidationError(status.message,this,inputControl);
           }
         }
-        
+
       } else {
         var inputValue = inputControl.getInputValue();
-		if (inputValue != null) {
+        if (inputValue != null) {
           this.nodeInfo.nodeValue = inputValue;
         }
         if (bValidating || (bIsTitle && xmlGenerator.isValidatingTitleOnly)) {
@@ -2506,10 +2583,10 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
     this.attributes.echo(xmlGenerator,sbAttributePortion,nDepth);
     var sAttributePortion = sbAttributePortion.toString();
     var bHasAttributePortion = (sAttributePortion.length > 0);
-    
+
     var bIsIsoCodeListValue = this.nodeInfo.isIsoCodeListValue;
     var bIsIsoXlink = this.nodeInfo.isIsoXlink;
-		
+
 
     if (bIsIsoCodeListValue) {
       var n = this.attributes.getLength();
@@ -2520,7 +2597,7 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
           if (ic != null) {
             if (!ic.getSupportsMultipleValues()) {
               var sCode = ic.getInputValue(true);
-			  
+
               if ((sCode == null) || (sCode.length == 0)) return;
               else nodeValue = sCode;
             }
@@ -2528,27 +2605,31 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
         }
       }
     }
-	
-	/* Add sezione per creazione dell'attributo xlink:href sul gmx:Anchor */
-	if(bIsIsoXlink) {
-		
-		var optionXlink = this.getInputControl().htmlElement.selectedOptions[0];
-		var arrayChildren = this.getInputControl().cfgObject.children[0];
-		var arrayAttributes = [];
-		for(var i = 0; i < arrayChildren.children.length; i++){
-			arrayAttributes.push(arrayChildren.children[i]);
-			for(var j = 0; j < arrayAttributes[i].attributes.length; j++){
-				if(optionXlink.value === arrayAttributes[i].attributes[j].value){
-					optionXlink = arrayAttributes[i].attributes;
-				}
-			}
-		}
-		
-		nodeValue = optionXlink[0].value;
-		nodeName = 'gmx:Anchor xlink:href="'+optionXlink[1].value+'"';	
-		
-	}
-    
+
+    /* Add sezione per creazione dell'attributo xlink:href sul gmx:Anchor */
+    if(bIsIsoXlink) {
+
+      var optionXlink = this.getInputControl().htmlElement.selectedOptions[0];
+      var arrayChildren = this.getInputControl().cfgObject.children[0];
+      var arrayAttributes = [];
+      for(var i = 0; i < arrayChildren.children.length; i++){
+        arrayAttributes.push(arrayChildren.children[i]);
+        for(var j = 0; j < arrayAttributes[i].attributes.length; j++){
+          if(optionXlink.value === arrayAttributes[i].attributes[j].value){
+            optionXlink = arrayAttributes[i].attributes;
+          }
+        }
+      }
+      //Settembre2020: scelta corretta degli attributi del nodo
+      var filter = optionXlink.filter(function(item){return item.name === "value";})
+      if(filter.length !== 0)
+        nodeValue = filter[0].value;
+      var filter1 = optionXlink.filter(function(item){return item.name === "link";})
+      if(filter1.length !== 0)
+        nodeName = 'gmx:Anchor xlink:href="'+filter1[0].value+'"';
+
+    }
+
     // isIsoWrappedMultiValueList, e.g. MD_TopicCategoryCode - InputSelectMany
     if (this.wrapsIsoMultiValueList()) {
       this.children.getItem(0).echo(xmlGenerator,stringBuffer,nDepth);
@@ -2561,27 +2642,27 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
           pNodeName = pNodeInfo.namespacePrefix+":"+pNodeName;
         }
         var n = inputValues.length;
-		//Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
-		if(nodeName != "gmx:Anchor"){
-			for (var i=0; i<n; i++) {
-			  stringBuffer.append(pfx+"<"+pNodeName+">");
-			  stringBuffer.append(pfx+"\t<"+nodeName+">");
-			  stringBuffer.append(xmlGenerator.escElement(inputValues[i]));
-			  stringBuffer.append("</"+nodeName+">");
-			  stringBuffer.append(pfx+"</"+pNodeName+">");
-			}
-		}else{
-			for (var i=0; i<n; i++) {
-			  stringBuffer.append(pfx+"<"+pNodeName+">");
-			  stringBuffer.append(pfx+"\t<"+nodeName+" xlink:href=\""+ inputValues[i] +"\">"+inputValues[(i=i+1)]+"");
-			  stringBuffer.append("</"+nodeName+">");
-			  stringBuffer.append(pfx+"</"+pNodeName+">");
-			}
-		}
+        //Esri italia Novembre 2019: l'Anchor ha anche la label mentre altre strutture no
+        if(nodeName != "gmx:Anchor"){
+          for (var i=0; i<n; i++) {
+            stringBuffer.append(pfx+"<"+pNodeName+">");
+            stringBuffer.append(pfx+"\t<"+nodeName+">");
+            stringBuffer.append(xmlGenerator.escElement(inputValues[i]));
+            stringBuffer.append("</"+nodeName+">");
+            stringBuffer.append(pfx+"</"+pNodeName+">");
+          }
+        }else{
+          for (var i=0; i<n; i++) {
+            stringBuffer.append(pfx+"<"+pNodeName+">");
+            stringBuffer.append(pfx+"\t<"+nodeName+" xlink:href=\""+ inputValues[i] +"\">"+inputValues[(i=i+1)]+"");
+            stringBuffer.append("</"+nodeName+">");
+            stringBuffer.append(pfx+"</"+pNodeName+">");
+          }
+        }
       }
-      return;    
+      return;
     }
-   
+
     if (nodeValue != null) nodeValue = xmlGenerator.escElement(nodeValue);
     var bHasValue = ((nodeValue != null) && (nodeValue.length > 0));
 
@@ -2600,20 +2681,20 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
         if (bHasChildPortion) {
           sbElement.append(sChildPortion);
           sbElement.append(pfx);
-        } 
-		/* Add sezione per creazione dell'attributo xlink:href sul gmx:Anchor */
-		if(bIsIsoXlink){
-			sbElement.append("</gmx:Anchor>");
-		}else{
-			sbElement.append("</"+nodeName+">");
-		}
+        }
+        /* Chiusura sezione per creazione dell'attributo xlink:href sul gmx:Anchor */
+        if(bIsIsoXlink){
+          sbElement.append("</gmx:Anchor>");
+        }else{
+          sbElement.append("</"+nodeName+">");
+        }
       } else {
         sbElement.append("/>");
       }
       stringBuffer.append(sbElement.toString());
     } else {
-        if (bSerializeIfEmpty) stringBuffer.append(pfx+"<"+nodeName+"/>");
-              //NICOL Check if exist almostOne
+      if (bSerializeIfEmpty) stringBuffer.append(pfx+"<"+nodeName+"/>");
+      //NICOL Check if exist almostOne
     }
 
     if ((inputValues != null) && (inputValues.length > 1)) {
@@ -2638,7 +2719,7 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
     }
     return false;
   },
-  
+
   /** Override gxe.xml.XmlNode.wrapsIsoMultiValueList() */
   wrapsIsoMultiValueList: function() {
     if (this.children.getLength() == 1) {
@@ -2646,7 +2727,7 @@ dojo.declare("gxe.xml.XmlElement",gxe.xml.XmlNode,{
     }
     return false;
   }
-  
+
 });
 
 /**
@@ -2658,8 +2739,8 @@ dojo.provide("gxe.xml.XmlElements");
 dojo.declare("gxe.xml.XmlElements",gxe.util.ArrayList,{
 
   /**
-   * Serializes XML content. 
-   * @function 
+   * Serializes XML content.
+   * @function
    * @name echo
    * @memberOf gxe.xml.XmlElements#
    * @param {gxe.xml.Generator} xmlGenerator the XML generator
@@ -2673,7 +2754,7 @@ dojo.declare("gxe.xml.XmlElements",gxe.util.ArrayList,{
 
   /**
    * Finds the array index associated with an element.
-   * @function 
+   * @function
    * @name findIndex
    * @memberOf gxe.xml.XmlElements#
    * @param {gxe.xml.XmlElement} xmlElement the subject element
@@ -2686,7 +2767,7 @@ dojo.declare("gxe.xml.XmlElements",gxe.util.ArrayList,{
     }
     return -1;
   }
-  
+
 });
 
 /**
@@ -2700,10 +2781,10 @@ dojo.provide("gxe.xml.XmlNamespace");
 dojo.declare("gxe.xml.XmlNamespace",null,{
   prefix: null,
   uri: null,
-  
+
   /**
    * Constructor.
-   * @function 
+   * @function
    * @name constructor
    * @memberOf gxe.xml.XmlNamespaces#
    * @param {String} prefix the prefix
@@ -2722,10 +2803,10 @@ dojo.declare("gxe.xml.XmlNamespace",null,{
  */
 dojo.provide("gxe.xml.XmlNamespaces");
 dojo.declare("gxe.xml.XmlNamespaces",gxe.util.ArrayList,{
-  
+
   /**
    * Gets the namespace prefix associated with a URI.
-   * @function 
+   * @function
    * @name getPrefix
    * @memberOf gxe.xml.XmlNamespaces#
    * @param {String} uri the URI
@@ -2737,14 +2818,14 @@ dojo.declare("gxe.xml.XmlNamespaces",gxe.util.ArrayList,{
       var ns = this.getItem(i);
       if ((ns != null) && (ns.uri == uri)) {
         return ns.prefix;
-      }                           
+      }
     }
     return null;
   },
 
   /**
    * Gets the namespace URI associated with a prefix.
-   * @function 
+   * @function
    * @name getUri
    * @memberOf gxe.xml.XmlNamespaces#
    * @param {String} prefix the prefix
@@ -2756,7 +2837,7 @@ dojo.declare("gxe.xml.XmlNamespaces",gxe.util.ArrayList,{
       var ns = this.getItem(i);
       if ((ns != null) && (ns.prefix == prefix)) {
         return ns.uri;
-      }                           
+      }
     }
     return null;
   }
@@ -2802,10 +2883,10 @@ dojo.declare("gxe.xml.XmlNodeInfo",null,{
  * <li>If a configuration object explicitly defines an h:tag attribute, it will be used to
  * create a corresponding HTML DOM element on the page.</li>
  * <li>If a configuration object is defined within the GXE HTML namespace, then the local name
- * of the configuration object will be used to create a corresponding HTML DOM element 
+ * of the configuration object will be used to create a corresponding HTML DOM element
  * on the page.</li>
  * </ul>
- * 
+ *
  * <br/><br/>
  * The processing flow is as follows:
  * <ul>
@@ -2824,7 +2905,7 @@ dojo.declare("gxe.xml.XmlNodeInfo",null,{
  * </ul>
  *
  * @name gxe.control.Control
- * @property {cfgObject} cfgObject the associated editor configuration object 
+ * @property {cfgObject} cfgObject the associated editor configuration object
  *   (i.e. an editor definition element)
  * @property {gxe.Context} context the editor context
  * @property {gxe.html.HtmlAttributes} htmlAttributes the configured HTML attributes for the control
@@ -2834,13 +2915,13 @@ dojo.declare("gxe.xml.XmlNodeInfo",null,{
  * @property {String} gxeId a unique auto-generated ID for the control
  * @property {gxe.control.Control} parentControl the parent of this control
  * @property {gxe.xml.XmlNode} xmlNode the targeted XML node.
- *   This is section based, many component controls target the same node. 
+ *   This is section based, many component controls target the same node.
  *   (e.g. a header div, a label, an input text box can all target the same XML node)
  * @property {gxe.xml.XmlElement} xmlParentElement the parent element of the targeted XML node
  */
 dojo.provide("gxe.control.Control");
 dojo.declare("gxe.control.Control",null,{
-  
+
   cfgObject: null,
   context: null,
   htmlAttributes: null,
@@ -2855,15 +2936,15 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Initializes the instance.
-   * @function 
+   * @function
    * @name initialize
    * @memberOf gxe.control.Control#
    * @param {gxe.Context} context the editor context
-   * @param {cfgObject} cfgObject the associated editor configuration object 
+   * @param {cfgObject} cfgObject the associated editor configuration object
    *   (i.e. an editor definition element)
    */
   initialize: function(context,cfgObject) {
-	 
+
     this.context = context;
     this.cfgObject = cfgObject;
     this.gxeId = this.context.generateUniqueId();
@@ -2873,20 +2954,20 @@ dojo.declare("gxe.control.Control",null,{
       var targetName = gxe.cfg.getGxeAttributeValue(this.cfgObject,"targetName");
       if (targetName != null) {
         this.htmlAttributes.set("gxeTargetName",targetName);
-      } 
+      }
     }
   },
 
   /**
    * Builds the user interface control.
-   * @function 
+   * @function
    * @name build
    * @memberOf gxe.control.Control#
-   * @param {Element} htmlParentElement the parent HTML element (a new 
+   * @param {Element} htmlParentElement the parent HTML element (a new
    *   control will be appended to this parent)
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   build: function(htmlParentElement,domProcessor,domNode) {
@@ -2895,14 +2976,14 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Executes the build of the the user interface control.
-   * @function 
+   * @function
    * @name execBuild
    * @memberOf gxe.control.Control#
-   * @param {Element} htmlParentElement the parent HTML element (a new 
+   * @param {Element} htmlParentElement the parent HTML element (a new
    *   control will be appended to this parent)
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   execBuild: function(htmlParentElement,domProcessor,domNode) {
@@ -2922,7 +3003,7 @@ dojo.declare("gxe.control.Control",null,{
       }
     }
     if (!bRendered) return;
-    
+
     this.createHtmlElement();
     if (this.htmlElement != null) {
       this.htmlElement.gxeControl = this;
@@ -2938,7 +3019,7 @@ dojo.declare("gxe.control.Control",null,{
             var gxeEventName = dojo.trim(value.substring(6));
             this.htmlElement.setAttribute("gxeEventName",gxeEventName);
             dojo.connect(this.htmlElement,htmlEventName,this,dojo.hitch(this,function(e) {
-              this.onEvent(e,this,htmlEventName,gxeEventName);               
+              this.onEvent(e,this,htmlEventName,gxeEventName);
             }));
           }
         }
@@ -2951,12 +3032,12 @@ dojo.declare("gxe.control.Control",null,{
         this.parentControl.onChildControlCreated(this,domProcessor,domNode);
       }
     }
-    
+
   },
 
   /**
    * Creates the HTML element associated with the control.
-   * @function 
+   * @function
    * @name createHtmlElement
    * @memberOf gxe.control.Control#
    * @returns {Element} the HTML element (can be null)
@@ -2979,9 +3060,9 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Ensures the visibility of the HTML element associated with the control.
-   * <br/>By default, no action is taken and the ensureVisibility method is triggered for the 
+   * <br/>By default, no action is taken and the ensureVisibility method is triggered for the
    * parent control.
-   * @function 
+   * @function
    * @name ensureVisibility
    * @memberOf gxe.control.Control#
    * @param {gxe.xml.XmlNode} subjectXmlNode the subject XML node (can be null)
@@ -2994,7 +3075,7 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Evaluates a configuration value.
-   * @function 
+   * @function
    * @name evaluateValue
    * @memberOf gxe.control.Control#
    * @param {Object} value the value
@@ -3012,7 +3093,7 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Finds the first child control that matches a Dojo query expression.
-   * @function 
+   * @function
    * @name findFirstChildControl
    * @memberOf gxe.control.Control#
    * @param {String} sDojoSelector the Dojo query expression
@@ -3032,14 +3113,14 @@ dojo.declare("gxe.control.Control",null,{
     }
     return ctlFirst;
   },
-  
+
   /**
    * Explicitly fires the onEvent method.
-   * @event 
+   * @event
    * @name fireOnEvent
    * @memberOf gxe.control.Control#
    * @param {Event} e the underlying browser event
-   * @deprecated 
+   * @deprecated
    */
   fireOnEvent: function(e) {
     this.onEvent(e,this,null,null);
@@ -3047,7 +3128,7 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Ensures the visibility of and focuses the HTML element associated with the control.
-   * @function 
+   * @function
    * @name focus
    * @memberOf gxe.control.Control#
    * @param {gxe.xml.XmlNode} subjectXmlNode the subject XML node (can be null)
@@ -3061,7 +3142,7 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Gets the label text associated with a control.
-   * @function 
+   * @function
    * @name getLabelText
    * @memberOf gxe.control.Control#
    * @return the label text (can be null)
@@ -3071,10 +3152,10 @@ dojo.declare("gxe.control.Control",null,{
     if (sLabel == null) sLabel = this.xmlNode.getLabelText();
     return sLabel;
   },
-  
+
   /**
    * Imports configuration properties into the current control.
-   * @function 
+   * @function
    * @name importCfgProperties
    * @memberOf gxe.control.Control#
    * @param {cfgObject} cfgObject the associated configuration object
@@ -3088,7 +3169,7 @@ dojo.declare("gxe.control.Control",null,{
       } else {
         if (cfgObject.namespace == gxe.cfg.uriGxeHtml) {
           this.htmlTag = cfgObject.name;
-        } 
+        }
       }
       this.htmlTextContent = value;
       this.importHtmlAttributes(cfgObject);
@@ -3101,7 +3182,7 @@ dojo.declare("gxe.control.Control",null,{
   /**
    * Imports configuration attributes within the GXE HTML namespace into the current control.
    * <br/>(i.e. namespace "http://www.esri.com/geoportal/gxe/html")
-   * @function 
+   * @function
    * @name importHtmlAttributes
    * @memberOf gxe.control.Control#
    * @param {cfgObject} cfgObject the associated configuration object
@@ -3120,20 +3201,20 @@ dojo.declare("gxe.control.Control",null,{
   /**
    * Fired on a parent control when a child has been created.
    * <br/>This event fires after the child has been fully processed.
-   * @event 
+   * @event
    * @name onChildControlCreated
    * @memberOf gxe.control.Control#
    * @param {gxe.control.Control} control the child control
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   onChildControlCreated: function(control,domProcessor,domNode) {},
-  
+
   /**
    * Fired for certain events triggered by the control.
-   * @event 
+   * @event
    * @name onEvent
    * @memberOf gxe.control.Control#
    * @param {Event} e the underlying browser event
@@ -3146,12 +3227,12 @@ dojo.declare("gxe.control.Control",null,{
   /**
    * Fired when all of the children for a control have been created.
    * <br/>This event fires after all child controls have been added to the HTML DOM.
-   * @event 
+   * @event
    * @name onHtmlChildrenCreated
    * @memberOf gxe.control.Control#
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   onHtmlChildrenCreated: function(domProcessor,domNode) {},
@@ -3159,28 +3240,28 @@ dojo.declare("gxe.control.Control",null,{
   /**
    * Fired when the HTML element for a control has been created.
    * <br/>This event fires prior to the creation of child controls.
-   * @event 
+   * @event
    * @name onHtmlElementCreated
    * @memberOf gxe.control.Control#
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   onHtmlElementCreated: function(domProcessor,domNode) {},
 
   /**
    * Processes a configuration object associated with a targeted XML attribute (g:attribute).
-   * @function 
+   * @function
    * @name processCfgAttribute
    * @memberOf gxe.control.Control#
    * @param {cfgObject} cfgAttribute the configuration object to process
    * @param {Element} htmlParentElement the parent HTML element
    *   (new controls will be appended to this parent)
    * @param {gxe.xml.XmlElement} xmlParentElement the targeted XML parent element
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   processCfgAttribute: function(cfgAttribute,htmlParentElement,xmlParentElement,domProcessor,domNode) {
@@ -3194,18 +3275,18 @@ dojo.declare("gxe.control.Control",null,{
     if ((domProcessor != null) && (domNode != null)) {
       domMatch = domProcessor.findMatchingChildAttribute(domNode,cfgAttribute);
     } else {
-      if (sDefault != null) xmlAttribute.nodeInfo.nodeValue = sDefault;      
+      if (sDefault != null) xmlAttribute.nodeInfo.nodeValue = sDefault;
     }
-    
+
     if(sTargetName == "gml:id" && xmlAttribute){
-	  xmlAttribute.nodeInfo.nodeValue = "Temporal-" + (Math.floor((Math.random()*100000)+1)).toString();
-	}
+      xmlAttribute.nodeInfo.nodeValue = "Temporal-" + (Math.floor((Math.random()*100000)+1)).toString();
+    }
 
     var ctl = this.context.makeXhtmlControl(cfgAttribute,this,true);
     ctl.xmlNode = xmlAttribute;
     ctl.xmlParentElement = xmlParentElement;
     ctl.build(htmlParentElement,domProcessor,domMatch);
-    
+
     if ((domMatch != null) && (xmlAttribute.getInputControl() == null)) {
       // can this put the document in an undesirable state?
       if (sDefault != null) {
@@ -3219,16 +3300,16 @@ dojo.declare("gxe.control.Control",null,{
 
   /**
    * Processes a configuration object associated with a targeted XML element (g:element).
-   * @function 
+   * @function
    * @name processCfgElement
    * @memberOf gxe.control.Control#
    * @param {cfgObject} cfgElement the configuration object to process
    * @param {Element} htmlParentElement the parent HTML element
    *   (new controls will be appended to this parent)
    * @param {gxe.xml.XmlElement} xmlParentElement the targeted XML parent element
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   processCfgElement: function(cfgElement,htmlParentElement,xmlParentElement,domProcessor,domNode) {
@@ -3237,26 +3318,26 @@ dojo.declare("gxe.control.Control",null,{
     var xmlElement = new gxe.xml.XmlElement(xmlDocument,xmlParentElement,cfgElement);
     xmlParentElement.children.add(xmlElement);
     var bRepeatable = xmlElement.isRepeatable();
-    
+
     var domMatch = null;
     var domMatches = null;
-		
+
     if ((domProcessor != null) && (domNode != null)) {
-      
+
       var cfgMatchTop = gxe.cfg.findGxeChild(cfgElement,"matchTopElements");
-      
+
       if (cfgMatchTop == null) {
         if (!bRepeatable) {
           domMatch = domProcessor.findMatchingChildElement(domNode,cfgElement);
           if (domMatch != null) {
             domMatches = new Array();
             domMatches.push(domMatch);
-          } 
+          }
         } else {
           domMatches = domProcessor.findMatchingChildElements(domNode,cfgElement);
           if ((domMatches != null) && (domMatches.length > 0)) domMatch = domMatches[0];
         }
-        
+
       } else {
         domMatches = domProcessor.findMatchingChildElements(domNode,cfgElement);
         if ((domMatches != null) && (domMatches.length > 0)) {
@@ -3268,49 +3349,49 @@ dojo.declare("gxe.control.Control",null,{
             var nConditions = 0;
             var nConditionsMatched = 0;
             gxe.cfg.forEachChild(cfgMatchTop,gxe.cfg.uriGxe,"match",
-              dojo.hitch(this,function(cfgChild) {
-                nConditions++;
-                var qPath = gxe.cfg.getGxeAttributeValue(cfgChild,"qPath");
-                var qValue = gxe.cfg.getGxeAttributeValue(cfgChild,"qValue");
-                var qMode = gxe.cfg.getGxeAttributeValue(cfgChild,"qMode");
-				//Modifica per implementazione stringa RegExp 01/02/2017
-				// Modifica per verifica XPATH
-                var bMust = false;
-				var bRegx=false;
-				var bXPATH=false;
-				if (qMode=="regX"){
-					bMust=true;
-					bRegx=true;
-				}else if (qMode=="regXNot"){
-					bMust=false;
-					bRegx=true;
-				} else if (qMode=="XPATH"){
-					bMust=true;
-					bRegx=false;
-					bXPATH=true;
-				} else {
-					bMust=(qMode != "mustNot");
-				}
-				
-                if (qPath != null) {
-                  var b = domProcessor.matchTopElement(ns,nd,qPath,qValue,bMust,bRegx, bXPATH);
-                  if (b) nConditionsMatched++;
-                }
-              }
-            ));
+                dojo.hitch(this,function(cfgChild) {
+                      nConditions++;
+                      var qPath = gxe.cfg.getGxeAttributeValue(cfgChild,"qPath");
+                      var qValue = gxe.cfg.getGxeAttributeValue(cfgChild,"qValue");
+                      var qMode = gxe.cfg.getGxeAttributeValue(cfgChild,"qMode");
+                      //Modifica per implementazione stringa RegExp 01/02/2017
+                      // Modifica per verifica XPATH
+                      var bMust = false;
+                      var bRegx=false;
+                      var bXPATH=false;
+                      if (qMode=="regX"){
+                        bMust=true;
+                        bRegx=true;
+                      }else if (qMode=="regXNot"){
+                        bMust=false;
+                        bRegx=true;
+                      } else if (qMode=="XPATH"){
+                        bMust=true;
+                        bRegx=false;
+                        bXPATH=true;
+                      } else {
+                        bMust=(qMode != "mustNot");
+                      }
+
+                      if (qPath != null) {
+                        var b = domProcessor.matchTopElement(ns,nd,qPath,qValue,bMust,bRegx, bXPATH);
+                        if (b) nConditionsMatched++;
+                      }
+                    }
+                ));
             if (nConditions == nConditionsMatched) topMatches.push(nd);
           }
           domMatches = topMatches;
           if (topMatches.length > 0) domMatch = topMatches[0];
         }
       }
-    }  
+    }
 
     var ctl = this.context.makeXhtmlControl(cfgElement,this,true);
     ctl.xmlNode = xmlElement;
     ctl.xmlParentElement = xmlParentElement;
-    ctl.build(htmlParentElement,domProcessor,domMatch);	
-	
+    ctl.build(htmlParentElement,domProcessor,domMatch);
+
     if (bRepeatable && (domMatches != null) && (domMatches.length > 1)) {
       var ctlRepeatables = xmlElement.repeatablesContainer;
       if (ctlRepeatables != null) {
@@ -3325,38 +3406,38 @@ dojo.declare("gxe.control.Control",null,{
         }
       }
     }
-    
+
   },
 
   /**
    * Processes the children of a configuration object.
-   * @function 
+   * @function
    * @name processChildren
    * @memberOf gxe.control.Control#
    * @param {cfgObject} cfgObject the configuration object to process
    * @param {Element} htmlParentElement the parent HTML element
    *   (new controls will be appended to this parent)
    * @param {gxe.xml.XmlNode} xmlNode the target XML node
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   processChildren: function(cfgObject,htmlParentElement,xmlNode,domProcessor,domNode) {
     gxe.cfg.forEachChild(cfgObject,"*","*",dojo.hitch(this,function(cfgChild) {
       if (cfgChild.namespace == gxe.cfg.uriGxe) {
-        
-        if (cfgChild.name == "attribute") {
-          this.processCfgAttribute(cfgChild,htmlParentElement,xmlNode,domProcessor,domNode);          
 
-        } else if ((cfgChild.name == "body") || 
-                   (cfgChild.name == "elementText") || 
-                   (cfgChild.name == "header")) {
+        if (cfgChild.name == "attribute") {
+          this.processCfgAttribute(cfgChild,htmlParentElement,xmlNode,domProcessor,domNode);
+
+        } else if ((cfgChild.name == "body") ||
+            (cfgChild.name == "elementText") ||
+            (cfgChild.name == "header")) {
           var ctl = this.context.makeXhtmlControl(cfgChild,this,true);
           ctl.xmlNode = xmlNode;
           ctl.xmlParentElement = xmlNode.parentElement;
           ctl.build(htmlParentElement,domProcessor,domNode);
-          
+
         } else if (cfgChild.name == "element") {
           this.processCfgElement(cfgChild,htmlParentElement,xmlNode,domProcessor,domNode);
         } else {
@@ -3375,7 +3456,7 @@ dojo.declare("gxe.control.Control",null,{
         ctl.xmlNode = xmlNode;
         ctl.xmlParentElement = xmlNode.parentElement;
         ctl.build(htmlParentElement,domProcessor,domNode);
-		
+
       }
     }));
   }
@@ -3386,9 +3467,9 @@ dojo.declare("gxe.control.Control",null,{
  * @class An array backed collection of GXE controls.
  * @name gxe.control.ControlArray
  * @extends gxe.control.Control
- * @property {boolean} displayInline indicates if the control should be displayed inline 
+ * @property {boolean} displayInline indicates if the control should be displayed inline
  *   (default=false, i.e. block display)
- * @property {boolean} isExclusive indicates if the control is using exclusive display 
+ * @property {boolean} isExclusive indicates if the control is using exclusive display
  *   (default=false)
  */
 dojo.provide("gxe.control.ControlArray");
@@ -3485,10 +3566,10 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
   getActiveIndex: function() {
     return this._activeIndex;
   },
-  
+
   /**
    * Gets the item at the specified index.
-   * @function 
+   * @function
    * @name getItem
    * @memberOf gxe.control.ControlArray#
    * @param {Integer} nIndex the index
@@ -3500,7 +3581,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Gets the length of the array.
-   * @function 
+   * @function
    * @name getLength
    * @memberOf gxe.control.ControlArray#
    * @returns {Integer} the length
@@ -3511,7 +3592,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Inserts a control at a specified index.
-   * @function 
+   * @function
    * @name insertAt
    * @memberOf gxe.control.ControlArray#
    * @param {Integer} nIndex the index (same as JavaScript Array.splice)
@@ -3548,7 +3629,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Appends a control to the array.
-   * @function 
+   * @function
    * @name push
    * @memberOf gxe.control.ControlArray#
    * @param {gxe.control.Control} control the control to add
@@ -3568,7 +3649,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Removes the control at the specified index from the array.
-   * @function 
+   * @function
    * @name removeIndex
    * @memberOf gxe.control.ControlArray#
    * @param {Integer} nIndex the index of the control to remove
@@ -3595,10 +3676,10 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
     }
     this.fireOnArrayModified();
   },
-  
+
   /**
    * Explicitly sets the display style for the control array.
-   * @function 
+   * @function
    * @name setDisplayStyle
    * @memberOf gxe.control.ControlArray#
    * @param {boolean} bShow if true then show the control
@@ -3615,7 +3696,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Swaps the positions of two controls within the array.
-   * @function 
+   * @function
    * @name swapPosition
    * @memberOf gxe.control.ControlArray#
    * @param {Integer} nFromIndex the from index
@@ -3635,7 +3716,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
         this._activeIndex = nToIndex;
         this.syncDisplay(true);
       }
-      
+
     } else {
       var bUp = (nFromIndex > nToIndex);
       var elA = a.htmlElement;
@@ -3648,7 +3729,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
       }
       this._array[nFromIndex] = b;
       this._array[nToIndex] = a;
-  
+
       var elARem = elA.parentNode.removeChild(elA);
       elB.parentNode.insertBefore(elARem,elB);
       var elRef = null;
@@ -3666,13 +3747,13 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
       var elBRem = elB.parentNode.removeChild(elB);
       elARem.parentNode.insertBefore(elBRem,elRef);
     }
-    
+
     this.fireOnArrayModified();
   },
 
   /**
    * Ensures that the active control for an exclusively displayed array is properly displayed.
-   * @function 
+   * @function
    * @name syncDisplay
    * @memberOf gxe.control.ControlArray#
    * @param {boolean} bForce if true then ensure that the control array itself is properly displayed
@@ -3705,7 +3786,7 @@ dojo.declare("gxe.control.ControlArray",gxe.control.Control,{
 
   /**
    * Toggles the display style of the control array.
-   * @function 
+   * @function
    * @name toggleDisplay
    * @memberOf gxe.control.ControlArray#
    */
@@ -3769,7 +3850,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
 
   /**
    * Determines if elements can be removed.
-   * @function 
+   * @function
    * @name canRemove
    * @memberOf gxe.control.RepeatablesContainer#
    * @returns {boolean} true if elements can be removed
@@ -3785,7 +3866,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
         if (isNaN(nMinOccurs)) nMinOccurs = 1;
         if (nMinOccurs < nSimiliar) {
           if (nSimiliar == 1) bCanRemove = false;
-          else bCanRemove = true;          
+          else bCanRemove = true;
         }
       }
     }
@@ -3794,7 +3875,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
 
   /**
    * Determines if elements can be repeated.
-   * @function 
+   * @function
    * @name canRepeat
    * @memberOf gxe.control.RepeatablesContainer#
    * @returns {boolean} true if elements can be repeated
@@ -3803,7 +3884,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
     var bCanRepeat = false;
     if (this.isConfigured()) {
       var sMaxOccurs = gxe.cfg.getMaxOccurs(this.xmlElementCfgObject);
-      if (sMaxOccurs == "unbounded") {  
+      if (sMaxOccurs == "unbounded") {
         bCanRepeat = true;
       } else {
         var nSimiliar = this.countSimilarSections();
@@ -3816,10 +3897,10 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
     }
     return bCanRepeat;
   },
-  
+
   /**
    * Counts the number of similar sections.
-   * @function 
+   * @function
    * @name countSimilarSections
    * @memberOf gxe.control.RepeatablesContainer#
    * @returns {Integer} the number of similiar sections
@@ -3843,7 +3924,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
   /**
    * Handles multiplicity related events .
    * <br/>(repeatSection removeSection moveSectionUp moveSectionDown)
-   * @event 
+   * @event
    * @name handleEvent
    * @memberOf gxe.control.RepeatablesContainer#
    * @param {Event} e the underlying browser event
@@ -3871,12 +3952,12 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
     } else if (gxeEventName == "moveSectionDown") {
       if (!this.isExclusive) this.activateIndex(this.findIndex(sectionControl));
       this.moveSection(false);
-    } 
+    }
   },
 
   /**
    * Determines if the control has been properly configured.
-   * @function 
+   * @function
    * @name isConfigured
    * @memberOf gxe.control.RepeatablesContainer#
    * @returns {boolean} true if properly configured
@@ -3887,16 +3968,16 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
 
   /**
    * Moves a section.
-   * @function 
+   * @function
    * @name moveSection
    * @memberOf gxe.control.RepeatablesContainer#
    * @param {boolean} bUp true if the section (i.e. element should be move up within the target XML document)
    */
   moveSection: function(bUp) {
     if (!this.isConfigured()) return;
-    
+
     // move up/down refers to up/down within the XML document
-    
+
     // determine the target and xml indices
     var nTargetIndex = this.getActiveIndex();
     var nTargetLength = this.getLength();
@@ -3906,7 +3987,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
     var xmlElement = this.getItem(nTargetIndex).xmlNode;
     var nXmlIndex = xmlElement.parentElement.children.findIndex(xmlElement);
     if (nXmlIndex == -1) return;
-  
+
     // determine the reposition indices
     var nNewTargetIndex = nTargetIndex + 1;
     var nNewXmlIndex = nXmlIndex + 1;
@@ -3915,12 +3996,12 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
       nNewXmlIndex = nXmlIndex - 1;
     }
     if (nTargetIndex == nNewTargetIndex) return;
-    
+
     // reposition
     xmlElement.parentElement.children.swapPosition(nXmlIndex,nNewXmlIndex);
     this.swapPosition(nTargetIndex,nNewTargetIndex,true);
   },
-  
+
   /** Override gxe.control.ControlArray.onArrayModified() */
   onArrayModified: function(control,domProcessor,domNode) {
     this.syncTools();
@@ -3938,13 +4019,13 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
 
   /**
    * Removes a section.
-   * @function 
+   * @function
    * @name removeSection
    * @memberOf gxe.control.RepeatablesContainer#
    */
   removeSection: function() {
     if (!this.canRemove()) return;
-    
+
     var nSections = this.getLength();
     var nTargetIndex = this.getActiveIndex();
     if (nTargetIndex < 0) return;
@@ -3968,27 +4049,27 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
           xmlElement.isPlaceHolder = true;
           this.xmlPlaceHolder = xmlElement;
           ctlBodyContainer.removeIndex(0,true);
-        } 
+        }
       }
     }
-    
+
   },
-  
+
   /**
    * Repeats a section.
-   * @function 
+   * @function
    * @name repeatSection
    * @memberOf gxe.control.RepeatablesContainer#
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   repeatSection: function(domProcessor,domNode) {
 
     // initialize
     if (!this.canRepeat()) return;
-    var nSections = this.getLength();      
+    var nSections = this.getLength();
     var xmlParent = this.xmlParentElement;
     var xmlDocument = xmlParent.parentDocument;
     var newXmlElement = new gxe.xml.XmlElement(xmlDocument,xmlParent,this.xmlElementCfgObject);
@@ -4013,10 +4094,10 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
       }
     }
     if (nXmlIndex == -1) return; // exception message here??
-          
+
     // repeat
-    var elTmp = document.createElement("div"); 
-    
+    var elTmp = document.createElement("div");
+
     if (this.xmlPlaceHolder == null) {
       if (this.isExclusive) {
         xmlParent.children.insertAt(nXmlIndex,newXmlElement);
@@ -4027,19 +4108,19 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
         var ctl = this.context.makeXhtmlControl(cfgElement,this,true);
         ctl.xmlNode = newXmlElement;
         ctl.xmlParentElement = newXmlElement.parentElement;
-        ctl.build(elTmp,domProcessor,domNode);        
+        ctl.build(elTmp,domProcessor,domNode);
       }
 
     } else {
       var nPlaceHolderIndex = xmlParent.children.findIndex(this.xmlPlaceHolder);
       if (nPlaceHolderIndex == -1) return; // exception message here??
-      
+
       if (this.isExclusive) {
         xmlParent.children.insertAt(nPlaceHolderIndex,newXmlElement);
         this.processChildren(this.cfgObject,elTmp,newXmlElement,domProcessor,domNode);
         xmlParent.children.removeIndex(nPlaceHolderIndex+1);
         this.xmlPlaceHolder = null;
-        
+
       } else {
         var ctlLast = this.getItem(0);
         ctlLast.xmlNode = newXmlElement;
@@ -4053,16 +4134,16 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
           ctl.xmlParentElement = newXmlElement.parentElement;
           ctl.build(elTmp,domProcessor,domNode);
           xmlParent.children.removeIndex(nPlaceHolderIndex+1);
-          this.xmlPlaceHolder = null;          
-          
-        } 
+          this.xmlPlaceHolder = null;
+
+        }
       }
-    } 
+    }
   },
-    
+
   /**
    * Synchronizes the multiplicity tools for a section.
-   * @function 
+   * @function
    * @name syncTools
    * @memberOf gxe.control.RepeatablesContainer#
    */
@@ -4084,7 +4165,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
           el.disabled = true;
         }
       };
-    
+
       var nTargetIndex = this.getActiveIndex();
       var nTargetLength = this.getLength();
       for (var i=0; i<aToolbars.length; i++) {
@@ -4109,7 +4190,7 @@ dojo.declare("gxe.control.RepeatablesContainer",gxe.control.ControlArray,{
       }
     }
   }
-  
+
 });
 
 /**
@@ -4148,7 +4229,7 @@ dojo.declare("gxe.control.TabArray",gxe.control.Control,{
     for (var i=0; i<nTabs; i++) this._setTabStyle(i);
     this.onTabClicked(this._activeIndex);
   },
-  
+
   /**
    * Appends a radio button tab to the array.
    * @function
@@ -4161,14 +4242,14 @@ dojo.declare("gxe.control.TabArray",gxe.control.Control,{
   appendRadio: function(nIndex,sLabel,bIsActive) {
     var elItem = document.createElement("li");
     this.htmlElement.appendChild(elItem);
-    
+
     var elLink = document.createElement("a");
     elLink.tabindex = (nIndex + 1);
     elLink._gxeTabIndex = nIndex;
     elLink.setAttribute("href","javascript:void(0);");
     if (bIsActive) elLink.className = "current";
     elItem.appendChild(elLink);
-    
+
     var sChoices = this.gxeId+"Option";
     var sOptionId = this.context.generateUniqueId();
     var elOption = document.createElement("input");
@@ -4184,29 +4265,29 @@ dojo.declare("gxe.control.TabArray",gxe.control.Control,{
       elOption.setAttribute("type","radio");
       if (bIsActive) elOption.setAttribute("checked","checked");
     }
-    
+
     elOption.setAttribute("id",sOptionId);
-    elOption.setAttribute("value",nIndex);    
+    elOption.setAttribute("value",nIndex);
     elLink.appendChild(elOption);
-    
+
     var elLabel = document.createElement("label");
     if(dojo.isIE <= 8) {
       elLabel = document.createElement("<label for=\""+sOptionId+"\"/>");
     } else {
       elLabel.setAttribute("for",sOptionId);
     }
-    
+
     elLabel.appendChild(document.createTextNode(sLabel));
     elLink.appendChild(elLabel);
-    
+
     dojo.connect(elOption,"onclick",this,dojo.hitch(this,function(e) {
-      this.activateIndex(elLink._gxeTabIndex);           
+      this.activateIndex(elLink._gxeTabIndex);
     }));
     this._array.push(elLink);
     if (bIsActive) this.activateIndex(nIndex);
     return elLink;
   },
-  
+
   /**
    * Appends a tab to the array.
    * @function
@@ -4233,16 +4314,16 @@ dojo.declare("gxe.control.TabArray",gxe.control.Control,{
     if (bIsActive) this.activateIndex(nIndex);
     return elLink;
   },
-  
+
   /**
    * Fired when a tab is clicked.
-   * @event 
+   * @event
    * @name onTabClicked
    * @memberOf gxe.control.TabArray#
    * @param {Integer} nIndex the index of the clicked tab
    */
   onTabClicked: function(nIndex) {},
-  
+
   /**
    * Sets the CSS class name for a tab.
    * @function
@@ -4271,13 +4352,13 @@ dojo.declare("gxe.control.TabArray",gxe.control.Control,{
  */
 dojo.provide("gxe.control.IndexedTabArray");
 dojo.declare("gxe.control.IndexedTabArray",gxe.control.TabArray,{
-  
+
   /**
    * Auto configures the control.
-   * @function 
+   * @function
    * @name autoConfigure
    * @memberOf gxe.control.IndexedTabArray#
-   * @param {gxe.Context} context the editor context 
+   * @param {gxe.Context} context the editor context
    * @param {gxe.control.Control} parentControl the parent control
    */
   autoConfigure: function(context,parentControl) {
@@ -4288,7 +4369,7 @@ dojo.declare("gxe.control.IndexedTabArray",gxe.control.TabArray,{
     cfgObj.parent = parentControl.cfgObject;
     cfgObj.attributes = new Array();
     this.cfgObject = cfgObj;
-  
+
     cfgAttr = new Object();
     cfgAttr.namespace = gxe.cfg.uriGxeHtml;
     cfgAttr.name = "class";
@@ -4297,10 +4378,10 @@ dojo.declare("gxe.control.IndexedTabArray",gxe.control.TabArray,{
     cfgObj.attributes.push(cfgAttr);
     this.initialize(context,cfgObj);
   },
-  
+
   /**
    * Synchronizes the array of indexed tabs.
-   * @function 
+   * @function
    * @name synchronize
    * @memberOf gxe.control.IndexedTabArray#
    * @param {Integer} count the number of repeated XML elements
@@ -4337,7 +4418,7 @@ dojo.declare("gxe.control.IndexedTabArray",gxe.control.TabArray,{
 });
 
 /**
- * @class Supports the message area section of the page. 
+ * @class Supports the message area section of the page.
  * @name gxe.control.MessageArea
  * @extends gxe.control.Control
  */
@@ -4347,7 +4428,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
 
   /**
    * Adds an error message.
-   * @function 
+   * @function
    * @name addError
    * @memberOf gxe.control.MessageArea#
    * @param {String} sMessage the message
@@ -4358,7 +4439,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
 
   /**
    * Adds a message.
-   * @function 
+   * @function
    * @name addMessage
    * @memberOf gxe.control.MessageArea#
    * @param {String} sMessage the message
@@ -4371,10 +4452,10 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
     this.ul.appendChild(elItem);
     this.ensureVisibility();
   },
-  
+
   /**
    * Adds a success message.
-   * @function 
+   * @function
    * @name addSuccess
    * @memberOf gxe.control.MessageArea#
    * @param {String} sMessage the message
@@ -4386,7 +4467,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
   /**
    * Adds a validation error to the control.
    * <br/>Validation errors are added as warning messages.
-   * @function 
+   * @function
    * @name addValidationError
    * @memberOf gxe.control.MessageArea#
    * @param {String} sMessage the message
@@ -4399,7 +4480,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
     if (inputControlArr[1] == null) {
       this.addMessage(sMessage,"error");
     } else {
-      
+
       var elItem = document.createElement("li");
       elItem.className = "warning";
       this.ul.appendChild(elItem);
@@ -4413,40 +4494,40 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
           if (sTip.length > 0) elLink.title = sTip;
         }
       }
-      
+
       elItem.appendChild(elLink);
       var handle = dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
-        inputControlArr[1].focus(xmlNode); 
+        inputControlArr[1].focus(xmlNode);
         this.scrollOnClick(elItem);
       }));
-      
+
       dojo.connect(inputControlArr[0],"onInputChanged",this,dojo.hitch(this,function(inputControl2,value) {
         var status =  xmlNode.validateInput(inputControl2,true);
         if (status.isValid) {
-          elItem.className = "success"; 
+          elItem.className = "success";
         } else {
-          elItem.className = "warning"; 
-        }  
+          elItem.className = "warning";
+        }
         if (status.message != null) {
           while (elLink.childNodes.length >= 1) elLink.removeChild(elLink.firstChild);
           elLink.appendChild(document.createTextNode(status.message));
-        }              
+        }
       }));
       dojo.connect(inputControlArr[1],"onInputChanged",this,dojo.hitch(this,function(inputControl2,value) {
         var status =  xmlNode.validateInput(inputControl2,true);
         if (status.isValid) {
-          elItem.className = "success"; 
+          elItem.className = "success";
         } else {
-          elItem.className = "warning"; 
-        }  
+          elItem.className = "warning";
+        }
         if (status.message != null) {
           while (elLink.childNodes.length >= 1) elLink.removeChild(elLink.firstChild);
           elLink.appendChild(document.createTextNode(status.message));
-        }              
+        }
       }));
-      
+
       this.ensureVisibility();
-    }    
+    }
   },
   addValidationError: function(sMessage,xmlNode,inputControl) {
     if (sMessage == null) sMessage = "";
@@ -4454,7 +4535,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
     if (inputControl == null) {
       this.addMessage(sMessage,"error");
     } else {
-      
+
       var elItem = document.createElement("li");
       elItem.className = "warning";
       this.ul.appendChild(elItem);
@@ -4468,33 +4549,33 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
           if (sTip.length > 0) elLink.title = sTip;
         }
       }
-      
+
       elItem.appendChild(elLink);
       var handle = dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
-        inputControl.focus(xmlNode); 
+        inputControl.focus(xmlNode);
         this.scrollOnClick(elItem);
       }));
-      
+
       dojo.connect(inputControl,"onInputChanged",this,dojo.hitch(this,function(inputControl2,value) {
         var status =  xmlNode.validateInput(inputControl2,true);
         if (status.isValid) {
-          elItem.className = "success"; 
+          elItem.className = "success";
         } else {
-          elItem.className = "warning"; 
-        }  
+          elItem.className = "warning";
+        }
         if (status.message != null) {
           while (elLink.childNodes.length >= 1) elLink.removeChild(elLink.firstChild);
           elLink.appendChild(document.createTextNode(status.message));
-        }              
+        }
       }));
-      
+
       this.ensureVisibility();
-    }    
+    }
   },
 
   /**
    * Adds a warning message.
-   * @function 
+   * @function
    * @name addWarning
    * @memberOf gxe.control.MessageArea#
    * @param {String} sMessage the message
@@ -4507,10 +4588,10 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
   build: function(htmlParentElement,domProcessor,domNode) {
     this.htmlElement = htmlParentElement;
     this.htmlElement.style.display = "none";
-    
+
     var el = this.htmlElement;
     while (el.childNodes.length >= 1) el.removeChild(el.firstChild);
-    
+
     var elClear = document.createElement("a");
     elClear.setAttribute("href","javascript:void(0);");
     elClear.className = "gxeClearAll";
@@ -4525,11 +4606,11 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
     dojo.connect(elClear,"onclick",this,"clearAll");
     this.htmlElement.appendChild(elClear);
     */
-    
+
     var elWrapper = document.createElement("div");
     elWrapper.className = "gxeMessageListWrapper";
     this.htmlElement.appendChild(elWrapper);
-    
+
     this.ul = document.createElement("ul");
     this.ul.className = "gxeMessageList";
     elWrapper.appendChild(this.ul);
@@ -4537,7 +4618,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
 
   /**
    * Clears add messages and hides the message area.
-   * @function 
+   * @function
    * @name clearAll
    * @memberOf gxe.control.MessageArea#
    */
@@ -4565,7 +4646,7 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
 
   /**
    * Handles an exception by adding an error message to the control.
-   * @function 
+   * @function
    * @name handleException
    * @memberOf gxe.control.MessageArea#
    * @param {String} exception the exception
@@ -4573,10 +4654,10 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
   handleException: function(exception) {
     this.addMessage(exception,"error");
   },
-  
+
   /**
    * Scrolls the clicked message item toward the center of the container.
-   * @function 
+   * @function
    * @name scrollOnClick
    * @memberOf gxe.control.MessageArea#
    * @param {DOMNode} elItem the clicked item
@@ -4606,18 +4687,18 @@ dojo.declare("gxe.control.MessageArea",gxe.control.Control,{
     //console.log("nClientHeight", nClientHeight);
     //console.log("nScrollHeight", nScrollHeight);
     if (nItemTop > (nItemHeight * 2)) {
-        //console.log("checking max top");
-        if (nScrollTop < (nScrollHeight - nClientHeight - nItemHeight)) {
-            //console.log("setting top", nNewTop);
-            elWrapper.scrollTop = nNewTop;
-        }
+      //console.log("checking max top");
+      if (nScrollTop < (nScrollHeight - nClientHeight - nItemHeight)) {
+        //console.log("setting top", nNewTop);
+        elWrapper.scrollTop = nNewTop;
+      }
     }
   }
 
 });
 
 /**
- * @class Supports a UI section. 
+ * @class Supports a UI section.
  * <br/>A section typically consists of a header and a body.
  * <br/><br/>Typically associated with:
  * <br/>gpt/gxe/core/ui/Section.xml
@@ -4638,8 +4719,8 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
   sectionBody: null,
   uiLabelText: null,
   useExclusiveDisplay: true,
-  
-    //Modifiche per eliminare le frecce - Nicol 06/02/2017
+
+  //Modifiche per eliminare le frecce - Nicol 06/02/2017
   showArrow:false,
 
   cfgSectionBody: null,
@@ -4661,12 +4742,12 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
     if ((this.parentControl == null) || this.useExclusiveDisplay || !bRepeatable) {
       this.inherited(arguments);
       return;
-    } 
+    }
 
     var ctlContainer = this.parentControl.sectionContainer;
     if ((typeof(ctlContainer) == "undefined") || (ctlContainer == null)) {
 
-      
+
       var cfgParent = this.parentControl.cfgObject;
       var cfgChild = this.cfgObject;
 
@@ -4684,7 +4765,7 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
       cfgAttribute.value = "gxeSectionContainer";
       cfgAttribute.parent = cfgContainer;
       cfgContainer.attributes.push(cfgAttribute);
-      
+
       cfgAttribute = new Object();
       cfgAttribute.namespace = gxe.cfg.uriGxe;
       cfgAttribute.name = "jsClass";
@@ -4694,12 +4775,12 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
 
       ctlContainer = this.context.makeXhtmlControl(cfgContainer,this.parentControl,true);
       ctlContainer.isExclusive = false;
-      
+
       ctlContainer.sectionContainer = ctlContainer;
-      this.sectionContainer = ctlContainer;      
+      this.sectionContainer = ctlContainer;
       ctlContainer.xmlNode = this.xmlNode;
       ctlContainer.xmlParentElement = this.xmlNode.parentElement;
-      
+
       ctlContainer.build(htmlParentElement,domProcessor,domNode);
       var elHtmlParent = ctlContainer.htmlElement;
       cfgContainer.children = new Array();
@@ -4711,33 +4792,33 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
       this.sectionContainer = ctlContainer;
       this.inherited(arguments);
     }
-    
+
   },
-  
+
   /**
    * Initializes events associated with the section header label.
    * <br/>Adds a checkbox to the label when a targeted XML node is optional.
-   * @function 
+   * @function
    * @name initializeLabelEvents
    * @memberOf gxe.control.Section#
    * @param {gxe.xml.XmlNode} xmlNode the targeted XML node (element or attribute)
-   * @param {gxe.control.SectionMenu} associated ctlMenu the section menu 
+   * @param {gxe.control.SectionMenu} associated ctlMenu the section menu
    *   (may be null)
-   * @param {gxe.control.IndexedtabArray} ctlIndexedIabArray associated indexed tab array 
+   * @param {gxe.control.IndexedtabArray} ctlIndexedIabArray associated indexed tab array
    *   (may be null)
-   * @param {gxe.xml.DomProcessor} domProcessor an XML processor 
+   * @param {gxe.xml.DomProcessor} domProcessor an XML processor
    *   (when opening an existing document)
-   * @param {Node} domNode the DOM node that is actively being processed 
+   * @param {Node} domNode the DOM node that is actively being processed
    *   (when opening an existing document)
    */
   initializeLabelEvents: function(xmlNode,ctlMenu,ctlIndexedIabArray,domProcessor,domNode) {
-    
+
     var ctlHeader = this.findFirstChildControl("> [gxename='header']");
     if (ctlHeader != null) {
-      
+
       var ctlLabel = ctlHeader.findFirstChildControl("> [gxename='label']");
       if (ctlLabel != null) {
-        
+
         var cn = ctlLabel.htmlElement.childNodes;
         for (var i=0; i<cn.length; i++) {
           if (cn[i].nodeType == 3) {
@@ -4745,17 +4826,17 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
             break;
           }
         }
-        
+
         if (ctlMenu == null) {
           var sInfo = gxe.cfg.getGxeAttributeValue(this.cfgObject,"info");
           if (sInfo != null) this.makeControlMenu(ctlHeader,true);
         }
-        
-        var nMinOccurs = xmlNode.resolveMinOccurs();   
+
+        var nMinOccurs = xmlNode.resolveMinOccurs();
         if (nMinOccurs >= 1) {
           ctlLabel.htmlElement.className = "required";
         } else {
-          
+
           var bChecked = true;
           if (domProcessor == null) {
             bChecked = false;
@@ -4763,7 +4844,7 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
           } else {
             bChecked = domProcessor.hasChildrenOrAttributes(domNode);
           }
-          
+
           var sId = this.context.generateUniqueId();
           var el = document.createElement("input");
           el.setAttribute("type","checkbox");
@@ -4772,14 +4853,14 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
           elLabel.parentNode.insertBefore(el,elLabel);
           if (bChecked) el.setAttribute("checked","checked");
           elLabel.setAttribute("for",sId);
-          
+
           var _toggleVisibility = function(ctl,bVisible) {
             if (ctl != null) {
               if (bVisible) ctl.htmlElement.style.visibility = "visible";
               else ctl.htmlElement.style.visibility = "hidden";
             }
           };
-          
+
           var _onCheckBoxClicked = function(sbc,bWasChecked) {
             xmlNode.isOptionalPlaceHolder = !bWasChecked;
             _toggleVisibility(ctlMenu,bWasChecked);
@@ -4792,17 +4873,17 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
               }
             }
           };
-          
-          dojo.connect(el,"onclick",this,dojo.hitch(this,function(e) { 
+
+          dojo.connect(el,"onclick",this,dojo.hitch(this,function(e) {
             _onCheckBoxClicked(this.sectionBodyContainer,el.checked);
           }));
-          
+
           if (!bChecked) _onCheckBoxClicked(this.sectionBodyContainer,bChecked);
-          
+
         }
-        
+
       }
-      
+
       var nSubHeaders = 0;
       dojo.query("[gxename='header']",this.htmlElement).forEach(dojo.hitch(this,function(item) {
         nSubHeaders++;
@@ -4813,7 +4894,7 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
 
   /**
    * Fired for certain events triggered from the section header.
-   * @event 
+   * @event
    * @name onHeaderEvent
    * @memberOf gxe.control.Section#
    * @param {Event} e the underlying browser event
@@ -4846,7 +4927,7 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
     if (ctlHeader != null) {
       ctlTabArray = ctlHeader.findFirstChildControl("[gxename='tabArray']");
       ctlIndexedTabs = ctlHeader.findFirstChildControl("[gxename='indexedTabArray']");
-      
+
       /*
       dojo.query("[gxeEventName]",ctlHeader.htmlElement).forEach(dojo.hitch(this,function(item) {
         var ctl = item.gxeControl;
@@ -4874,10 +4955,10 @@ dojo.declare("gxe.control.Section",gxe.control.Control,{
       this.xmlNode.repeatablesContainer = this.repeatablesContainer;
     }
   },
-  
+
   /**
    * Makes a menu bar for the section within the section header.
-   * @function 
+   * @function
    * @name makeControlMenu
    * @memberOf gxe.control.Section#
    * @param {gxe.control.SectionHeader} ctlHeader the section header
@@ -4922,13 +5003,13 @@ dojo.declare("gxe.control.SectionHeader",gxe.control.Control,{
  */
 dojo.provide("gxe.control.SectionMenu");
 dojo.declare("gxe.control.SectionMenu",gxe.control.Control,{
-  
+
   /**
    * Appends an image button to the menu bar.
-   * @function 
+   * @function
    * @name appendImageButton
    * @memberOf gxe.control.SectionMenu#
-   * @param {String} gxeEventName to associate with the click event of the new img element 
+   * @param {String} gxeEventName to associate with the click event of the new img element
    * @param {String} sSrc the src for the new img element
    * @param {String} sTip the tool tip for the new img element
    */
@@ -4937,26 +5018,26 @@ dojo.declare("gxe.control.SectionMenu",gxe.control.Control,{
     el.alt = sTip;
     el.title = sTip;
     el.src = sSrc;
-	el.setAttribute('data-toggle',"tooltip");
-	el.setAttribute('data-placement',"right");
-	el.setAttribute('data-html',"true");
+    el.setAttribute('data-toggle',"tooltip");
+    el.setAttribute('data-placement',"right");
+    el.setAttribute('data-html',"true");
 
-    el.setAttribute("gxeToolName",gxeEventName); 
+    el.setAttribute("gxeToolName",gxeEventName);
     this.htmlElement.appendChild(el);
-	
-	$(el).tooltip({delay: { "show": 100, "hide": 5000 }});
-    dojo.connect(el,"onclick",this,dojo.hitch(this,function(e) { 
+
+    $(el).tooltip({delay: { "show": 100, "hide": 5000 }});
+    dojo.connect(el,"onclick",this,dojo.hitch(this,function(e) {
       this.onEvent(e,this,"onclick",gxeEventName);
     }));
     return el;
   },
-  
+
   /**
    * Auto configures the control.
-   * @function 
+   * @function
    * @name autoConfigure
    * @memberOf gxe.control.SectionMenu#
-   * @param {gxe.Context} context the editor context 
+   * @param {gxe.Context} context the editor context
    * @param {gxe.control.Control} parentControl the parent control
    */
   autoConfigure: function(context,parentControl) {
@@ -4990,7 +5071,7 @@ dojo.declare("gxe.control.SectionBody",gxe.control.Control,{
 
   /** Override gxe.control.Control.build() */
   build: function(htmlParentElement,domProcessor,domNode) {
-  
+
     var ctlContainer = this.parentControl.sectionBodyContainer;
     if ((typeof(ctlContainer) == "undefined") || (ctlContainer == null)) {
       var cfgParent = this.parentControl.cfgObject;
@@ -5010,14 +5091,14 @@ dojo.declare("gxe.control.SectionBody",gxe.control.Control,{
       cfgAttribute.value = "gxeSectionBodyContainer";
       cfgAttribute.parent = cfgContainer;
       cfgContainer.attributes.push(cfgAttribute);
-      
+
       cfgAttribute = new Object();
       cfgAttribute.namespace = gxe.cfg.uriGxe;
       cfgAttribute.name = "jsClass";
       cfgAttribute.value = "gxe.control.RepeatablesContainer";
       cfgAttribute.parent = cfgContainer;
       cfgContainer.attributes.push(cfgAttribute);
-      
+
       ctlContainer = this.context.makeXhtmlControl(cfgContainer,this.parentControl,true);
       ctlContainer.isExclusive = true;
       ctlContainer.sectionBodyContainer = ctlContainer;
@@ -5025,7 +5106,7 @@ dojo.declare("gxe.control.SectionBody",gxe.control.Control,{
       this.parentControl.sectionBodyContainer = ctlContainer;
       ctlContainer.xmlNode = this.xmlNode;
       ctlContainer.xmlParentElement = this.xmlNode.parentElement;
-      
+
       ctlContainer.build(htmlParentElement,domProcessor,domNode);
       var elHtmlParent = ctlContainer.htmlElement;
       cfgContainer.children = new Array();
@@ -5036,7 +5117,7 @@ dojo.declare("gxe.control.SectionBody",gxe.control.Control,{
     } else {
       this.inherited(arguments);
     }
-    
+
   },
 
   /** Override gxe.control.Control.ensureVisibility() */
@@ -5074,17 +5155,17 @@ dojo.declare("gxe.control.Parameter",gxe.control.Section,{
 dojo.provide("gxe.control.Element");
 dojo.declare("gxe.control.Element",gxe.control.Section,{
   multiplicityTools: null,
-  
+
   /** Override gxe.control.Control.onHtmlChildrenCreated() */
   onHtmlChildrenCreated: function(domProcessor,domNode) {
     this.inherited(arguments);
-    
+
     var ctlMenu = null;
     var ctlIndexedIabArray = null;
     var sImages = this.context.contextPath+"/catalog/images/";
     var ctlHeader = this.findFirstChildControl("> [gxename='header']");
     if (ctlHeader != null) {
-      
+
       var bBuildRepeatables = false;
       if ((this.xmlNode != null) && this.xmlNode.isRepeatable()) {
         bBuildRepeatables = true;
@@ -5095,31 +5176,31 @@ dojo.declare("gxe.control.Element",gxe.control.Section,{
           bBuildRepeatables = false;
         }
       }
-          
+
       if (bBuildRepeatables) {
         ctlMenu = this.makeControlMenu(ctlHeader,true);
-        
+
         ctlMenu.appendImageButton("repeatSection",sImages+"gxe-repeat.png",
             this.context.getI18NString("button.repeatSection"));
         ctlMenu.appendImageButton("removeSection",sImages+"gxe-remove.png",
             this.context.getI18NString("button.removeSection"));
-            //NICOL modifica per visualizzazione frecce
+        //NICOL modifica per visualizzazione frecce
         if (this.showArrow){
-            if (this.useExclusiveDisplay) {
-              ctlMenu.appendImageButton("moveSectionUp",sImages+"gxe-move-left.png",
-                  this.context.getI18NString("button.moveSectionLeft"));
-              ctlMenu.appendImageButton("moveSectionDown",sImages+"gxe-move-right.png",
-                  this.context.getI18NString("button.moveSectionRight"));
-            } else {
-              ctlMenu.appendImageButton("moveSectionUp",sImages+"gxe-move-up.png",
-                  this.context.getI18NString("button.moveSectionUp"));
-              ctlMenu.appendImageButton("moveSectionDown",sImages+"gxe-move-down.png",
-                  this.context.getI18NString("button.moveSectionDown"));
-            }
+          if (this.useExclusiveDisplay) {
+            ctlMenu.appendImageButton("moveSectionUp",sImages+"gxe-move-left.png",
+                this.context.getI18NString("button.moveSectionLeft"));
+            ctlMenu.appendImageButton("moveSectionDown",sImages+"gxe-move-right.png",
+                this.context.getI18NString("button.moveSectionRight"));
+          } else {
+            ctlMenu.appendImageButton("moveSectionUp",sImages+"gxe-move-up.png",
+                this.context.getI18NString("button.moveSectionUp"));
+            ctlMenu.appendImageButton("moveSectionDown",sImages+"gxe-move-down.png",
+                this.context.getI18NString("button.moveSectionDown"));
+          }
         }
         dojo.connect(ctlMenu,"onEvent",this,"onHeaderEvent");
         this.multiplicityTools = ctlMenu;
-        
+
         var ctlRepeatables = this.repeatablesContainer;
         if (ctlRepeatables != null) ctlRepeatables.multiplicityTools = ctlMenu;
         if (this.useExclusiveDisplay && (ctlRepeatables != null)) {
@@ -5131,10 +5212,10 @@ dojo.declare("gxe.control.Element",gxe.control.Section,{
           dojo.connect(ctlIndexedIabArray,"onTabClicked",ctlRepeatables,"syncTools");
         }
         if (ctlRepeatables != null) ctlRepeatables.syncTools();
-        
+
       }
     }
-    
+
     this.initializeLabelEvents(this.xmlNode,ctlMenu,ctlIndexedIabArray,domProcessor,domNode);
   }
 
@@ -5148,7 +5229,7 @@ dojo.declare("gxe.control.Element",gxe.control.Section,{
  */
 dojo.provide("gxe.control.Attribute");
 dojo.declare("gxe.control.Attribute",gxe.control.Parameter,{
-  
+
   /** Override gxe.control.Control.onHtmlChildrenCreated() */
   onHtmlChildrenCreated: function(domProcessor,domNode) {
     this.inherited(arguments);
@@ -5192,7 +5273,7 @@ dojo.declare("gxe.control.ElementChoice",gxe.control.Control,{
   /**
    * Determines if an XML element is associated with the selected choice.
    * <br/>The anchor is enabled when text has been entered into the associated input text box.
-   * @function 
+   * @function
    * @name isElementSelected
    * @memberOf gxe.control.ElementChoice#
    * @param {gxe.xml.XmlElement} xmlElement the XML element to test
@@ -5232,8 +5313,8 @@ dojo.declare("gxe.control.ElementChoice",gxe.control.Control,{
           if (bAllowNone) {
             //ctlTabArray.appendTab(-1,sLabelNone,(nSelectedIndex == -1));
             ctlTabArray.appendRadio(-1,sLabelNone,(nSelectedIndex == -1));
-          } 
-          
+          }
+
           var n = ctlBody.getLength();
           for (var i=0; i<n; i++) {
             var bIsSelected = false;
@@ -5264,7 +5345,7 @@ dojo.declare("gxe.control.ElementChoiceBody",gxe.control.ExclusiveControlArray,{
 
   /** Override gxe.control.Control.processChildren() */
   processChildren: function(cfgObject,htmlParentElement,xmlNode,domProcessor,domNode) {
-  
+
     // Don't process all the children we only want the child "element"s
     var nIndex = -1;
     var nSelectedIndex = -1;
@@ -5291,7 +5372,7 @@ dojo.declare("gxe.control.ElementChoiceBody",gxe.control.ExclusiveControlArray,{
         if (cfgChild.name == "element") {
           var elTmp = document.createElement("div");
           this.processCfgElement(cfgChild,elTmp,this.xmlNode,domProcessor,domNode);
-        } 
+        }
       }
     }));
   }
@@ -5376,9 +5457,9 @@ dojo.declare("gxe.control.InputBase",gxe.control.Control,{
 
   /**
    * Attempts to find label text associated with the input control.
-   * The label text is used for validation feedback within the gxe.control.MessageArea 
+   * The label text is used for validation feedback within the gxe.control.MessageArea
    * portion of the page.
-   * @function 
+   * @function
    * @name findParentLabelText
    * @memberOf gxe.control.InputBase#
    * @param {gxe.xml.XmlNode} xmlNode the targeted XML node for input control
@@ -5393,27 +5474,27 @@ dojo.declare("gxe.control.InputBase",gxe.control.Control,{
     }
     return "?"+xmlNode.nodeInfo.localName;
   },
-  
+
   /**
    * Fires the onInputChanged() event.
-   * @function 
+   * @function
    * @name fireInputChanged
    * @memberOf gxe.control.InputBase#
    * @param {Event} e the underlying browser event
-   */  
+   */
   fireInputChanged: function(e) {
     this.onInputChanged(this);
   },
 
   /**
    * Fires the onInputChanged() event based upon a browser onkeyup() event.
-   * The onInputChanged() event will only be fired if the user key is 
+   * The onInputChanged() event will only be fired if the user key is
    * not 13 (carriage return) and not 9 (tab).
-   * @function 
+   * @function
    * @name fireInputChangedOnKeyUp
    * @memberOf gxe.control.InputBase#
    * @param {Event} e the underlying browser event
-   */  
+   */
   fireInputChangedOnKeyUp: function(e) {
     if (!e) e = window.event;
     if (e) {
@@ -5422,61 +5503,66 @@ dojo.declare("gxe.control.InputBase",gxe.control.Control,{
       if ((nKey != 13) && (nKey != 9)) this.fireInputChanged(e);
     }
   },
-  
+
   /**
    * Gets the value associated with the input control.
    * This method should be overridden for all sub-classes that support single valued
    * input (i.e. where this.supportsMultipleValues == false).
-   * @function 
+   * @function
    * @name getInputValue
    * @memberOf gxe.control.InputBase#
    * @param {boolean} bInFeedbackMode true if the value is being requested as validation feedback
    * @return {Object} the input value
-   */  
+   */
   getInputValue: function(bInFeedbackMode) {return null;},
-  
+
   /**
    * Gets the values associated with the input control.
    * This method should be overridden for all sub-classes that support multi-valued
    * input (i.e. where this.supportsMultipleValues == true).
-   * @function 
+   * @function
    * @name getInputValues
    * @memberOf gxe.control.InputBase#
    * @param {boolean} bInFeedbackMode true if the value is being requested as validation feedback
    * @return {Object[]} the input values
-   */  
+   */
   getInputValues: function(bInFeedbackMode) {return null;},
-  
+
   getInputValuesNoLabel: function(bInFeedbackMode) {return null;},
 
   /**
    * Indicates whether or not the control supports the input of multiple values.
    * (simple wrapper for this.supportsMultipleValues)
-   * @function 
+   * @function
    * @name getSupportsMultipleValues
    * @memberOf gxe.control.InputBase#
    * @return {boolean} true if multi-valued input is supported
-   */ 
+   */
   getSupportsMultipleValues: function() {return this.supportsMultipleValues;},
 
   /**
    * Makes an HTML "input" element of type "text" supporting entry of "other" code values.
    * This function is useful when the user requires the ability to enter a value outside
    * of a coded domain.
-   * @function 
+   * @function
    * @name makeOtherInputText
    * @memberOf gxe.control.InputBase#
    * @param {Object} cfgOption the JSON configuration object associated with the input control
    * @return {Element} the HTML "input" element
-   */ 
+   */
   makeOtherInputText: function(cfgOption) {
     var elOther = document.createElement("input");
     elOther.setAttribute("type","text");
     gxe.cfg.forEachHtmlAttribute(cfgOption,dojo.hitch(this,function(cfgAttribute) {
       var sName = cfgAttribute.name.toLowerCase();
       var sValue = cfgAttribute.name.toLowerCase();
-      if ((sName == "maxlength") || (sName != "size")) {
+      /** Ottobre 2020: possibilità di specificare una textarea per il campo other **/
+      if ((sName == "maxlength") || (sName != "size" && sName != "textareacustom")) {
         elOther.setAttribute(sName,cfgAttribute.value);
+      }else if((sName=="textareacustom")){
+        elOther = document.createElement("textArea");
+        elOther.setAttribute("cols","60");
+        elOther.setAttribute("rows","8");
       }
     }));
     return elOther;
@@ -5508,11 +5594,11 @@ dojo.declare("gxe.control.InputBase",gxe.control.Control,{
 
   /**
    * An event fired when input has changed.
-   * @event 
+   * @event
    * @name onInputChanged
    * @memberOf gxe.control.InputBase#
    * @param {Object} inputControl the input control that initiated the change
-   */ 
+   */
   onInputChanged: function(inputControl) {}
 
 });
@@ -5554,8 +5640,8 @@ dojo.declare("gxe.control.InputDelimitedTextArea",gxe.control.InputBase,{
   },
   /**
    * Tokenizes a supplied value and merges the result into a supplied array.
-   * <br/>The supplied value will be split using this.delimiter plus characters: \r and \n 
-   * @function 
+   * <br/>The supplied value will be split using this.delimiter plus characters: \r and \n
+   * @function
    * @name _mergeTokens
    * @memberOf gxe.control.InputDelimitedTextArea#
    * @param {Array} values the values into which the tokens will be merged
@@ -5610,8 +5696,8 @@ dojo.declare("gxe.control.InputDelimitedTextArea",gxe.control.InputBase,{
           }
         }
       }
-    }   
-    
+    }
+
     if (domValues.length > 0) {
       var values = new Array();
       for (var i=0; i<domValues.length; i++) {
@@ -5625,8 +5711,8 @@ dojo.declare("gxe.control.InputDelimitedTextArea",gxe.control.InputBase,{
         }
         this.htmlElement.value = sValues;
       }
-    }    
-    
+    }
+
     dojo.connect(this.htmlElement,"onchange",this,"fireInputChanged");
     dojo.connect(this.htmlElement,"onkeyup",this,"fireInputChangedOnKeyUp");
   }
@@ -5646,7 +5732,7 @@ dojo.declare("gxe.control.InputSelectMany",gxe.control.InputBase,{
 
   /**
    * Appends a checkbox option to the parent HTML DOM element.
-   * @function 
+   * @function
    * @name _appendCheckBox
    * @memberOf gxe.control.InputSelectMany#
    * @param {String} sLabel the label
@@ -5656,7 +5742,7 @@ dojo.declare("gxe.control.InputSelectMany",gxe.control.InputBase,{
   _appendCheckBox: function(sLabel,sValue,bSelected) {
     var elListItem = document.createElement("li");
     this.htmlElement.appendChild(elListItem);
-    
+
     var sCollectionName = this.gxeId+"Options";
     var sOptionId = this.context.generateUniqueId();
     var elOption = document.createElement("input");
@@ -5669,11 +5755,11 @@ dojo.declare("gxe.control.InputSelectMany",gxe.control.InputBase,{
     }
     elOption.setAttribute("type","checkbox");
     elOption.setAttribute("id",sOptionId);
-    elOption.setAttribute("value",sValue); 
+    elOption.setAttribute("value",sValue);
     elListItem.appendChild(elOption);
     if (bSelected) elOption.setAttribute("checked","checked");
     this._checkBoxes.push(elOption);
-    
+
     var elLabel = document.createElement("label");
     elLabel.setAttribute("for",sOptionId);
     elLabel.appendChild(document.createTextNode(sLabel));
@@ -5698,9 +5784,9 @@ dojo.declare("gxe.control.InputSelectMany",gxe.control.InputBase,{
         var elCheckBox = this._checkBoxes[i];
         if (elCheckBox.checked) {
           var oValue = elCheckBox.value;
-		  //if(dojo.query('label[for="'+elCheckBox.id+'"]').length != 0){	
-			var labelVal = elCheckBox.parentElement.innerText;//dojo.query('label[for="'+elCheckBox.id+'"]');
-		  //}
+          //if(dojo.query('label[for="'+elCheckBox.id+'"]').length != 0){
+          var labelVal = elCheckBox.parentElement.innerText;//dojo.query('label[for="'+elCheckBox.id+'"]');
+          //}
           var elOther = elCheckBox.gxeOtherInputText;
           if (elOther != null) {
             var sValue = dojo.trim(elOther.value);
@@ -5709,17 +5795,17 @@ dojo.declare("gxe.control.InputSelectMany",gxe.control.InputBase,{
             else oValue = null;
           }
           if (oValue != null) {
-			values.push(oValue);
-			if(labelVal != undefined && labelVal[0] != 0){
-				values.push(labelVal);
-			}
-		  }
+            values.push(oValue);
+            if(labelVal != undefined && labelVal[0] != 0){
+              values.push(labelVal);
+            }
+          }
         }
       }
     }
     return values;
   },
-  
+
   getInputValuesNoLabel: function(bInFeedbackMode) {
     var values = new Array();
     if (this._checkBoxes != null) {
@@ -5881,9 +5967,9 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
   /**
    * Catches "onchange" events for the HTML "select" element.
    * <br/>This method triggers the firing of the inputChanged() event.
-   * <br/>If applicable, this method toggles the display of the 
+   * <br/>If applicable, this method toggles the display of the
    * "other" code input text box.
-   * @function 
+   * @function
    * @name _onChange
    * @memberOf gxe.control.InputSelectOne#
    * @param {Event} e the underlying browser event
@@ -5913,9 +5999,9 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
     var bFoundSelected = false;
     var nIndex = -1;
     var cfgOptions = gxe.cfg.findChild(this.cfgObject,gxe.cfg.uriGxe,"options");
-	
 
-	
+
+
     if (cfgOptions != null) {
       gxe.cfg.forEachChild(cfgOptions,gxe.cfg.uriGxe,"option",dojo.hitch(this,function(cfgOption) {
         nIndex++;
@@ -5923,7 +6009,7 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
         var sValue = gxe.cfg.getGxeAttributeValue(cfgOption,"value");
         var sAlias =  gxe.cfg.getGxeAttributeValue(cfgOption,"alias");
         var bSelected = false;
-        
+
         if (!bFoundSelected) {
           if (!bUseDomValueForSelected) {
             var sSelected = gxe.cfg.getGxeAttributeValue(cfgOption,"selected");
@@ -5936,10 +6022,10 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
           }
           if (bSelected) bFoundSelected = true;
         }
-        
+
         var elOption = new Option(sLabel,sValue,bSelected,bSelected);
         elOptions[elOptions.length] = elOption;
-  
+
         if (this._htmlOther == null) {
           var sOther = gxe.cfg.getGxeAttributeValue(cfgOption,"isOther");
           if ((sOther != null) && (sOther == "true")) {
@@ -5952,7 +6038,7 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
         }
       }));
     }
-    
+
     if (!bFoundSelected && (elOptions.length > 0)) {
       var nSelectedIndex = 0;
       if (bUseDomValueForSelected && (sDomValue != null) && (this._htmlOther != null)) {
@@ -5968,7 +6054,7 @@ dojo.declare("gxe.control.InputSelectOne",gxe.control.InputBase,{
       dojo.connect(this._htmlOther,"onkeyup",this,"fireInputChangedOnKeyUp");
     }
   }
-  
+
 });
 
 /**
@@ -6025,7 +6111,7 @@ dojo.declare("gxe.control.InputText",gxe.control.InputBase,{
     dojo.connect(this.htmlElement,"onchange",this,"fireInputChanged");
     dojo.connect(this.htmlElement,"onkeyup",this,"fireInputChangedOnKeyUp");
   }
-  
+
 });
 
 /**
@@ -6072,7 +6158,7 @@ dojo.declare("gxe.control.InputTextArea",gxe.control.InputBase,{
     dojo.connect(this.htmlElement,"onchange",this,"fireInputChanged");
     dojo.connect(this.htmlElement,"onkeyup",this,"fireInputChangedOnKeyUp");
   }
-  
+
 });
 
 /**
@@ -6089,11 +6175,11 @@ dojo.declare("gxe.control.InputGemetKeyword",gxe.control.InputText,{
   _gemetTool: null,
 
   _isThemeSearch: false,
-  
+
   /**
    * Utility to enable/disable the anchor that launches the GEMET dialog.
    * <br/>The anchor is enabled when text has been entered into the associated input text box.
-   * @function 
+   * @function
    * @name _enableDisable
    * @memberOf gxe.control.InputGemetKeyword#
    */
@@ -6103,26 +6189,26 @@ dojo.declare("gxe.control.InputGemetKeyword",gxe.control.InputText,{
     if (bOk) this._gemetTool.style.display = "inline";
     else this._gemetTool.style.display = "none";*/
   },
-  
+
   /** Override gxe.control.InputBase.onInputChanged() */
   onInputChanged: function() {this._enableDisable();},
 
   /** Override gxe.control.Control.onHtmlChildrenCreated() */
   onHtmlChildrenCreated: function(domProcessor,domNode) {
-	  
-   this.inherited(arguments);
-   
-   
-   
-    
- 
-    
+
+    this.inherited(arguments);
+
+
+
+
+
+
     var elLink = document.createElement("a");
     elLink.setAttribute("href","javascript:void(0);");
     elLink.className = "gxeInputTool";
     elLink.appendChild(document.createTextNode(this.context.getI18NString("gemet.find")));
     this.htmlElement.parentNode.appendChild(elLink);
-    
+
     var gemet = new Gemet();
     gemet.isThemeSearch = this._isThemeSearch;
     gemet.lblHelp = this.context.getI18NString("gemet.dialogHelp");
@@ -6135,53 +6221,53 @@ dojo.declare("gxe.control.InputGemetKeyword",gxe.control.InputText,{
     gemet.lblSearch =  this.context.getI18NString("gemet.find");
     gemet.imgLoading = this.context.contextPath+"/catalog/images/loading.gif";
     dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
-    	
+
       gemet.initFind(this.htmlElement);
-      
+
     }));
-    
+
     this._gemetTool = elLink;
     this._enableDisable();
   }
-  
+
 });
 
 dojo.provide("gxe.control.InputGemetTheme");
 dojo.declare("gxe.control.InputGemetTheme", gxe.control.InputDelimitedTextArea,{
-	
-	onHtmlChildrenCreated: function(domProcessor,domNode) {
-        
-		this._isThemeSearch = true;
-		this.inherited(arguments);
-		
 
-	    var elLink = document.createElement("a");
-	    elLink.setAttribute("href","javascript:void(0);");
-	    elLink.className = "gxeInputTool";
-	    elLink.appendChild(document.createTextNode(this.context.getI18NString("gemet.find")));
-	    this.htmlElement.parentNode.appendChild(elLink);
-	    
-	    var gemet = new Gemet();
-	    gemet.isThemeSearch = this._isThemeSearch;
-	    gemet.lblHelp = this.context.getI18NString("gemet.dialogHelp");
-	    gemet.lblDialogTitle = this.context.getI18NString("gemet.dialogTitle");
-	    gemet.lblWordNotFound = this.context.getI18NString("gemet.wordNotFound");
-	    gemet.lblCancel = this.context.getI18NString("gemet.cancel");
-	    gemet.lblOk = this.context.getI18NString("gemet.ok");
-	    gemet.lblErrorKeywordEmpty = this.context.getI18NString("gemet.lblErrorKeywordEmpty");
-	    gemet.lblLoadingMessage = this.context.getI18NString("gemet.connectingMessage");
-	    gemet.lblSearch =  this.context.getI18NString("gemet.search");
-	    gemet.imgLoading = this.context.contextPath+"/catalog/images/loading.gif";
-	    
-	    dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
-	    	
-	      gemet.initFind(this.htmlElement);
-	      
-	    }));
-	    
-	    /*this._gemetTool = elLink;
+  onHtmlChildrenCreated: function(domProcessor,domNode) {
+
+    this._isThemeSearch = true;
+    this.inherited(arguments);
+
+
+    var elLink = document.createElement("a");
+    elLink.setAttribute("href","javascript:void(0);");
+    elLink.className = "gxeInputTool";
+    elLink.appendChild(document.createTextNode(this.context.getI18NString("gemet.find")));
+    this.htmlElement.parentNode.appendChild(elLink);
+
+    var gemet = new Gemet();
+    gemet.isThemeSearch = this._isThemeSearch;
+    gemet.lblHelp = this.context.getI18NString("gemet.dialogHelp");
+    gemet.lblDialogTitle = this.context.getI18NString("gemet.dialogTitle");
+    gemet.lblWordNotFound = this.context.getI18NString("gemet.wordNotFound");
+    gemet.lblCancel = this.context.getI18NString("gemet.cancel");
+    gemet.lblOk = this.context.getI18NString("gemet.ok");
+    gemet.lblErrorKeywordEmpty = this.context.getI18NString("gemet.lblErrorKeywordEmpty");
+    gemet.lblLoadingMessage = this.context.getI18NString("gemet.connectingMessage");
+    gemet.lblSearch =  this.context.getI18NString("gemet.search");
+    gemet.imgLoading = this.context.contextPath+"/catalog/images/loading.gif";
+
+    dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
+
+      gemet.initFind(this.htmlElement);
+
+    }));
+
+    /*this._gemetTool = elLink;
 	    this._enableDisable();*/
-	}
+  }
 });
 
 
@@ -6199,10 +6285,10 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
   gptLocator: null,
   gptInpEnv: null,
   _wasMapInitialized: false,
-  
+
   /**
    * Appends an image button to a map toolbar.
-   * @function 
+   * @function
    * @name _appendImageButton
    * @memberOf gxe.control.Map#
    * @param {Element} elToolBar the parent HTML element for the toolbar
@@ -6219,48 +6305,48 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
     elToolBar.appendChild(el);
     return el;
   },
-  
+
   /** Override gxe.control.Control.build() */
   build: function(htmlParentElement,domProcessor,domNode) {
     this.inherited(arguments);
     this.htmlElement.style.display = "none";
-    
+
     var idPfx = this.gxeId+"_";
     var sImages = this.context.contextPath+"/catalog/images/";
     var elImg;
-    
+
     var elUseMap = document.createElement("a");
     elUseMap.setAttribute("href","javascript:void(0);");
     elUseMap.className = "gxeUseMapButton";
     elUseMap.appendChild(document.createTextNode(
         this.context.getI18NString("map.useMap")));
     this.htmlElement.parentNode.insertBefore(elUseMap,this.htmlElement);
-    
+
     var elToolBar = document.createElement("div");
     elToolBar.id = idPfx+"mapToolbar";
     elToolBar.className = "mapToolbar";
     this.htmlElement.appendChild(elToolBar);
-    
+
     elImg = this._appendImageButton(elToolBar,idPfx+"mapButton-zoomToWorld",
         sImages+"btn-zoomToWorld-off.gif",
         this.context.getI18NString("map.zoomToWorld"));
-    
+
     elImg = this._appendImageButton(elToolBar,idPfx+"mapButton-zoomToInputEnvelope",
         sImages+"btn-zoomToInputEnvelope-off.gif",
         this.context.getI18NString("map.zoomToInputEnvelope"));
-    
+
     elImg = this._appendImageButton(elToolBar,idPfx+"mapTool-drawInputEnvelope",
         sImages+"btn-drawInputEnvelope-off.gif",
         this.context.getI18NString("map.drawInputEnvelope"));
     elImg.className = "firstTool";
-    
+
     elImg = this._appendImageButton(elToolBar,idPfx+"mapTool-deactivate",
         sImages+"btn-deactivate-off.gif",
         this.context.getI18NString("map.deactivate"));
-    
-     //NICOL modifica per inserimento combo box per selezione Extent
+
+    //NICOL modifica per inserimento combo box per selezione Extent
     var selectExt = document.createElement("select");
-    var elOptions = selectExt.options;       
+    var elOptions = selectExt.options;
     var elOption = new Option("Default","",true,true);
     elOptions[elOptions.length] = elOption;
     elOption = new Option("Piemonte","6.62;44.06;9.22;46.47",false,false);
@@ -6305,8 +6391,8 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
     elOptions[elOptions.length] = elOption;
     dojo.connect(selectExt,"onchange",this,"onChangeExtent");
     elToolBar.appendChild(selectExt);
-    //NICOL FINE 
-    
+    //NICOL FINE
+
     var elLocatorInput = document.createElement("input");
     elLocatorInput.setAttribute("type","text");
     elLocatorInput.setAttribute("maxLength","1024");
@@ -6314,25 +6400,25 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
     elLocatorInput.className = "locatorInput";
     dojo.connect(elLocatorInput,"onkeypress",this,"onLocatorKeyPress");
     elToolBar.appendChild(elLocatorInput);
-    
+
     elImg = this._appendImageButton(elToolBar,idPfx+"mapButton-locate",
         sImages+"btn-locate-off.gif",
         this.context.getI18NString("map.locate"));
-        
+
     var elCandidates = document.createElement("div");
     elCandidates.id = idPfx+"locatorCandidates";
     elCandidates.className = "locatorCandidates";
     this.htmlElement.appendChild(elCandidates);
-    
+
     var elMapContainer = document.createElement("div");
     elMapContainer.className = "gxeMapContainer";
     this.htmlElement.appendChild(elMapContainer);
-    
+
     var elMapCanvas = document.createElement("div");
     elMapCanvas.id = idPfx+"interactiveMap";
     elMapCanvas.className = "gxeMapCanvas";
     elMapContainer.appendChild(elMapCanvas);
-    
+
     var config = this.context.gptMapConfig;
     if (config == null) return;
     config.mapElementId = idPfx+"interactiveMap";
@@ -6340,7 +6426,7 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
     config.mapToolbarId = idPfx+"mapToolbar";
     config.locatorInputId =  idPfx+"mapInput-locate";
     config.locatorCandidatesId = idPfx+"locatorCandidates";
-    
+
     var el = this.htmlElement.parentNode;
     while (el != null) {
       var nl = dojo.query("[gxeMapPart='envelope_container']",el);
@@ -6361,26 +6447,26 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
       }
       el = el.parentNode;
     }
-    
+
     dojo.connect(elUseMap,"onclick",this,"_useMap");
   },
   onChangeExtent: function(e) {
-      var extent= e.target.options[e.target.selectedIndex].value
-      if((extent!=null)&&(extent!=""))	{
-        var selectedExtent = eval("new esri.geometry.Extent({"+gptMapConfig.mapInitialExtent+"})");
-        if(extent!=="default") {
-          selectedExtent = new esri.geometry.Extent(Number(extent.split(";")[0]),Number(extent.split(";")[1]),Number(extent.split(";")[2]),Number(extent.split(";")[3]),(new esri.SpatialReference({wkid:4326})));
-        } 
-        this.gptMap.zoomToGCSExtent(selectedExtent,true);
-        this.gptInpEnv.setInputEnvelope(selectedExtent);
-      } else {
-          this.gptMap.zoomToDefault();
+    var extent= e.target.options[e.target.selectedIndex].value
+    if((extent!=null)&&(extent!=""))	{
+      var selectedExtent = eval("new esri.geometry.Extent({"+gptMapConfig.mapInitialExtent+"})");
+      if(extent!=="default") {
+        selectedExtent = new esri.geometry.Extent(Number(extent.split(";")[0]),Number(extent.split(";")[1]),Number(extent.split(";")[2]),Number(extent.split(";")[3]),(new esri.SpatialReference({wkid:4326})));
       }
+      this.gptMap.zoomToGCSExtent(selectedExtent,true);
+      this.gptInpEnv.setInputEnvelope(selectedExtent);
+    } else {
+      this.gptMap.zoomToDefault();
+    }
 
   },
   /**
    * Responds to a key press from the input text box associated with the locator (i.e. gazateer).
-   * @function 
+   * @function
    * @name onLocatorKeyPress
    * @memberOf gxe.control.Map#
    * @param {Event} e the underlying browser event
@@ -6393,13 +6479,13 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
         if (this.gptLocator != null) this.gptLocator.locate();
         return false;
       }
-    } 
+    }
     return true;
   },
-  
+
   /**
    * Responds to a click of a map related button.
-   * @function 
+   * @function
    * @name onMapButtonClicked
    * @memberOf gxe.control.Map#
    * @param {String} sButtonName the map button name
@@ -6413,20 +6499,20 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
       if (this.gptLocator != null) this.gptLocator.locate();
     }
   },
-  
+
   /**
    * Responds following the load of the underlying map control.
-   * @function 
+   * @function
    * @name onMapLoaded
    * @memberOf gxe.control.Map#
    */
   onMapLoaded: function() {
     if (this.gptInpEnv != null) this.gptInpEnv.highlightInputEnvelope();
   },
-  
+
   /**
    * Repositions the underlying map control.
-   * @function 
+   * @function
    * @name repositionMap
    * @memberOf gxe.control.Map#
    */
@@ -6440,10 +6526,10 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
       }
     }
   },
-  
+
   /**
    * Handles a "Use Map" click.
-   * @function 
+   * @function
    * @name _useMap
    * @memberOf gxe.control.Map#
    * @param {Event} e the underlying browser event
@@ -6453,31 +6539,31 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
       this.repositionMap();
       return;
     }
-    
+
     this.htmlElement.style.display = "block";
     var config = this.context.gptMapConfig;
-    
+
     this.gptMap = new GptMap();
     dojo.connect(this.gptMap,"onMapLoaded",this,"onMapLoaded");
-  
+
     this.gptInpEnv = new GptInputEnvelope();
     this.gptInpEnv.initialize(config,this.gptMap);
-    
+
     this.gptMap.initialize(config);
     this._wasMapInitialized = true;
-    
+
     this.gptMapToolbar = new GptMapToolbar();
     dojo.connect(this.gptMapToolbar,"onMapButtonClicked",this,"onMapButtonClicked");
     dojo.connect(this.gptMapToolbar,"onDrawInputEnvelope",this.gptInpEnv,"onDrawInputEnvelope");
     this.gptMapToolbar.initialize(config,this.gptMap);
-    
+
     this.gptLocator = new GptLocator();
     this.gptLocator.initialize(config,this.gptMap);
-    
+
     dojo.connect(window,"onresize",this,"repositionMap");
     dojo.connect(window,"onscroll",this,"repositionMap");
   }
-  
+
 });
 
 /**
@@ -6487,10 +6573,10 @@ dojo.declare("gxe.control.Map",gxe.control.Control,{
  */
 dojo.provide("fgdc.control.KeywordSelector");
 dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
-  
+
   /**
    * Appends a checkbox option to the popup dialog.
-   * @function 
+   * @function
    * @name _appendCheckBox
    * @memberOf fgdc.control.KeywordSelector#
    * @param {Element} el the parent HTML element
@@ -6505,24 +6591,24 @@ dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
     var elOption = document.createElement("input");
     elOption.setAttribute("type","checkbox");
     elOption.setAttribute("id",sOptionId);
-    elOption.setAttribute("value",sValue); 
+    elOption.setAttribute("value",sValue);
     elListItem.appendChild(elOption);
     if (bSelected) elOption.setAttribute("checked","checked");
-    
+
     var elLabel = document.createElement("label");
     elLabel.setAttribute("for",sOptionId);
     elLabel.appendChild(document.createTextNode(sLabel));
     elListItem.appendChild(elLabel);
     return elListItem;
   },
-  
+
   /** Override gxe.control.Control.build() */
   build: function(htmlParentElement,domProcessor,domNode) {
     this.inherited(arguments);
-    
+
     if (this.htmlElement != null) {
       dojo.connect(this.htmlElement,"onclick",this,dojo.hitch(this,function(e) {
-        
+
         var delimitedTextArea = null;
         var aCurrentValues = null;
         var siblings = this.xmlNode.parentElement.children;
@@ -6568,7 +6654,7 @@ dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
               this._appendCheckBox(elList,sLabel,sValue,bSelected);
             }));
           }
-          
+
           var elDialogContent = document.createElement("div");
           dojo.addClass(elDialogContent,"gxePopupDialog");
           var sTitle = this.htmlTextContent;
@@ -6581,7 +6667,7 @@ dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
           });
           dojo.addClass(dialog.domNode,"tundra");
           elDialogContent.appendChild(elListDiv);
-          
+
           var elButtonDiv = document.createElement("div");
           dojo.style(elButtonDiv,{marginLeft:"auto",marginRight:"auto",width:"50%",padding:"5px"});
           elDialogContent.appendChild(elButtonDiv);
@@ -6591,7 +6677,7 @@ dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
           var elCancel = document.createElement("button");
           elCancel.appendChild(document.createTextNode(this.context.getI18NString("dialog.cancel")));
           elButtonDiv.appendChild(elCancel);
-          
+
           dojo.connect(elOk,"onclick",this,dojo.hitch(this,function(e) {
             var sCheckedValues = "";
             dojo.query("[type='checkbox']",elDialogContent).forEach(dojo.hitch(this,function(item) {
@@ -6611,19 +6697,19 @@ dojo.declare("fgdc.control.KeywordSelector",gxe.control.Control,{
             };
             dialog.hide().then(destr,destr);
           }));
-          
+
           dojo.connect(elCancel,"onclick",this,dojo.hitch(this,function(e) {
             var destr = function() {
               dialog.destroy();
             };
             dialog.hide().then(destr,destr);
           }));
-          dialog.show(); 
+          dialog.show();
         }
       }));
     }
   }
-  
+
 });
 
 dojo.provide("gxe.control.InputBoxWithCheck");
@@ -6632,7 +6718,7 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
   /**
    * Utility to enable/disable the anchor that launches the GEMET dialog.
    * <br/>The anchor is enabled when text has been entered into the associated input text box.
-   * @function 
+   * @function
    * @name _enableDisable
    * @memberOf gxe.control.InputGemetKeyword#
    */
@@ -6642,19 +6728,19 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
     if (bOk) this._gemetTool.style.display = "inline";
     else this._gemetTool.style.display = "none";*/
   },
-  
+
   /** Override gxe.control.InputBase.onInputChanged() */
   onInputChanged: function() {this._enableDisable();},
 
   /** Override gxe.control.Control.onHtmlChildrenCreated() */
   onHtmlChildrenCreated: function(domProcessor,domNode) {
-	  
-   this.inherited(arguments);
+
+    this.inherited(arguments);
     var s = gxe.cfg.getGxeAttributeValue(this.cfgObject,"regexp");
     var s2 = gxe.cfg.getGxeAttributeValue(this.cfgObject,"urlToCall");
     var stringaInit = "";
-
-    if (domNode==null){
+    
+     if (domNode==null){
         var u = this.context.contextPath +s2;//"/rest/RestUserAddOn/getNextId";
                 dojo.xhrGet({
                   handleAs: "json",
@@ -6663,13 +6749,13 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
                   sync: true,
                   timeout: 30000,
                   error: dojo.hitch(this,function(responseObject,ioArgs) {
-                    
+
                   }),
                   load: dojo.hitch(this,function(responseObject,ioArgs) {
                     this.htmlElement.value=responseObject.id;
                     stringaInit = responseObject.id.toString().substring(0,responseObject.id.indexOf(":")+1);
                   })
-                });             
+                });
     } else{
         var u = this.context.contextPath +"/rest/RestUserAddOn/getCurrentCodIPA";//"/rest/RestUserAddOn/getNextId";
                 dojo.xhrGet({
@@ -6679,20 +6765,20 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
                   sync: true,
                   timeout: 30000,
                   error: dojo.hitch(this,function(responseObject,ioArgs) {
-                    
+
                   }),
                   load: dojo.hitch(this,function(responseObject,ioArgs) {
                     stringaInit = responseObject.id.toString().substring(0,responseObject.id.indexOf(":")+1);
                   })
-                });             
+                });
     }
-    var elLink = document.createElement("a");
-    elLink.setAttribute("href","javascript:void(0);");
-    elLink.className = "gxeInputTool";
-    elLink.appendChild(document.createTextNode(this.context.getI18NString("identifier.verify")));
-    this.htmlElement.parentNode.appendChild(elLink);
-    
-    dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
+     var elLink = document.createElement("a");
+     elLink.setAttribute("href","javascript:void(0);");
+     elLink.className = "gxeInputTool";
+     elLink.appendChild(document.createTextNode(this.context.getI18NString("identifier.verify")));
+     this.htmlElement.parentNode.appendChild(elLink);
+
+     dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
         if (this.htmlElement.value.indexOf(stringaInit) == 0){
             if (s.length>0){
                 var regexp = new RegExp(s);
@@ -6708,13 +6794,13 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
             alert(this.context.getI18NString("validate.other"));
         }
     }));
-    var elLink2 = document.createElement("a");
-    elLink2.setAttribute("href","javascript:void(0);");
-    elLink2.className = "gxeInputTool";
-    elLink2.appendChild(document.createTextNode("Genera"));
-    this.htmlElement.parentNode.appendChild(elLink2);
-    
-    dojo.connect(elLink2,"onclick",this,dojo.hitch(this,function(e) {
+     var elLink2 = document.createElement("a");
+     elLink2.setAttribute("href","javascript:void(0);");
+     elLink2.className = "gxeInputTool";
+     elLink2.appendChild(document.createTextNode("Genera"));
+     this.htmlElement.parentNode.appendChild(elLink2);
+
+     dojo.connect(elLink2,"onclick",this,dojo.hitch(this,function(e) {
         var u = this.context.contextPath +s2;//"/rest/RestUserAddOn/getNextId";
         dojo.xhrGet({
           handleAs: "json",
@@ -6728,11 +6814,11 @@ dojo.declare("gxe.control.InputBoxWithCheck",gxe.control.InputText,{
           load: dojo.hitch(this,function(responseObject,ioArgs) {
             this.htmlElement.value=responseObject.id;
           })
-        });     
+        });
     }));
     
     this._enableDisable();
-  }  
+  }
 });
 dojo.provide("gxe.control.InputBoxWithValueFrom");
 dojo.declare("gxe.control.InputBoxWithValueFrom",gxe.control.InputText,{
@@ -6740,7 +6826,7 @@ dojo.declare("gxe.control.InputBoxWithValueFrom",gxe.control.InputText,{
   /**
    * Utility to enable/disable the anchor that launches the GEMET dialog.
    * <br/>The anchor is enabled when text has been entered into the associated input text box.
-   * @function 
+   * @function
    * @name _enableDisable
    * @memberOf gxe.control.InputGemetKeyword#
    */
@@ -6750,14 +6836,14 @@ dojo.declare("gxe.control.InputBoxWithValueFrom",gxe.control.InputText,{
     if (bOk) this._gemetTool.style.display = "inline";
     else this._gemetTool.style.display = "none";*/
   },
-  
+
   /** Override gxe.control.InputBase.onInputChanged() */
   onInputChanged: function() {this._enableDisable();},
 
   /** Override gxe.control.Control.onHtmlChildrenCreated() */
   onHtmlChildrenCreated: function(domProcessor,domNode) {
-	  
-   this.inherited(arguments);
+
+    this.inherited(arguments);
     var elLink = document.createElement("a");
     elLink.setAttribute("href","javascript:void(0);");
     elLink.className = "gxeInputTool";
@@ -6765,27 +6851,26 @@ dojo.declare("gxe.control.InputBoxWithValueFrom",gxe.control.InputText,{
     this.htmlElement.parentNode.appendChild(elLink);
     var s = gxe.cfg.getGxeAttributeValue(this.cfgObject,"qPathFrom");
     dojo.connect(elLink,"onclick",this,dojo.hitch(this,function(e) {
-    	var xmlGenerator = new gxe.xml.Generator();
-        var sXml = xmlGenerator.getFormElement(s,gxeContext); 
-        this.htmlElement.value= sXml;
-      
+      var xmlGenerator = new gxe.xml.Generator();
+      var sXml = xmlGenerator.getFormElement(s,gxeContext);
+      this.htmlElement.value= sXml;
+
     }));
-    
+
     this._enableDisable();
-  }  
+  }
 });
 
 //Nicol
 function executeFormServer(contextPath,gxeNewDocumentId) {
- var gxeContext = new gxe.Context();
+  var gxeContext = new gxe.Context();
 
-      gxeContext.contextPath = contextPath;
-      gxeContext.gptMapConfig = gptMapConfig;
-      gxeContext.newDocumentId = gxeNewDocumentId;
-    var xmlGenerator = new gxe.xml.Generator();
-    var sXml = xmlGenerator.generate(gxeContext,true); 
-    if (!xmlGenerator.hadValidationErrors) {
-     
-    }
+  gxeContext.contextPath = contextPath;
+  gxeContext.gptMapConfig = gptMapConfig;
+  gxeContext.newDocumentId = gxeNewDocumentId;
+  var xmlGenerator = new gxe.xml.Generator();
+  var sXml = xmlGenerator.generate(gxeContext,true);
+  if (!xmlGenerator.hadValidationErrors) {
+
   }
-  
+}
