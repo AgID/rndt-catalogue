@@ -82,12 +82,14 @@ public class HarvesterStatisticsDao extends BaseDao {
 	CATEGORIA("CATEGORIA"),
 	INSPIRE("INSPIRE"),
 	SERVIZIO("SERVIZIO"),
-	RESPONSABILE("RESPONSABILE");
+	RESPONSABILE("RESPONSABILE"),      
+	PDATASET("PDATASET"),
+	OPENDATA("OPENDATA");
 	
 	private String type;
 	
 	StatisticsType(String type){
-		this.type = type;
+            this.type = type;
 	}
 	
 }
@@ -395,8 +397,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             // Solo gli approvati
             sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
             
-            sbSelectSql.append(" group by " + strGroupBy + ",s.HIERARCHY ");
+            sbSelectSql.append(" group by " + strGroupBy + ",s.HIERARCHY ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(), startDate,endDate);
                 objStat.tipologia=StatisticsType.TIPOLOGIA.toString();
             } catch (SQLException ex) {
@@ -446,8 +449,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
                 }
                 sbSelectSql.append(" UPDATEDATE <= ? ");
             }
-            sbSelectSql.append(" group by " + strGroupBy + ", r.APPROVALSTATUS ");
+            sbSelectSql.append(" group by " + strGroupBy + ", r.APPROVALSTATUS ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.STATO.toString();
             } catch (SQLException ex) {
@@ -497,8 +501,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
                 }
                 sbSelectSql.append(" UPDATEDATE <= ? ");
             }
-            sbSelectSql.append(" group by " + strGroupBy + ", r.PUBMETHOD ");
+            sbSelectSql.append(" group by " + strGroupBy + ", r.PUBMETHOD ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.METODO.toString();
             } catch (SQLException ex) {
@@ -532,8 +537,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             if (endDate.length() > 0) {
                 sbSelectSql.append(" AND UPDATEDATE <= ? ");
             }
-            sbSelectSql.append(" group by " + strGroupBy + ", t.TOPIC ");
+            sbSelectSql.append(" group by " + strGroupBy + ", t.TOPIC ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.CATEGORIA.toString();
             } catch (SQLException ex) {
@@ -569,8 +575,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             // Solo gli approvati
             sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
             
-            sbSelectSql.append(" group by " + strGroupBy + ", i.INSPIRE_THEME ");
+            sbSelectSql.append(" group by " + strGroupBy + ", i.INSPIRE_THEME ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.INSPIRE.toString();
             } catch (SQLException ex) {
@@ -606,8 +613,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             // Solo gli approvati
             sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
             
-            sbSelectSql.append(" group by " + strGroupBy + ", i.SERVICE_TYPE ");
+            sbSelectSql.append(" group by " + strGroupBy + ", i.SERVICE_TYPE ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.SERVIZIO.toString();
             } catch (SQLException ex) {
@@ -643,8 +651,9 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             // Solo gli approvati
             sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
             
-            sbSelectSql.append(" group by " + strGroupBy + ", s.RESPONSIBLE");
+            sbSelectSql.append(" group by " + strGroupBy + ", s.RESPONSIBLE ORDER BY USERNAME_LOC");
             try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
                 objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
                 objStat.tipologia=StatisticsType.RESPONSABILE.toString();
             } catch (SQLException ex) {
@@ -652,6 +661,86 @@ group by p.nome,p.tipoPA, s.HIERARCHY
             }
             elencostat.add(objStat);
         }
+        
+        if ((listType.equals("")) ||(elencoS.contains(StatisticsType.PDATASET.toString()))){
+            /* Priority Dataset */
+            objStat = new statistic();
+            sbSelectSql = new StringBuilder();
+            sbSelectSql.append("SELECT " + Ragg + " i.PRIORITYDATASET, count(*) FROM gpt_resource r inner join gpt_resource_stat_priority_dataset i on i.DOCUUID = r.DOCUUID ");
+            sbSelectSql.append("inner join gpt_user u on u.USERID = r.OWNER  inner join gpt_pa p on p.ID = u.FK_IDPA WHERE r.APPROVALSTATUS = 'approved' ");
+            if ((!datiPA.isEmpty()) && (!datiPA.equals("*")) && (!datiPA.equals("s"))){
+                //sbSelectSql.append("WHERE u.USERNAME like '%?%' ");
+               sbSelectSql.append("AND u.FK_IDPA =  " + datiPA);
+             
+            }
+            if ((!datiTipoPA.isEmpty()) && (!datiTipoPA.equals("*")) && (!datiTipoPA.equals("s"))){
+                //sbSelectSql.append("WHERE u.USERNAME like '%?%' ");
+               sbSelectSql.append("AND p.tipoPA =  '" + datiTipoPA + "'");
+             
+            }
+            if (!owner.equals("*")){
+                sbSelectSql.append(" AND u.USERID =  " + owner);
+            }
+            if (startDate.length() > 0) {
+                sbSelectSql.append(" AND UPDATEDATE >= ? ");
+            }
+            if (endDate.length() > 0) {
+                sbSelectSql.append(" AND UPDATEDATE <= ? ");
+            }
+            // Solo gli approvati(già inserita nella where)
+            // sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
+            
+            sbSelectSql.append(" group by " + strGroupBy + ", i.PRIORITYDATASET ORDER BY USERNAME_LOC");
+            try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
+                objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
+                objStat.tipologia=StatisticsType.INSPIRE.toString();
+            } catch (SQLException ex) {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            elencostat.add(objStat);             
+        }
+        
+        
+        if ((listType.equals("")) ||(elencoS.contains(StatisticsType.OPENDATA.toString()))){
+            /*Opendata*/
+            objStat = new statistic();
+            sbSelectSql = new StringBuilder();
+            sbSelectSql.append("SELECT " + Ragg + " i.OPENDATA, count(*) FROM gpt_resource r inner join gpt_resource_stat_opendata i on i.DOCUUID = r.DOCUUID ");
+            sbSelectSql.append("inner join gpt_user u on u.USERID = r.OWNER  inner join gpt_pa p on p.ID = u.FK_IDPA WHERE r.APPROVALSTATUS = 'approved' ");
+            if ((!datiPA.isEmpty()) && (!datiPA.equals("*")) && (!datiPA.equals("s"))){
+                //sbSelectSql.append("WHERE u.USERNAME like '%?%' ");
+               sbSelectSql.append("AND u.FK_IDPA =  " + datiPA);
+             
+            }
+            if ((!datiTipoPA.isEmpty()) && (!datiTipoPA.equals("*")) && (!datiTipoPA.equals("s"))){
+                //sbSelectSql.append("WHERE u.USERNAME like '%?%' ");
+               sbSelectSql.append("AND p.tipoPA =  '" + datiTipoPA + "'");
+             
+            }
+            if (!owner.equals("*")){
+                sbSelectSql.append(" AND u.USERID =  " + owner);
+            }
+            if (startDate.length() > 0) {
+                sbSelectSql.append(" AND UPDATEDATE >= ? ");
+            }
+            if (endDate.length() > 0) {
+                sbSelectSql.append(" AND UPDATEDATE <= ? ");
+            }
+            // Solo gli approvati (già inserita nella where)
+            // sbSelectSql.append(" AND r.APPROVALSTATUS = 'approved' "); 
+            
+            sbSelectSql.append(" group by " + strGroupBy + ", i.OPENDATA ORDER BY USERNAME_LOC");
+            try {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.FINE, "QUERY STAT -> "+sbSelectSql.toString());
+                objStat = fetchGroupStat(sbSelectSql.toString(),startDate,endDate);
+                objStat.tipologia=StatisticsType.INSPIRE.toString();
+            } catch (SQLException ex) {
+                Logger.getLogger(HarvesterStatisticsDao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            elencostat.add(objStat);            
+        }
+        
         StringBuilder stRet = new StringBuilder();
         stRet.append("\"elencoStat\": [");
         boolean isFirstS=true;
