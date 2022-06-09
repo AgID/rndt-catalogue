@@ -50,6 +50,10 @@ String basePath = RequestContext.extract(request).resolveBaseContextPath(request
   max-height: 300px;
   overflow: scroll;
 }
+.displayNoneCustom{
+	display:none;
+}
+
 </style>
 <script type="text/javascript" >
 <%ApplicationContext appCtx = ApplicationContext.getInstance();
@@ -859,16 +863,29 @@ dojo.addOnLoad(function(){
       }
     }
   }
-  if (disabilita){
-      dojo.byId("divForScope").style.display="none";
-      setChecked(dojo.byId("harvestCreate:findable"),false);
-      setChecked(dojo.byId("harvestCreate:searchable"),false);
-      setChecked(dojo.byId("harvestCreate:synchronizable"),true);
-      setChecked(dojo.byId("harvestCreate:updateDefinition"),false);
-      setChecked(dojo.byId("harvestCreate:updateContent"),true);
-      setChecked(dojo.byId("harvestCreate:autoApprove"),false);
 
+  if (disabilita){
+	dojo.byId("divForScope").style.display="none";
+	setChecked(dojo.byId("harvestCreate:findable"),false);
+	setChecked(dojo.byId("harvestCreate:searchable"),false);
+	setChecked(dojo.byId("harvestCreate:synchronizable"),true);
+	setChecked(dojo.byId("harvestCreate:updateDefinition"),false);
+	setChecked(dojo.byId("harvestCreate:updateContent"),true);
+	setChecked(dojo.byId("harvestCreate:autoApprove"),false);
+
+  }else{
+	  /*Esri Italia 03/01/2018 display non per bootstrap mod*/
+	//dojo.byId("#harvestCreate\3a incSync").style.display="none";
+	//$("#harvestCreate\\:incSync").hide();
+	//$(".displayNoneCustom").hide();
+	$("#divForScope > table:nth-child(8) > tbody > tr:nth-child(3)").hide();
+	$("#divForScope > table:nth-child(8) > tbody > tr:nth-child(4)").hide();
+	setChecked(dojo.byId("harvestCreate:findable"),false);
+	setChecked(dojo.byId("harvestCreate:searchable"),false);
+	setChecked(dojo.byId("harvestCreate:synchronizable"),true);
+	setChecked(dojo.byId("harvestCreate:updateContent"),true);
   }
+  // Anche se siamo Adm alcune cose vanno disabilitate
   
 });
 
@@ -1226,7 +1243,7 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 
 <%-- username name --%>
 <h:outputLabel styleClass="waf" for="wafImsUserName" value="#{gptMsg['catalog.harvest.manage.edit.userName']}"/>
-<h:inputText   styleClass="form-control waf" size="30" value="#{HarvestController.editor.attrs['waf.username']}" id="wafImsUserName"/>
+<h:inputText styleClass="form-control waf" size="30" value="#{HarvestController.editor.attrs['waf.username']}" id="wafImsUserName"/>
 
 <%-- username password --%>
 <h:outputLabel styleClass="waf" for="wafImsUserPassword" value="#{gptMsg['catalog.harvest.manage.edit.userPassword']}"/>
@@ -1238,6 +1255,9 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 <h:selectOneMenu styleClass="form-control csw" value="#{HarvestController.editor.attrs['profile']}" id="cswProfile">
 <f:selectItems value="#{HarvestController.editor.allProfiles}"/>
 </h:selectOneMenu>
+
+<h:outputLabel styleClass="csw" for="filter" value="#{gptMsg['catalog.harvest.manage.edit.filter']}"/>
+<h:inputText styleClass="form-control csw" size="30" value="#{HarvestController.editor.repository.filterCSW}" id="cswFilter"/>
 
 <%-- ArcGIS Portal specific properties ---------------------------------------%>
 
@@ -1509,17 +1529,15 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 
 <f:verbatim><hr class="onBehalfOf"/><br class="onBehalfOf"/></f:verbatim>
 
-<h:outputText value="#{gptMsg['catalog.harvest.manage.edit.purpose.title']}"/>
+<!--<h:outputText value="#{gptMsg['catalog.harvest.manage.edit.purpose.title']}"/>-->
 <h:panelGrid columns="2" summary="#{gptMsg['catalog.general.designOnly']}"
-  styleClass="table" columnClasses="formInputColumn,">
+  styleClass="table displayNoneCustom" columnClasses="formInputColumn,">
 
 <%-- Purpose of the registration --%>
 <h:selectBooleanCheckbox styleClass="findable" value="#{HarvestController.editor.repository.findable}" id="findable"/>
 <h:outputLabel styleClass="findable" for="findable" value="#{gptMsg['catalog.harvest.manage.edit.purpose.findable']}"/>
-
 <h:selectBooleanCheckbox styleClass="searchable" value="#{HarvestController.editor.repository.searchable}" id="searchable"/>
 <h:outputLabel styleClass="searchable" for="searchable" value="#{gptMsg['catalog.harvest.manage.edit.purpose.searchable']}"/>
-
 <h:selectBooleanCheckbox styleClass="synchronizable" value="#{HarvestController.editor.repository.synchronizable}" id="synchronizable"/>
 <h:outputLabel styleClass="synchronizable" for="synchronizable" value="#{gptMsg['catalog.harvest.manage.edit.purpose.synchronizable']}"/>
 
@@ -1535,14 +1553,16 @@ value="#{HarvestController.prepareSelectedPublishers}"/>
 <h:selectBooleanCheckbox styleClass="syncOpt" value="#{HarvestController.editor.updateDefinition}" id="updateDefinition"/>
 <h:outputLabel styleClass="syncOpt" for="updateDefinition" value="#{gptMsg['catalog.harvest.manage.edit.protocol.updateDefinition']}"/>
 
-<h:selectBooleanCheckbox styleClass="syncOpt" value="#{HarvestController.editor.updateContent}" id="updateContent"/>
-<h:outputLabel styleClass="syncOpt" for="updateContent" value="#{gptMsg['catalog.harvest.manage.edit.protocol.updateContent']}"/>
 
-<h:outputText/>
-<h:panelGroup>
+
   <h:selectBooleanCheckbox styleClass="autoApprove syncOpt" value="#{HarvestController.editor.autoApprove}" id="autoApprove"/>
   <h:outputLabel styleClass="autoApprove syncOpt" for="autoApprove" value="#{gptMsg['catalog.harvest.manage.edit.protocol.autoApprove']}"/>
-</h:panelGroup>
+
+<h:outputText/>
+
+<h:selectBooleanCheckbox styleClass="syncOpt displayNoneCustom" value="#{HarvestController.editor.updateContent}" id="updateContent"/>
+<h:outputLabel styleClass="syncOpt displayNoneCustom" for="updateContent" value="#{gptMsg['catalog.harvest.manage.edit.protocol.updateContent']}"/>
+
 
 <%-- Publish as draft --%>
 

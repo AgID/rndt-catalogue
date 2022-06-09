@@ -22,3 +22,4 @@
 <tiles:insert definition=".gptLayout" flush="false" >
   	<tiles:put name="body" value="/catalog/content/aboutBody.jsp" />
 </tiles:insert>
+
