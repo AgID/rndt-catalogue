@@ -163,7 +163,7 @@ public class HrSelectRequest extends HrRequest {
       sbSql.append("SELECT A.ID,A.DOCUUID,A.OWNER,A.INPUTDATE,A.UPDATEDATE");
       sbSql.append(",A.TITLE,A.HOST_URL,A.FREQUENCY");
       sbSql.append(",A.SEND_NOTIFICATION,A.PROTOCOL,H.LAST_HARVEST_DATE");
-      sbSql.append(",A.FINDABLE,A.SEARCHABLE,A.SYNCHRONIZABLE,A.APPROVALSTATUS,A.LASTSYNCDATE");
+      sbSql.append(",A.FINDABLE,A.SEARCHABLE,A.SYNCHRONIZABLE,A.APPROVALSTATUS,A.LASTSYNCDATE,A.FILTRO_CSW");
 
       sbSql.append(",(SELECT COUNT(*) FROM " + getHarvestingJobTableName() + " HJ");
       sbSql.append(" WHERE HJ.HARVEST_ID=A.DOCUUID");
@@ -352,6 +352,7 @@ public class HrSelectRequest extends HrRequest {
       st = con.prepareStatement(sbSql.toString());
       stCount = con.prepareStatement(sbCount.toString());
 
+
       // local harvest id 
       if (sLocalId.length() > 0) {
         n++;
@@ -440,6 +441,8 @@ public class HrSelectRequest extends HrRequest {
 
         // execute the query
         logExpression(sbSql.toString());
+        
+        System.out.println(st);
         ResultSet rs = st.executeQuery();
 
         // build the record set
@@ -520,7 +523,8 @@ public class HrSelectRequest extends HrRequest {
     record.setSynchronizable(Val.chkBool(rs.getString(n++), false));
     record.setApprovalStatus(ApprovalStatus.checkValue(rs.getString(n++)));
     record.setLastSyncDate(rs.getTimestamp(n++));
-
+    record.setFilterCSW(rs.getString(n++));
+    
     int submited = rs.getInt(n++);
     int running = rs.getInt(n++);
     int completed = rs.getInt(n++);

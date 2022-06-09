@@ -74,6 +74,8 @@ private Date _updateDate = new Date();
 private String _name = "";
 /** Host server url. Default: empty string.*/
 private String _hostUrl = "";
+/** FILTRO CSW .*/
+private String _filterCSW = "";
 /** Theme lookup switch flag. Deafult: <code>false</code>.*/
 private boolean _useThemeLookup = false;
 /** Harvest frequency. Default: <code>Skip</code>.*/
@@ -230,6 +232,22 @@ public String getName() {
  */
 public void setName(String name) {
   _name = Val.chkStr(name);
+}
+
+/**
+ * Gets _filterCSW.
+ * @return _filterCSW
+ */
+public String getFilterCSW() {
+  return _filterCSW;
+}
+
+/**
+ * Sets _filterCSW.
+ * @param name _filterCSW
+ */
+public void setFilterCSW(String filterCSW) {
+  _filterCSW = Val.chkStr(filterCSW);
 }
 
 /**

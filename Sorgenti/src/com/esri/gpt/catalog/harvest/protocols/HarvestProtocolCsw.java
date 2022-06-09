@@ -30,7 +30,7 @@ public class HarvestProtocolCsw extends AbstractHTTPHarvestProtocol {
 // class variables =============================================================
   /** Default profile */
   private static String DEFAULT_PROFILE = "";
-
+    private String _filter = "";
   static {
     ApplicationContext appCtx = ApplicationContext.getInstance();
     ApplicationConfiguration appCfg = appCtx.getConfiguration();
@@ -39,7 +39,6 @@ public class HarvestProtocolCsw extends AbstractHTTPHarvestProtocol {
 // instance variables ==========================================================
   /** CSW profile. */
   private String _profile = DEFAULT_PROFILE;
-
 // constructors ================================================================
 // properties ==================================================================
   /**
@@ -56,6 +55,22 @@ public class HarvestProtocolCsw extends AbstractHTTPHarvestProtocol {
    */
   public void setProfile(String profile) {
     _profile = Val.chkStr(profile);
+  }
+  
+   /**
+   * Gets _filter.
+   * @return _filter
+   */
+  public String getFilter() {
+    return _filter;
+  }
+
+  /**
+   * Sets _filter.
+   * @param _filter _filter
+   */
+  public void setFilter(String filter) {
+    _filter = Val.chkStr(filter);
   }
 
   /**
@@ -83,7 +98,8 @@ public class HarvestProtocolCsw extends AbstractHTTPHarvestProtocol {
   @Override
   public StringAttributeMap getAttributeMap() {
     StringAttributeMap properties = new StringAttributeMap();
-    properties.set("profile", getProfile());
+    properties.set("profile", getProfile()); 
+    properties.set("filter", getFilter());
     return properties;
   }
 
@@ -94,6 +110,7 @@ public class HarvestProtocolCsw extends AbstractHTTPHarvestProtocol {
   @Override
   public void setAttributeMap(StringAttributeMap attributeMap) {
     setProfile(chckAttr(attributeMap.get("profile")));
+    setFilter(chckAttr(attributeMap.get("filter")));
   }
 
   @Override

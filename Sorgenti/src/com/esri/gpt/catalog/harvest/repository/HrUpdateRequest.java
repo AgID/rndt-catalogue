@@ -173,6 +173,7 @@ public void executeUpdate(Native nativeResource) throws Exception {
     st.setString(n++, hr.getProtocol().getKind().toLowerCase());
     st.setString(n++, ProtocolSerializer.toXmlString(hr.getProtocol()));
     st.setString(n++, PublicationMethod.registration.name());
+    
     if (!isUpdate) {
       if (getRequestContext().getApplicationConfiguration().getHarvesterConfiguration().getResourceAutoApprove()) {
         st.setString(n++, ApprovalStatus.approved.name());
@@ -183,9 +184,10 @@ public void executeUpdate(Native nativeResource) throws Exception {
     // NOTE! Don't update 'findable' here. It has to be updated by ImsMetadataAdminDao.updateRecord.
     st.setString(n++, Boolean.toString(hr.getSearchable()));
     st.setString(n++, Boolean.toString(hr.getSynchronizable()));
+    
+    st.setString(n++, hr.getFilterCSW());
     st.setString(n++, sUuid);
-
-   logExpression(sql);
+    logExpression(st.toString());
 
     int nRowCount = st.executeUpdate();
     getActionResult().setNumberOfRecordsModified(nRowCount);
@@ -482,9 +484,9 @@ private String createInsertSQL() {
   sbInsertSql.append("(OWNER,INPUTDATE,UPDATEDATE,TITLE,");
   sbInsertSql.append("HOST_URL,FREQUENCY,");
   sbInsertSql.append("SEND_NOTIFICATION,PROTOCOL_TYPE,PROTOCOL,PUBMETHOD,APPROVALSTATUS,");
-  sbInsertSql.append("SEARCHABLE,SYNCHRONIZABLE,");
+  sbInsertSql.append("SEARCHABLE,SYNCHRONIZABLE,FILTRO_CSW,");
   sbInsertSql.append("DOCUUID)");
-  sbInsertSql.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+  sbInsertSql.append("values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
   return sbInsertSql.toString();
 }
@@ -501,7 +503,7 @@ private String createUpdateSQL() {
   sbUpdateSql.append("set OWNER=?,INPUTDATE=?,UPDATEDATE=?,");
   sbUpdateSql.append("TITLE=?,HOST_URL=?,FREQUENCY=?,");
   sbUpdateSql.append("SEND_NOTIFICATION=?,PROTOCOL_TYPE=?,PROTOCOL=?,PUBMETHOD=?, ");
-  sbUpdateSql.append("SEARCHABLE=?,SYNCHRONIZABLE=? ");
+  sbUpdateSql.append("SEARCHABLE=?,SYNCHRONIZABLE=?,FILTRO_CSW=? ");
   sbUpdateSql.append("where DOCUUID=?");
 
   return sbUpdateSql.toString();
