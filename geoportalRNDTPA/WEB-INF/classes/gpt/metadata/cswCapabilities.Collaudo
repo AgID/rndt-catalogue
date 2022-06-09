@@ -1,5 +1,15 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<csw:Capabilities xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gml="http://www.opengis.net/gml" xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0" xmlns:ogc="http://www.opengis.net/ogc" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0.2" xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd http://inspire.ec.europa.eu/schemas/inspire_ds/1.0 http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<csw:Capabilities version="2.0.2"
+	xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
+	xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" 
+	xmlns:ogc="http://www.opengis.net/ogc" 
+	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+	xmlns:ows="http://www.opengis.net/ows" 
+	xmlns:xlink="http://www.w3.org/1999/xlink" 
+	xmlns:gml="http://www.opengis.net/gml" 
+	xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd http://inspire.ec.europa.eu/schemas/inspire_ds/1.0 http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd">
 	<ows:ServiceIdentification>
 		<ows:Title>RNDT - Repertorio Nazionale dei Dati Territoriali - Servizio di ricerca</ows:Title>
 		<ows:Abstract>Il servizio di ricerca del RNDT fornisce l'accesso ai metadati su dati e servizi territoriali delle Pubbliche Amministrazioni italiane. Esso è conforme alle specifiche CSW (ISO Application Profile) di OGC e alle linee guida INSPIRE sui servizi di ricerca</ows:Abstract>
@@ -20,7 +30,7 @@
 	</ows:ServiceIdentification>
 	<ows:ServiceProvider>
 		<ows:ProviderName>Agenzia per l'Italia Digitale</ows:ProviderName>
-		<ows:ProviderSite xlink:href="https://geodati.gov.it"/>
+		<ows:ProviderSite xlink:href="http://geodati.gov.it" />
 		<ows:ServiceContact>
 			<ows:ContactInfo>
 				<ows:Address>
@@ -34,8 +44,8 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="https://geodati.gov.it/RNDT/csw"/>
-					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
+					<ows:Get xlink:href="http://185.182.142.137/geoportalRNDTPA/csw" />
+					<ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -57,7 +67,7 @@
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
+					<ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -84,7 +94,7 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
+					<ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -117,54 +127,74 @@
 			<ows:Parameter name="CONSTRAINTLANGUAGE">
 				<ows:Value>FILTER</ows:Value>
 			</ows:Parameter>
+			<ows:Constraint name="SupportedCommonQueryables">
+        <ows:Value>Subject</ows:Value>
+        <ows:Value>Title</ows:Value>
+        <ows:Value>Abstract</ows:Value>
+        <ows:Value>AnyText</ows:Value>
+        <ows:Value>Format</ows:Value>
+        <ows:Value>Identifier</ows:Value>
+        <ows:Value>Modified</ows:Value>
+        <ows:Value>Type</ows:Value>
+        <ows:Value>BoundingBox</ows:Value>
+      </ows:Constraint>
 			<ows:Constraint name="SupportedISOQueryables">
-				<ows:Value>Language</ows:Value>
-				<ows:Value>CreationDate</ows:Value>
-				<ows:Value>PublicationDate</ows:Value>				
-				<ows:Value>OrganisationName</ows:Value>
-				<ows:Value>ResourceIdentifier</ows:Value>
-				<ows:Value>TopicCategory</ows:Value>
-				<ows:Value>DistanceValue</ows:Value>
-				<ows:Value>DistanceUOM</ows:Value>
-				<ows:Value>TempExtent_begin</ows:Value>
-				<ows:Value>TempExtent_end</ows:Value>
-				<ows:Value>ServiceType</ows:Value>
-				<ows:Value>Denominator</ows:Value>
-				<ows:Value>RevisionDate</ows:Value>
-				<ows:Value>ParentIdentifier</ows:Value>
-        		<ows:Value>CRS.Authority</ows:Value>
-        		<ows:Value>CRS.ID</ows:Value>
-        		<ows:Value>CRS.Version</ows:Value>
-        		<ows:Value>ResourceLanguage</ows:Value>
-        		<ows:Value>GeographicDescriptionCode</ows:Value>
-        		<ows:Value>KeywordType</ows:Value>
-       	 		<ows:Value>HasSecurityConstraints</ows:Value>
-        		<ows:Value>ServiceType</ows:Value>
-        		<ows:Value>ServiceTypeVersion</ows:Value>
-        		<ows:Value>Operation</ows:Value>
-        		<ows:Value>OperatesOn</ows:Value>
-        		<ows:Value>OperatesOnIdentifier</ows:Value>
-        		<ows:Value>OperatesOnName</ows:Value>
-        		<ows:Value>CouplingType</ows:Value>
+				<ows:Value>apiso:Language</ows:Value>
+				<ows:Value>apiso:CreationDate</ows:Value>
+				<ows:Value>apiso:PublicationDate</ows:Value>				
+				<ows:Value>apiso:OrganisationName</ows:Value>
+				<ows:Value>apiso:ResourceIdentifier</ows:Value>
+				<ows:Value>apiso:TopicCategory</ows:Value>
+				<ows:Value>apiso:DistanceValue</ows:Value>
+				<ows:Value>apiso:DistanceUOM</ows:Value>
+				<ows:Value>apiso:TempExtent_begin</ows:Value>
+				<ows:Value>apiso:TempExtent_end</ows:Value>
+				<ows:Value>apiso:ServiceType</ows:Value>
+				<ows:Value>apiso:Denominator</ows:Value>
+				<ows:Value>apiso:Type</ows:Value>
+				<ows:Value>apiso:RevisionDate</ows:Value>
+				<ows:Value>apiso:AnyText</ows:Value>
+				<ows:Value>apiso:ParentIdentifier</ows:Value>
+				<ows:Value>apiso:Identifier</ows:Value>
+				<ows:Value>apiso:Subject</ows:Value>
+				<ows:Value>apiso:Title</ows:Value>
+				<ows:Value>apiso:Abstract</ows:Value>
+				<ows:Value>apiso:Format</ows:Value>
+				<ows:Value>apiso:Modified</ows:Value>
+        <ows:Value>apiso:BoundingBox</ows:Value>
+        <ows:Value>apiso:CRS.Authority</ows:Value>
+        <ows:Value>apiso:CRS.ID</ows:Value>
+        <ows:Value>apiso:CRS.Version</ows:Value>
+        <ows:Value>apiso:ResourceLanguage</ows:Value>
+        <ows:Value>apiso:GeographicDescriptionCode</ows:Value>
+        <ows:Value>apiso:KeywordType</ows:Value>
+        <ows:Value>apiso:HasSecurityConstraints</ows:Value>
+        <ows:Value>apiso:ServiceType</ows:Value>
+        <ows:Value>apiso:ServiceTypeVersion</ows:Value>
+        <ows:Value>apiso:Operation</ows:Value>
+        <ows:Value>apiso:OperatesOn</ows:Value>
+        <ows:Value>apiso:OperatesOnIdentifier</ows:Value>
+        <ows:Value>apiso:OperatesOnName</ows:Value>
+        <ows:Value>apiso:CouplingType</ows:Value>
 			</ows:Constraint>
 			<ows:Constraint name="AdditionalQueryables">
-				<ows:Value>Degree</ows:Value>
-				<ows:Value>AccessConstraints</ows:Value>
-				<ows:Value>OtherConstraints</ows:Value>
-				<ows:Value>Classification</ows:Value>
-				<ows:Value>ConditionApplyingToAccessAndUse</ows:Value>
-				<ows:Value>Lineage</ows:Value>
-				<ows:Value>ResponsiblePartyRole</ows:Value>
-				<ows:Value>SpecificationTitle</ows:Value>
-				<ows:Value>SpecificationDate</ows:Value>
-				<ows:Value>SpecificationDateType</ows:Value>
+				<ows:Value>apiso:Degree</ows:Value>
+				<ows:Value>apiso:AccessConstraints</ows:Value>
+				<ows:Value>apiso:OtherConstraints</ows:Value>
+				<ows:Value>apiso:Classification</ows:Value>
+				<ows:Value>apiso:ConditionApplyingToAccessAndUse</ows:Value>
+				<ows:Value>apiso:Lineage</ows:Value>
+				<ows:Value>apiso:ResponsiblePartyRole</ows:Value>
+				<ows:Value>apiso:SpecificationTitle</ows:Value>
+				<ows:Value>apiso:SpecificationDate</ows:Value>
+				<ows:Value>apiso:SpecificationDateType</ows:Value>
 			</ows:Constraint>
 		</ows:Operation>
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="https://geodati.gov.it/RNDT/csw"/>
-					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
+					<ows:Get xlink:href="http://185.182.142.137/geoportalRNDTPA/csw" />
+					<ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 							<ows:Value>XML</ows:Value>
@@ -193,7 +223,7 @@
 		<ows:Operation name="Transaction">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
+          <ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw">
             <ows:Constraint name="PostEncoding">
               <ows:Value>XML</ows:Value>
               <ows:Value>SOAP</ows:Value>
@@ -205,7 +235,7 @@
 		<ows:Operation name="Harvest">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw"/>
+					<ows:Post xlink:href="http://185.182.142.137/geoportalRNDTPA/csw" />
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
@@ -227,7 +257,7 @@
 		</ows:Constraint>
 		<inspire_ds:ExtendedCapabilities>
 			<inspire_common:ResourceLocator>
-				<inspire_common:URL>https://geodati.gov.it/RNDT/csw?request=GetCapabilities&amp;service=CSW&amp;acceptFormats=application%2Fxml&amp;LANGUAGE=ita</inspire_common:URL>
+				<inspire_common:URL>http://185.182.142.137/geoportalRNDTPA/csw?request=GetCapabilities&amp;service=CSW&amp;acceptFormats=application%2Fxml&amp;LANGUAGE=ita</inspire_common:URL>
 			</inspire_common:ResourceLocator>
 			<inspire_common:ResourceType>service</inspire_common:ResourceType>
 			<inspire_common:TemporalReference>
@@ -265,7 +295,7 @@
 				<inspire_common:Language>ita</inspire_common:Language>
 			</inspire_common:ResponseLanguage>
 			<inspire_common:MetadataUrl>
-				<inspire_common:URL>https://geodati.gov.it/RNDT/csw?request=GetRecordById&amp;service=CSW&amp;version=2.0.2&amp;id=agid:000001:20130204:100158&amp;ELEMENTSETNAME=full&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd</inspire_common:URL>
+				<inspire_common:URL>http://185.182.142.137/geoportalRNDTPA/csw?request=GetRecordById&amp;service=CSW&amp;version=2.0.2&amp;id=agid:000001:20130204:100158&amp;ELEMENTSETNAME=full&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd</inspire_common:URL>
 				<inspire_common:MediaType>application/vnd.ogc.csw_xml</inspire_common:MediaType>
 			</inspire_common:MetadataUrl>
 		</inspire_ds:ExtendedCapabilities>
@@ -276,12 +306,12 @@
 				<ogc:GeometryOperand>gml:Envelope</ogc:GeometryOperand>
 			</ogc:GeometryOperands>
 			<ogc:SpatialOperators>
-				<ogc:SpatialOperator name="BBOX"/>
-				<ogc:SpatialOperator name="Intersects"/>
+				<ogc:SpatialOperator name="BBOX" />
+				<ogc:SpatialOperator name="Intersects" />
 			</ogc:SpatialOperators>
 		</ogc:Spatial_Capabilities>
 		<ogc:Scalar_Capabilities>
-			<ogc:LogicalOperators/>
+			<ogc:LogicalOperators />
 			<ogc:ComparisonOperators>
 				<ogc:ComparisonOperator>EqualTo</ogc:ComparisonOperator>
 				<ogc:ComparisonOperator>Like</ogc:ComparisonOperator>
@@ -293,8 +323,8 @@
 			</ogc:ComparisonOperators>
 		</ogc:Scalar_Capabilities>
 		<ogc:Id_Capabilities>
-			<ogc:EID/>
-			<ogc:FID/>
+			<ogc:EID />
+			<ogc:FID />
 		</ogc:Id_Capabilities>
 	</ogc:Filter_Capabilities>
 </csw:Capabilities>

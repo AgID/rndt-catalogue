@@ -437,11 +437,11 @@
 		<apiso name="apiso:OpenData"/>
 	</property-meaning> 
 
-	<property-meaning name="OpenDataTheme" valueType="String" comparisonType="value">
+	<property-meaning name="OpenDataTheme" valueType="String" comparisonType="keyword">
 		<apiso name="apiso:OpenDataTheme"/>
 	</property-meaning>
 	
-	<property-meaning name="PriorityDataset" valueType="String" comparisonType="value">
+	<property-meaning name="PriorityDataset" valueType="String" comparisonType="keyword">
 		<apiso name="apiso:PriorityDataset"/>
 	</property-meaning>
 	
