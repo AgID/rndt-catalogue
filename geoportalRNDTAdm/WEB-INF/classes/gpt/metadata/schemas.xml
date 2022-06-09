@@ -17,11 +17,9 @@ ESRI Italy may 2017
 		<schema fileName="gpt/metadata/EsriItaly/rndt_nuovo/esriitalia-rndt_nuovo-definition_raster.xml"/>	
         <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_dataset.xml"/>	
         <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_series.xml"/>
-		<schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_services.xml"/> 
-        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_raster.xml"/>
+        <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_services.xml"/>		
+		<schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_raster.xml"/>	
         <schema fileName="gpt/metadata/EsriItaly/rndt/esriitalia-rndt-definition_nuoveacq.xml"/> 
-
-
 <!-- Schema Feature Catalog Esri Inc-->
 	<!-- 
 	<schema fileName="gpt/metadata/iso/iso-19110-fc-definition.xml"/> 
@@ -36,7 +34,8 @@ ESRI Italy may 2017
 	<schema fileName="gpt/metadata/esri/esri-arcgis-definition.xml"/>
 	<schema fileName="gpt/metadata/esri/esri-iso-definition.xml"/>
 
-	 <!-- Dublin Core profile is needed for external resources	 -->
+	 <!-- Dublin Core profile is needed for external resources
+	Dublin core viene lasciato ma viene messo "non editable"	 -->
 	<schema fileName="gpt/metadata/dc/dc-definition.xml"/>
 
  
@@ -53,13 +52,14 @@ ESRI Italy may 2017
 
 <!--  NOTE: Only one of INSPIRE or standard ISO should be enabled -->
 	<!--  Esri Italy: Additional rules set so that interrogation works fine for both schemas -->
-
+<!-- Not used for Public administration -->
 	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19115-definition.xml"/>
 	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19119-definition.xml"/>
 
 	<schema fileName="gpt/metadata/iso/iso-19115-definition.xml"/>
 	<schema fileName="gpt/metadata/iso/iso-19119-definition.xml"/>
 	<schema fileName="gpt/metadata/iso/iso-19115-2-definition.xml"/>
+
 	<!-- 
 	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19115-definition.xml"/>
 	<schema fileName="gpt/metadata/iso/inspire/inspire-iso-19119-definition.xml"/>-->

@@ -60,7 +60,7 @@
 			<xsl:value-of select="/*[self::gmd:MD_Metadata or self::gmi:MI_Metadata]/gmd:identificationInfo/*[self::gmd:MD_DataIdentification or self::srv:SV_ServiceIdentification]/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"/>
 			<a class="linkRNDT">
 				<xsl:attribute name="href">
-						<xsl:value-of select="translate(concat('https://geodati-collaudo.gov.it/geoportale/visualizzazione-metadati/scheda-metadati/?uuid=', /*[self::gmd:MD_Metadata or self::gmi:MI_Metadata]/gmd:fileIdentifier),'&#xA;&#xD;&#x9;&#x20;','')"/>
+						<xsl:value-of select="translate(concat('https://geodati.gov.it/geoportale/visualizzazione-metadati/scheda-metadati/?uuid=', /*[self::gmd:MD_Metadata or self::gmi:MI_Metadata]/gmd:fileIdentifier),'&#xA;&#xD;&#x9;&#x20;','')"/>
 				</xsl:attribute>
 				<xsl:attribute name="target">
 						<xsl:value-of select="'_blank'"/>

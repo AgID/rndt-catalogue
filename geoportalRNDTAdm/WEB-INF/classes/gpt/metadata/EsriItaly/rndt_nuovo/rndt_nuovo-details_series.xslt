@@ -52,7 +52,9 @@
 			<xsl:if test="count(/gmi:MI_Metadata/gmi:acquisitionInformation)>0">
 				<xsl:call-template name="Acquisition_Info"/>
 			</xsl:if>
+<!--
 			<xsl:call-template name="Google_Dataset"/>
+-->
 		</div>
 	</xsl:template>
 	<xsl:template name="Page_Title">
@@ -61,7 +63,7 @@
 		</h1>
 			<a class="linkRNDT">
 				<xsl:attribute name="href">
-						<xsl:value-of select="translate(concat('https://geodati-collaudo.gov.it/geoportale/visualizzazione-metadati/scheda-metadati/?uuid=', /*[self::gmd:MD_Metadata or self::gmi:MI_Metadata]/gmd:fileIdentifier),'&#xA;&#xD;&#x9;&#x20;','')"/>
+						<xsl:value-of select="translate(concat('https://geodati.gov.it/geoportale/visualizzazione-metadati/scheda-metadati/?uuid=', /*[self::gmd:MD_Metadata or self::gmi:MI_Metadata]/gmd:fileIdentifier),'&#xA;&#xD;&#x9;&#x20;','')"/>
 				</xsl:attribute>
 				<xsl:attribute name="target">
 						<xsl:value-of select="'_blank'"/>

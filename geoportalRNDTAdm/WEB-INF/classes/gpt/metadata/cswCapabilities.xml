@@ -44,8 +44,8 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw" />
-					<ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw">
+					<ows:Get xlink:href="https://geodati.gov.it/RNDT/csw" />
+					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -67,7 +67,7 @@
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw">
+					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -94,7 +94,7 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw">
+					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>XML</ows:Value>
 							<ows:Value>SOAP</ows:Value>
@@ -193,8 +193,8 @@
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw" />
-					<ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw">
+					<ows:Get xlink:href="https://geodati.gov.it/RNDT/csw" />
+					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
 						<ows:Constraint name="PostEncoding">
 							<ows:Value>SOAP</ows:Value>
 							<ows:Value>XML</ows:Value>
@@ -223,7 +223,7 @@
 		<ows:Operation name="Transaction">
       <ows:DCP>
         <ows:HTTP>
-          <ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw">
+          <ows:Post xlink:href="https://geodati.gov.it/RNDT/csw">
             <ows:Constraint name="PostEncoding">
               <ows:Value>XML</ows:Value>
               <ows:Value>SOAP</ows:Value>
@@ -235,7 +235,7 @@
 		<ows:Operation name="Harvest">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="https://geodati-collaudo.gov.it/geoportalRNDTPA/csw" />
+					<ows:Post xlink:href="https://geodati.gov.it/RNDT/csw" />
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
@@ -257,7 +257,7 @@
 		</ows:Constraint>
 		<inspire_ds:ExtendedCapabilities>
 			<inspire_common:ResourceLocator>
-				<inspire_common:URL>https://geodati-collaudo.gov.it/geoportalRNDTPA/csw?request=GetCapabilities&amp;service=CSW&amp;acceptFormats=application%2Fxml&amp;LANGUAGE=ita</inspire_common:URL>
+				<inspire_common:URL>https://geodati.gov.it/RNDT/csw?request=GetCapabilities&amp;service=CSW&amp;acceptFormats=application%2Fxml&amp;LANGUAGE=ita</inspire_common:URL>
 			</inspire_common:ResourceLocator>
 			<inspire_common:ResourceType>service</inspire_common:ResourceType>
 			<inspire_common:TemporalReference>
@@ -295,7 +295,7 @@
 				<inspire_common:Language>ita</inspire_common:Language>
 			</inspire_common:ResponseLanguage>
 			<inspire_common:MetadataUrl>
-				<inspire_common:URL>https://geodati-collaudo.gov.it/geoportalRNDTPA/csw?request=GetRecordById&amp;service=CSW&amp;version=2.0.2&amp;id=agid:000001:20130204:100158&amp;ELEMENTSETNAME=full&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd</inspire_common:URL>
+				<inspire_common:URL>https://geodati.gov.it/RNDT/csw?request=GetRecordById&amp;service=CSW&amp;version=2.0.2&amp;id=agid:000001:20130204:100158&amp;ELEMENTSETNAME=full&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd</inspire_common:URL>
 				<inspire_common:MediaType>application/vnd.ogc.csw_xml</inspire_common:MediaType>
 			</inspire_common:MetadataUrl>
 		</inspire_ds:ExtendedCapabilities>

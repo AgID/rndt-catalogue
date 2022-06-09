@@ -284,9 +284,11 @@ The URI must be valid and the string after the Hash is the Dataset identifier
 	<property meaning="apiso:Protocol"
     xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString"/>
 	
-	<!-- Inspire Theme. Esri Italia Modifica 17/12/2019: i temi INSPIRE possono essere Anchor così come il titolo -->
-	<property meaning="apiso:INSPIRETheme" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gco:CharacterString, 'GEMET - INSPIRE themes') or contains(gmx:Anchor/@xlink:href, 'www.eionet.europa.eu.gemet/it/inspire-themes')]/../../../gmd:keyword/gco:CharacterString | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gco:CharacterString, 'GEMET - INSPIRE themes') or contains(gmx:Anchor/@xlink:href,'https://www.eionet.europa.eu.gemet/it/inspire-themes')]/../../../gmd:keyword/gmx:Anchor/@xlink:href"/> 
- 
+	<!-- Inspire Theme. Esri Italia Modifica 17/12/2019: i temi INSPIRE possono essere Anchor così come il titolo. Nel caso di Anchor il link cambia a seconda se è /it/ oppure no. -->
+	<property meaning="apiso:INSPIRETheme" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gco:CharacterString, 'GEMET - INSPIRE themes') or contains(gmx:Anchor/@xlink:href, 'inspire-themes')]/../../../gmd:keyword/*" /> 
+	<!-- Indicizzazione del link al tema, solo Anchor -->
+	<property meaning="apiso:INSPIREThemeLink" xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gmx:Anchor/@xlink:href, 'inspire-themes')]/../../../gmd:keyword/gmx:Anchor/@xlink:href"/> 
+
 	<!-- contentType based also on protocol -->
 	<property meaning="contentType"
     xpath="/gmd:MD_Metadata/gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString"/>
@@ -331,10 +333,11 @@ The URI must be valid and the string after the Hash is the Dataset identifier
 	<!-- Esri Italia 2019: Aggiunti openData e dataset prioritari. Sono sempre keywords ma così è più pulito.  -->
 	<!-- Opendata setta true o false -->
 	<property meaning="apiso:OpenData" xpathType="BOOLEAN"
-	xpath="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(gco:CharacterString, 'opendata') or contains(gco:CharacterString, 'open data')] | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation[contains(gco:CharacterString, 'CC-BY') or contains(gco:CharacterString, 'CCBY') or contains(gco:CharacterString, 'BY SA') or contains(gco:CharacterString,'IODL') or contains(gco:CharacterString,'Italian Open Data') or contains(gco:CharacterString, 'Creative Commons BY') or contains(gco:CharacterString,'Open Data') or contains(gco:CharacterString, 'CC BY') or contains(gco:CharacterString,'citazione della fonte')])>0"/> 
+	xpath="count(/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*[contains(text(), 'opendata') or contains(text(), 'open data')] | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation[contains(gco:CharacterString, 'CC-BY') or contains(gco:CharacterString, 'CCBY') or contains(gco:CharacterString, 'BY SA') or contains(gco:CharacterString,'IODL') or contains(gco:CharacterString,'Italian Open Data') or contains(gco:CharacterString, 'Creative Commons BY') or contains(gco:CharacterString,'Open Data') or contains(gco:CharacterString, 'CC BY') or contains(gco:CharacterString,'citazione della fonte')])>0"/> 
 	<property meaning="apiso:OpenDataTheme"
-	xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor"/> 
+	xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gco:CharacterString, 'GEMET - INSPIRE themes') or contains(gmx:Anchor/@xlink:href, 'www.eionet.europa.eu/gemet')]/../../../gmd:keyword/*"/> 
+
 	<property meaning="apiso:PriorityDataset"
-	xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor"/> 
+	xpath="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*"/> 
 </indexables>
 
