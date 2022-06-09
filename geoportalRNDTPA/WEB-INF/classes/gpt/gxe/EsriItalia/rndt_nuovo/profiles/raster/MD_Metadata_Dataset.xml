@@ -19,7 +19,8 @@
 		<g:namespace g:prefix="srv" g:uri="http://www.isotc211.org/2005/srv"/>
 		<g:namespace g:prefix="gml" g:uri="http://www.opengis.net/gml/3.2"/>
 		<g:namespace g:prefix="xlink" g:uri="http://www.w3.org/1999/xlink"/>
-		<g:namespace g:prefix="xsi" g:uri="http://www.w3.org/2001/XMLSchema-instance"/>		
+		<g:namespace g:prefix="xsi" g:uri="http://www.w3.org/2001/XMLSchema-instance"/>
+		<g:namespace g:prefix="xs" g:uri="http://www.w3.org/2001/XMLSchema"/>		
 	</g:namespaces>
 	<g:body>
 		<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
@@ -190,7 +191,16 @@
 									</g:element>
 								</g:element>
 								-->
+								<!--
 								<g:import g:src="$base/xtn/gmd/referenceSystem/XTN_TemporalReference.xml"/>
+-->
+								<g:element g:extends="$base/xtn/gmd/referenceSystem/XTN_TemporalReference.xml">
+									<g:matchTopElements> 
+										<g:match
+											g:qPath="/gmd:MD_Metadata/gmd:referenceSystemInfo/gmd:MD_ReferenceSystem/gmd:referenceSystemIdentifier/gmd:RS_Identifier/gmd:code/gco:CharacterString"
+											g:qMode="must"/>
+									</g:matchTopElements>
+								</g:element>
 							</h:div>
 						</g:body>
 					</g:tabs>
@@ -239,9 +249,11 @@
 					<g:element g:targetName="gmd:DQ_DataQuality" g:minOccurs="1" g:maxOccurs="1" h:tag="div" g:jsClass="gxe.control.Element">
 						<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
 							<g:body>
-								<!-- scope -->
+								<!-- Quality level and Positional Accuracy -->
 								<h:div g:label="$i18n.catalog.mdParam.LivelloDiQualita.caption">
+									<!-- Livello di qualità -->
 									<g:element g:extends="$base/xtn/gmd/dataQuality/XTN_Scope.xml"/>
+									<!-- Accuratezza posizionale -->
 									<g:element g:targetName="gmd:report" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.caption" g:minOccurs="1" g:maxOccurs="1"    h:tag="div" g:jsClass="gxe.control.Element">
 										<g:element g:targetName="gmd:DQ_AbsoluteExternalPositionalAccuracy"   h:tag="div" g:jsClass="gxe.control.Element">
 											<g:element g:targetName="gmd:result"  h:tag="div" g:jsClass="gxe.control.Element">
@@ -264,10 +276,7 @@
 																	<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
 																</g:attribute>
 															</g:element>
-
 														</g:element>
-
-
 													</g:element>
 													<g:element g:targetName="gmd:value" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.value" h:tag="div" g:jsClass="gxe.control.Element">
 														<g:element g:targetName="gco:Record" g:info="$i18n.catalog.rdnt.dataset.hint.valoreQDD" g:label="$i18n.catalog.mdParam.rndt.dataQuality.positionalAccuracy.value" g:minOccurs="1" g:maxOccurs="1" g:extends="$base/schema/gco/basicTypes/Real_PropertyType.xml"/>
@@ -278,8 +287,33 @@
 									</g:element>
 								</h:div>
 
-								<!-- conformance report -->
+								<!-- Topological coherence -->
+								<h:div g:label="$i18n.catalog.mdParam.TopologicalCoherence.caption">
+									<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
+										<g:body>
+											<!-- Misura descrittiva -->
+											<g:element g:label="$i18n.catalog.mdParam.TopologicalCoherence.Descrittiva.caption" g:extends="$base/xtn/gmd/dataQuality/XTN_TopologicalCoherence5.xml">
+												<g:matchTopElements> 
+													<g:match
+															g:qPath="gmd:DQ_TopologicalConsistency/gmd:result/gmd:DQ_ConformanceResult"
+															g:qMode="must"/>
+												</g:matchTopElements> 
+											</g:element>
+											<!-- Misura quantitativa -->
+											<g:element g:label="$i18n.catalog.mdParam.TopologicalCoherence.Quantitativa.caption" g:extends="$base/xtn/gmd/dataQuality/XTN_TopologicalCoherence3.xml">
+												<g:matchTopElements> 
+													<g:match
+															g:qPath="gmd:DQ_TopologicalConsistency/gmd:result/gmd:DQ_QuantitativeResult"
+															g:qMode="must"/>
+												</g:matchTopElements>
+											</g:element>
 
+										</g:body>
+									</g:tabs>
+
+								</h:div>
+								
+								<!-- conformance report -->
 								<h:div g:label="$i18n.catalog.mdParam.rndt.dataQuality.conformity.caption">
 									<g:tabs g:extends="$base/xtn/ui/UI_Tabs.xml">
 										<g:body>
@@ -313,7 +347,8 @@
 															g:qMode="mustNot"/>
 													<g:match
 															g:qPath="gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString"
-															g:qValue="^INSPIRE Data Specification on" g:qMode="regX"/>
+															g:qValue="^INSPIRE Data Specification on" 
+															g:qMode="regXNot"/>
 
 												</g:matchTopElements> 
 											</g:element>
