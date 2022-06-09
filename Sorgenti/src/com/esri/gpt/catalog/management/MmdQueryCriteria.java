@@ -53,6 +53,8 @@ public class MmdQueryCriteria extends QueryCriteria {
   private String _pubMethod;
   private String _title = "";
   private String _uuid = "";
+  private String _fileIdentifier = "";
+  private String _ente = "";
   private String _siteUuid = "";
   private String _protocolType = "";
 
@@ -80,6 +82,7 @@ public class MmdQueryCriteria extends QueryCriteria {
            (getPublicationMethod().length()==0 || getPublicationMethod().equals(MmdEnums.PublicationMethod.any.toString())) &&
            getTitle().length()==0 &&
            getUuid().length()==0 &&
+           getFileIdentifier().length()==0 &&
            getSiteUuid().length()==0 &&
            getCollectionUuid().length()==0 &&
            getProtocolType().length()==0;
@@ -114,6 +117,9 @@ public class MmdQueryCriteria extends QueryCriteria {
     if (getUuid().length()>0) {
       sb.append("<Uuid>").append(Val.escapeXml(getUuid())).append("</Uuid>");
     }
+    if (getFileIdentifier().length()>0) {
+      sb.append("<FileIdentifier>").append(Val.escapeXml(getFileIdentifier())).append("</FileIdentifier>");
+    }
     if (getSiteUuid().length()>0) {
       sb.append("<SiteUuid>").append(Val.escapeXml(getSiteUuid())).append("</SiteUuid>");
     }
@@ -146,6 +152,7 @@ public class MmdQueryCriteria extends QueryCriteria {
       setPublicationMethod((String) xPath.evaluate("/MmdQueryCriteria/PublicationMethod", doc, XPathConstants.STRING));
       setTitle((String) xPath.evaluate("/MmdQueryCriteria/Title", doc, XPathConstants.STRING));
       setUuid((String) xPath.evaluate("/MmdQueryCriteria/Uuid", doc, XPathConstants.STRING));
+      setFileIdentifier((String) xPath.evaluate("/MmdQueryCriteria/FileIdentifier", doc, XPathConstants.STRING));
       setSiteUuid((String) xPath.evaluate("/MmdQueryCriteria/SiteUuid", doc, XPathConstants.STRING));
       setCollectionUuid((String) xPath.evaluate("/MmdQueryCriteria/CollectionUuid", doc, XPathConstants.STRING));
       setProtocolType((String) xPath.evaluate("/MmdQueryCriteria/ProtocolType", doc, XPathConstants.STRING));
@@ -187,6 +194,8 @@ public class MmdQueryCriteria extends QueryCriteria {
     _pubMethod = MmdEnums.PublicationMethod.any.toString();
     _title = "";
     _uuid = "";
+    _fileIdentifier = "";
+    _ente  = "";
     _siteUuid = "";
     _protocolType = "";
     _collectionUuid = "";
@@ -263,6 +272,22 @@ public class MmdQueryCriteria extends QueryCriteria {
   public void setOwner(String owner) {
     _owner = Val.chkStr(owner);
   }
+  
+  /**
+   * Gets the document ente.
+   * @return the document ente
+   */
+  public String getEnte() {
+    return _ente;
+  }
+
+  /**
+   * Sets the document _ente.
+   * @param ente the document owner
+   */
+  public void setEnte(String ente) {
+    _ente = Val.chkStr(ente);
+  }
 
   /**
    * Gets the publication method.
@@ -315,6 +340,21 @@ public class MmdQueryCriteria extends QueryCriteria {
    */
   public void setUuid(String uuid) {
     _uuid = UuidUtil.addCurlies(uuid);
+  }
+/**
+   * Gets the document FILEIDENTIFIER.
+   * @return the document FILEIDENTIFIER
+   */
+  public String getFileIdentifier() {
+    return _fileIdentifier;
+  }
+
+  /**
+   * Sets the document FILEIDENTIFIER.
+   * @param FILEIDENTIFIER the document FILEIDENTIFIER
+   */
+  public void setFileIdentifier(String fileIdentifier) {
+    _fileIdentifier = Val.chkStr(fileIdentifier);
   }
 
   /**
@@ -413,6 +453,13 @@ public class MmdQueryCriteria extends QueryCriteria {
       sDocUuid = appendValueFilter(wherePhrase, tableAlias+ "DOCUUID", sDocUuid, false);
       
       args.put("sDocUuid", sDocUuid);
+    }
+
+    // site FileIdentifier
+    String sFileIdentifier = getFileIdentifier();
+    if (sFileIdentifier.length() > 0) {
+      sFileIdentifier = appendValueFilter(wherePhrase, tableAlias+ "FILEIDENTIFIER", sFileIdentifier, false);
+      args.put("sFileIdentifier", sFileIdentifier);
     }
 
     // site UUID
@@ -542,6 +589,20 @@ public class MmdQueryCriteria extends QueryCriteria {
     String sSiteUuid = Val.chkStr(args.get("sSiteUuid")!=null? args.get("sSiteUuid").toString(): null);
     if (sSiteUuid.length() > 0) {
       st.setString(n, sSiteUuid);
+      n++;
+    }
+    
+     // ente
+    String sEnte = Val.chkStr(args.get("sEnte")!=null? args.get("sEnte").toString(): null);
+    if (sEnte.length() > 0) {
+      st.setString(n, sEnte);
+      n++;
+    }
+    
+    // site sFileIdentifier
+    String sFileIdentifier = Val.chkStr(args.get("sFileIdentifier")!=null? args.get("sFileIdentifier").toString(): null);
+    if (sFileIdentifier.length() > 0) {
+      st.setString(n, sFileIdentifier);
       n++;
     }
 

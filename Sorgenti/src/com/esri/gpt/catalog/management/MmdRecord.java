@@ -35,7 +35,7 @@ import java.util.Map;
  */
 public class MmdRecord extends Record {
 
-// class variables  =============================================================
+  // class variables  =============================================================
 // instance variables ==========================================================
   private String _approvalStatus = "";
   private String _approvalStatusMsg = "";
@@ -49,6 +49,8 @@ public class MmdRecord extends Record {
   private String _title = "";
   private String _uuid = "";
   private String _siteUuid = "";
+  private String _ente = "";
+  private String _fileIdentifier = "";
   private String _metadataAccessPolicyType = "";
   private String _currentMetadataAccessPolicy = "";
   private String _currentMetadataAccessPolicyKeys = "";
@@ -68,7 +70,7 @@ public class MmdRecord extends Record {
   private boolean searchable;
   /** synchronizable */
   private boolean synchronizable;
-  
+
   private Map<String, Object> _objectMap = new LinkedHashMap<String, Object>();
 
 // constructors ================================================================
@@ -78,19 +80,19 @@ public class MmdRecord extends Record {
   }
 
 // properties ==================================================================
- 
+
   /**
-  * Gets the object map.
-  *
-  * @return the object map (never null)
-  */
+   * Gets the object map.
+   *
+   * @return the object map (never null)
+   */
   public Map<String, Object> getObjectMap() {
     if(_objectMap == null) {
       _objectMap = new LinkedHashMap<String, Object>();
     }
     return _objectMap;
   }
-  
+
   /**
    * Gets the approval status.
    * @return the approval status
@@ -139,7 +141,7 @@ public class MmdRecord extends Record {
   protected void setCanEdit(boolean canEdit) {
     _canEdit = canEdit;
   }
-  
+
   /**
    * Gets the collection membership string.
    * @return the collection membership 
@@ -185,6 +187,22 @@ public class MmdRecord extends Record {
    */
   public void setOwnerName(String name) {
     _ownerName = Val.chkStr(name);
+  }
+
+  /**
+   * Gets the document ente (username).
+   * @return the document owner name
+   */
+  public String getEnte() {
+    return _ente;
+  }
+
+  /**
+   * Sets the document ente (username).
+   * @param name the document owner name
+   */
+  public void setEnte(String name) {
+    _ente = Val.chkStr(name);
   }
 
   /**
@@ -268,6 +286,22 @@ public class MmdRecord extends Record {
   }
 
   /**
+   * Gets the document FILEIDENTIFIER.
+   * @return the FILEIDENTIFIER
+   */
+  public String getFileIdentifier() {
+    return _fileIdentifier;
+  }
+
+  /**
+   * Sets the document FILEIDENTIFIER.
+   * @param FILEIDENTIFIER the FILEIDENTIFIER
+   */
+  public void setFileIdentifier(String fileIdentifier) {
+    _fileIdentifier = Val.chkStr(fileIdentifier);
+  }
+
+  /**
    * Gets the site UUID.
    * @return the site UUID
    */
@@ -314,7 +348,7 @@ public class MmdRecord extends Record {
   public void setCurrentMetadataAccessPolicy(String currentMetadataAccessPolicy) {
     this._currentMetadataAccessPolicy = currentMetadataAccessPolicy;
   }
-  
+
   /**
    * Gets the document current access policy.
    * @return access policy keys
@@ -512,8 +546,8 @@ public class MmdRecord extends Record {
   public QueryBuilder newQueryBuilder(IterationContext iterationContext) {
     if (iterationContext==null) {
       iterationContext = new DefaultIterationContext(readBots(
-                      ProtocolInvoker.getRobotsTxtMode(getProtocol()),
-                      getHostUrl()
+              ProtocolInvoker.getRobotsTxtMode(getProtocol()),
+              getHostUrl()
       ));
     }
     return getProtocol()!=null? getProtocol().newQueryBuilder(iterationContext, getHostUrl()): null;

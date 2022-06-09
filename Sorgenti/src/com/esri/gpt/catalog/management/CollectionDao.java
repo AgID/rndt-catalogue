@@ -82,6 +82,22 @@ public class CollectionDao extends BaseDao {
   }
   
   /**
+   * Gets the User table name.
+   * @return the User table name
+   */
+  public String getUserTableName() {
+    return this.getTablePrefix()+"USER";
+  }
+  
+  /**
+   * Gets the PA table name.
+   * @return the PA table name
+   */
+  public String getPATableName() {
+    return this.getTablePrefix()+"PA";
+  }
+  
+  /**
    * Gets resource table name.
    * @return resource table name
    */
