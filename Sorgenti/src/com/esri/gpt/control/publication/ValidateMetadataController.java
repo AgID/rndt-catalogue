@@ -17,10 +17,12 @@ package com.esri.gpt.control.publication;
 import com.esri.gpt.catalog.publication.ValidationRequest;
 import com.esri.gpt.catalog.schema.Schema;
 import com.esri.gpt.catalog.schema.ValidationException;
+import com.esri.gpt.control.publication.controlMetadata.ControlMetadataDocument;
 import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.jsf.BaseActionListener;
 import com.esri.gpt.framework.jsf.MessageBroker;
 import com.esri.gpt.framework.util.Val;
+import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AbortProcessingException;
 import javax.faces.event.ActionEvent;
@@ -76,11 +78,20 @@ private void verifyFile(ActionEvent event, RequestContext context)
       if (sXml.startsWith(sbom)) {
         sXml = Val.chkStr(sXml.substring(1));
       }
+      
+      ControlMetadataDocument controlMetadata = new ControlMetadataDocument(context,sXml);
 
       if (sFileName.length() == 0) {
         msgBroker.addErrorMessage("publication.validateMetadata.err.file.required");
       } else if (sXml.length() == 0) {
         msgBroker.addErrorMessage("publication.validateMetadata.err.file.empty");
+      } else if(!controlMetadata.getStatus()){
+
+        ArrayList<String> errorMessage = controlMetadata.getErrorMessage();
+        errorMessage.forEach((error) -> {
+            msgBroker.addErrorMessage(error);
+        });
+         
       } else {
 
         //String sOut = "C:/xfer/test19139.xml";

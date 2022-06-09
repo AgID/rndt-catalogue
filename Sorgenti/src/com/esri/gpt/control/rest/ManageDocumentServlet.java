@@ -30,6 +30,7 @@ import com.esri.gpt.catalog.schema.MetadataDocument;
 import com.esri.gpt.catalog.schema.Schema;
 import com.esri.gpt.catalog.schema.SchemaException;
 import com.esri.gpt.catalog.schema.ValidationException;
+import com.esri.gpt.control.publication.controlMetadata.ControlMetadataDocument;
 import com.esri.gpt.control.publication.fromMaven;
 import com.esri.gpt.control.webharvest.client.arcgis.ArcGISProtocol;
 import com.esri.gpt.control.webharvest.protocol.ProtocolFactory;
@@ -43,7 +44,6 @@ import com.esri.gpt.framework.context.BaseServlet;
 import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.jsf.FacesContextBroker;
 import com.esri.gpt.framework.jsf.MessageBroker;
-import static com.esri.gpt.framework.jsf.PageContext.extractMessageBroker;
 import com.esri.gpt.framework.security.credentials.Credentials;
 import com.esri.gpt.framework.security.credentials.CredentialsDeniedException;
 import com.esri.gpt.framework.security.identity.NotAuthorizedException;
@@ -410,7 +410,6 @@ public class ManageDocumentServlet extends BaseServlet {
       }
     } catch (ServletException e) {
       String sMsg = e.getMessage();
-      // Error code defaults to 500 if not present
       int nCode = Val.chkInt(sMsg.substring(0,3),500);
       sMsg = Val.chkStr(sMsg.substring(4));
       String json = Val.chkStr(request.getParameter("errorsAsJson"));
@@ -421,18 +420,8 @@ public class ManageDocumentServlet extends BaseServlet {
         sb.append("message: \"").append(Val.escapeStrForJson(sMsg)).append("\",\r\n");
         sb.append("code: ").append(nCode).append(",\r\n");
         sb.append("errors: [\r\n");
-        
-        //sb.append("\"").append(Val.escapeStrForJson(sMsg)).append("\"");
-        
-        String[] tokens = sMsg.split(";%;");
-        for (String token : tokens)
-        {
-            sb.append("\"").append(Val.escapeStrForJson(token)).append("\",");
-        }
-        sb.deleteCharAt(sb.lastIndexOf(","));
-        sb.deleteCharAt(sb.lastIndexOf(";%;"));
+        sb.append("\"").append(Val.escapeStrForJson(sMsg)).append("\"");
         sb.append("]}");
-       
         
         LOGGER.log(Level.SEVERE, sb.toString());
         response.getWriter().print(sb.toString());
@@ -533,7 +522,6 @@ public class ManageDocumentServlet extends BaseServlet {
       RequestContext context, Publisher publisher) throws Exception {
     String xml = null;
     HrRecord record = extractRegistrationInfo(request);
-    MessageBroker msgBroker = extractMessageBroker(); //AGGIUNTO
 
     if (record==null) {
       try {
@@ -558,6 +546,7 @@ public class ManageDocumentServlet extends BaseServlet {
         
         String asDraft = Val.chkStr(request.getParameter("asDraft"));
         String approve = Val.chkStr(request.getParameter("approve"));
+        String validate = Val.chkStr(request.getParameter("validate"));
         LOGGER.fine("Approving of uploaded documents through the REST with 'approve' flag: "+approve);
         if (asDraft.equals("true")) {
           pubRecord.setApprovalStatus(MmdEnums.ApprovalStatus.draft.toString());
@@ -589,32 +578,48 @@ public class ManageDocumentServlet extends BaseServlet {
                         fromMaven OUT = new fromMaven();
                         OUT.setFile(is, fileVal);
                         OUT.execute();
-
                         if (OUT.failedList.isEmpty()) {
                         } else {
-                            // Leave space for generic error code
-                            String elenco="    ";
-                            // Ogni stringa di errore viene separata da ";%;", che poi viene utilizzato per separare gli errori
+                            String elenco="";
                             for (SVRLFailedAssert failedAssert : OUT.failedList) {
-                                elenco += "Errore Schematron: " + failedAssert.getText() + ";%;";
+                                elenco += "Errore: " + failedAssert.getText();
                             }
-                            // Devo sostituire le lettere accentate
-                            elenco = elenco.replace("è", "e'");
-                            elenco = elenco.replace("à", "a'");
-                            elenco = elenco.replace("ò", "o'");
-                            elenco = elenco.replace("ù", "u'");
-                            elenco = elenco.replace("é", "e'");
-                            elenco = elenco.replace("ì", "i'");
-                           
-                            throw new ServletException(elenco);
+                            throw new ServletException("     Errore Schematron:"+elenco);
                         }
-
                     }
                 }
             }
-// Schematron validation end
+            // Schematron validation end
             
-          pubRequest.publish();
+            //Verifica nome pa, ipa e xpath ControlMetadataDocument
+            if (!asDraft.equals("true")) {
+              
+                ControlMetadataDocument controlMetadata = new ControlMetadataDocument(context,xml);
+              
+                if(!controlMetadata.getStatus()){
+                    ArrayList<String> errorMessage = controlMetadata.getErrorMessage();
+                    String elenco="";
+                    MessageBroker msgBroker2 = new MessageBroker();
+                    for (String error : errorMessage) {
+                        //msgBroker2.addErrorMessage(error);
+                        String errorTranslate = "";
+                        //# Verifica codici IPA
+                        if(error == "catalog.publication.NomeEnte.Responsabile") errorTranslate = "Il nome dell'Ente responsabile non e' presente nel sistema";
+                        else if(error == "catalog.publication.codIPA.FileID") errorTranslate = "Il codice IPA dell'identificativo del file non e' presente nel sistema";
+                        else if(error == "catalog.publication.codIPA.ParentID") errorTranslate = "Il codice IPA dell'identificativo del parent file non e' presente nel sistema";
+                        else if(error == "catalog.publication.codIPA.DataID") errorTranslate = "Il codice IPA dell'identificativo del dato non e' presente nel sistema";
+                        else if(error == "catalog.publication.codIPA.IssueID") errorTranslate = "Il codice IPA dell'identificativo della serie del dato non e' presente nel sistema";
+                        //elenco += msgBroker2.retrieveMessage(error);
+                                
+                        elenco += msgBroker2.retrieveMessage(errorTranslate);
+                    }
+                    throw new ServletException("     Errore Validatore:"+elenco);
+                }
+          }
+            
+          //publish is validate false
+          if (!validate.equals("true")) pubRequest.publish();
+          
           if (!pubRecord.getWasDocumentReplaced()) {
             response.setStatus(HttpServletResponse.SC_CREATED);
           }

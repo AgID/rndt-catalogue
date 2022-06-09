@@ -25,6 +25,7 @@ import com.esri.gpt.catalog.publication.ValidationRequest;
 import com.esri.gpt.catalog.schema.MetadataDocument;
 import com.esri.gpt.catalog.schema.Schema;
 import com.esri.gpt.catalog.schema.ValidationException;
+import com.esri.gpt.control.publication.controlMetadata.ControlMetadataDocument;
 import com.esri.gpt.control.view.SelectablePublishers;
 import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.http.HttpClientRequest;
@@ -45,6 +46,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -346,7 +348,7 @@ public class UploadMetadataController extends BaseActionListener {
         boolean bRecognized = sCommand.equalsIgnoreCase("recognize");
         boolean bIsBrowse = this.getSpecificationMethod().equals(UploadMetadataController.SPECIFICATIONMETHOD_BROWSE);
         String sExplicitPath = this.getExplicitPath();
-
+        
         try {
             InputStream fileVal = null;
             // upload a single file from disk
@@ -366,6 +368,8 @@ public class UploadMetadataController extends BaseActionListener {
                     FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_WARN, sFileName, null);
                     msgBroker.addMessage(fm);
                 }
+                
+                ControlMetadataDocument controlMetadata = new ControlMetadataDocument(context,sXml);
 
                 if (sFileName.length() == 0) {
                     msgBroker.addErrorMessage("publication.uploadMetadata.err.file.required");
@@ -413,7 +417,12 @@ public class UploadMetadataController extends BaseActionListener {
                     }
                     
                     String fileSch = schema.getSchematronSch();
-                    if (!fileSch.isEmpty()){
+                    if(!controlMetadata.getStatus()){
+                        ArrayList<String> errorMessage = controlMetadata.getErrorMessage();
+                        errorMessage.forEach((error) -> {
+                            msgBroker.addErrorMessage(error);
+                        });
+                    }else if (!fileSch.isEmpty()){
                         ResourcePath rp = new ResourcePath();
                         URL url = rp.makeUrl(fileSch);
                         InputStream is  = url.openStream();
@@ -431,7 +440,7 @@ public class UploadMetadataController extends BaseActionListener {
                     } else {
                         msgBroker.addSuccessMessage("catalog.publication.success.validated");
                     }
-                } else {
+                }else {
                     Publisher publisher = getSelectablePublishers().selectedAsPublisher(context, false);
                     UploadRequest request = new UploadRequest(context, publisher, sFileName, sXml);
                     request.setRetryAsDraft(getAsDraft());
@@ -453,6 +462,11 @@ public class UploadMetadataController extends BaseActionListener {
                             msgBroker.addMessage(new FacesMessage(FacesMessage.SEVERITY_ERROR,"Errore: " + failedAssert.getText(), null));
                         }
 
+                    }else if(!controlMetadata.getStatus()){
+                        ArrayList<String> errorMessage = controlMetadata.getErrorMessage();
+                        errorMessage.forEach((error) -> {
+                            msgBroker.addErrorMessage(error);
+                        });
                     }
                     if (continua) {
                         msgBroker.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Validazione Schematron Ok!", null));
@@ -513,7 +527,7 @@ public class UploadMetadataController extends BaseActionListener {
                 msgBroker.addMessage(fm);
 
                 sFileName = sExplicitPath;
-        // Modified by Esri Italy: set to true to overcome control on owner/publisher useful for enableEditForAdministrator flag
+                // Modified by Esri Italy: set to true to overcome control on owner/publisher useful for enableEditForAdministrator flag
                 // Publisher publisher = getSelectablePublishers().selectedAsPublisher(context,false);
                 Publisher publisher = getSelectablePublishers().selectedAsPublisher(context, true);
                 HttpClientRequest httpClient = HttpClientRequest.newRequest();

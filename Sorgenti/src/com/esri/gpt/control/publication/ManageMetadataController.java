@@ -18,7 +18,9 @@ import com.esri.gpt.catalog.arcgis.metadata.AGSProcessorConfig;
 import com.esri.gpt.catalog.harvest.jobs.HjRecord;
 import com.esri.gpt.catalog.harvest.repository.HrCriteria;
 import com.esri.gpt.catalog.harvest.repository.HrHarvestRequest;
+import com.esri.gpt.catalog.harvest.repository.HrRecord;
 import com.esri.gpt.catalog.harvest.repository.HrResult;
+import com.esri.gpt.catalog.harvest.repository.HrSelectRequest;
 import com.esri.gpt.catalog.management.CollectionDao;
 import com.esri.gpt.catalog.management.MmdActionCriteria;
 import com.esri.gpt.catalog.management.MmdActionRequest;
@@ -29,7 +31,9 @@ import com.esri.gpt.catalog.management.MmdQueryRequest;
 import com.esri.gpt.catalog.management.MmdQueryResult;
 import com.esri.gpt.catalog.management.MmdRecord;
 import com.esri.gpt.catalog.management.MmdResult;
+import com.esri.gpt.control.harvest.HarvestController;
 import com.esri.gpt.control.view.PageCursorPanel;
+import com.esri.gpt.control.view.SelectablePA;
 import com.esri.gpt.control.view.SelectablePublishers;
 import com.esri.gpt.control.webharvest.protocol.ProtocolFactories;
 import com.esri.gpt.control.webharvest.protocol.ProtocolFactory;
@@ -45,6 +49,7 @@ import com.esri.gpt.framework.security.identity.NotAuthorizedException;
 import com.esri.gpt.framework.security.identity.local.SimpleIdentityAdapter;
 import com.esri.gpt.framework.security.metadata.MetadataAccessPolicy;
 import com.esri.gpt.framework.security.principal.Publisher;
+import com.esri.gpt.framework.util.UuidUtil;
 import com.esri.gpt.framework.util.Val;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -73,12 +78,13 @@ private PageCursorPanel       _pageCursorPanel;
 private MmdResult             _result;
 private SelectableCollections _selectableCollections;
 private SelectablePublishers  _selectablePublishers;
+private SelectablePA          _selectablePA;
 private SelectableGroups      _candidateGroups;
 private MetadataAccessPolicy  _metadataAccessPolicyConfig;
 private MmdQueryCriteria      _queryCriteriaForAction = new MmdQueryCriteria();
 private boolean               _useCollections = false;
 private String                _datiFromURL="";
-
+public static String          csvQuery = "test";
 // constructors ================================================================
 /** Default constructor. */
 public ManageMetadataController() {
@@ -88,6 +94,7 @@ public ManageMetadataController() {
 
   // initialize the selectablables
   _selectablePublishers = new SelectablePublishers();
+  _selectablePA = new SelectablePA();
   _candidateGroups = new SelectableGroups();
   _selectableCollections = new SelectableCollections();
 
@@ -103,11 +110,13 @@ public void setdatiFromURL(String valore){
     this._datiFromURL=valore;
 }
 
+public String getCsvQuery(){
+    return ManageMetadataController.csvQuery;
+}
+
 public String getdatiFromURL(){
     return this._datiFromURL;
 }
-
-
 /**
  * Gets list of candidate groups
  * @return the list of candidate groups
@@ -283,6 +292,14 @@ public SelectablePublishers getSelectablePublishers() {
 }
 
 /**
+ * Gets list of selectable publishers.
+ * @return the list of selectable publishers
+ */
+public SelectablePA getSelectablePA() {
+  return _selectablePA;
+}
+
+/**
  * Determine if collections are in use.
  * @return <code>true</code> if collections are in use
  */
@@ -345,6 +362,7 @@ private void executeAction(ActionEvent event, final RequestContext context,
 
     if (_metadataAccessPolicyConfig==null) {
       getSelectablePublishers().build(context, true);
+      getSelectablePA().build(context);
       prepareAccessPolicyConfig(context);
       prepareGroups(context);
       prepareActionCriteria(context);
@@ -470,6 +488,51 @@ private void executeSynchronization(ActionEvent event, RequestContext context, M
   }
 }
 
+
+/**
+ * Executes synchronization.
+ * @param event the associated JSF action event
+ * @param context the context associated with the active request
+ * @param actionCriteria the criteria for the action
+ * @throws Exception if an exception occurs
+ */
+ private void executeSynchronizationComplete(ActionEvent event, RequestContext context, MmdActionCriteria actionCriteria) throws Exception {
+    //ArrayList<String> uuids = new ArrayList<String>();
+
+    StringSet uuids = actionCriteria.getSelectedRecordIdSet();
+    String[] aUuids = uuids.toArray(new String[uuids.size()]);
+  
+  
+    HrSelectRequest select = new HrSelectRequest(context, aUuids[0]);
+    select.execute();
+
+    for (HrRecord r : select.getQueryResult().getRecords()) {
+      if (UuidUtil.isUuid(r.getUuid())) {
+        uuids.add(r.getUuid());
+      }
+    }
+    HarvestController harvestController = new HarvestController();
+
+    HrHarvestRequest hrvFullRequest =
+            new HrHarvestRequest(context,
+                    aUuids,
+                    HjRecord.JobType.Full,
+                    harvestController.getCriteria(),
+                    harvestController.getResult());
+    hrvFullRequest.execute();
+
+    if (hrvFullRequest.getActionResult().getNumberOfRecordsModified() > 0) {
+      extractMessageBroker().addSuccessMessage(
+              "catalog.harvest.manage.message.synchronized",
+              new Object[]{Integer.toString(hrvFullRequest.getActionResult().
+                      getNumberOfRecordsModified())
+              });
+    } else {
+      extractMessageBroker().addSuccessMessage(
+              "catalog.harvest.manage.message.synchronized.none");
+    }
+  }
+
 /**
  * Executes canceling of the synchronization.
  * @param event the associated JSF action event
@@ -568,6 +631,7 @@ protected void onPrepareView(final RequestContext context) throws Exception {
   
   // build the selectable list of publishers
   getSelectablePublishers().build(context,true);
+  getSelectablePA().build(context);
   prepareAccessPolicyConfig(context);
   prepareGroups(context);
   prepareActionCriteria(context);
@@ -711,6 +775,8 @@ protected void processSubAction(ActionEvent event, RequestContext context)
     executeAction(event, context, actionCriteria, publisher, applyToAll);
   } else if (sCommand.equals("synchronize")) {
     executeSynchronization(event, context, actionCriteria);
+  } else if (sCommand.equals("synchronizeComplete")) {
+    executeSynchronizationComplete(event, context, actionCriteria);
   } else if (sCommand.equals("cancel")) {
     executeCancelSynchronization(event, context, actionCriteria);
   } else if (sCommand.equals("showharvested")) {

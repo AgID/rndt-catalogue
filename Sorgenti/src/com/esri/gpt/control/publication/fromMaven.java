@@ -38,14 +38,8 @@ import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.xml.transform.AbstractTransformErrorListener;
-/**
-import com.helger.schematron.AbstractSchematronResource;
-import com.helger.schematron.xslt.SchematronResourceSCH;
-**/
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -232,22 +226,8 @@ public void setFile(InputStream schV, InputStream xmlIV){
       else
         getLog ().debug ("Using the language code '" + languageCode + "'");
     }
-   
- /** Apr 2020 Questa funzione non è utilizzata e necessita di un import che crea errore, quindi è stata tolta 
-  public static boolean validateXMLViaXSLTSchematron (@Nonnull final File aSchematronFile,
-                                                      @Nonnull final File aXMLFile) throws Exception
-  {
-    ISchematronResource aResSCH = SchematronResourceSCH.fromFile (aSchematronFile);
-    if (!aResSCH.isValidSchematron ())
-      throw new IllegalArgumentException ("Invalid Schematron!");
-    return aResSCH.getSchematronValidity (new StreamSource (aXMLFile)).isValid ();
-      return(true);
-  }
-  * **/
-
     public static SchematronOutputType validateXMLViaPureSchematron(@Nonnull final InputStream aSchematronFile,
             @Nonnull final InputStream aXMLFile) throws Exception {
-
         final ISchematronResource aResPure = SchematronResourcePure.fromInputStream(aSchematronFile);
         if (!aResPure.isValidSchematron())
             throw new IllegalArgumentException("Invalid Schematron! file:[" + aSchematronFile +"] on XML file:["+aXMLFile+"]");

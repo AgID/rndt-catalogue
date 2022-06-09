@@ -21,16 +21,21 @@ import com.esri.gpt.framework.security.identity.NotAuthorizedException;
 import com.esri.gpt.framework.security.principal.Publisher;
 import com.esri.gpt.framework.security.principal.User;
 import com.esri.gpt.framework.security.principal.Users;
+import com.esri.gpt.framework.sql.ManagedConnection;
 import com.esri.gpt.framework.util.Val;
 
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.faces.model.SelectItem;
 
 /**
- * Defines a list of publishers selectable from the user interface.
+ * Defines a list of PA selectable from the user interface.
  */
-public class SelectablePublishers {
+public class SelectablePA {
 
 // class variables =============================================================
 
@@ -41,7 +46,7 @@ private String                _selectedKey = "";
 // constructors ================================================================
 
 /** Default constructor. */
-    public SelectablePublishers() {}
+    public SelectablePA() {}
 
 // properties ==================================================================
 
@@ -82,14 +87,33 @@ public void setSelectedKey(String key) {
 /**
  * Builds the list of selectable publishers.
  * @param context the active request context
- * @param forManagement <code>true</code> for management
  */
-public void build(RequestContext context, boolean forManagement) {
-  _list.clear();
-  Users users = Publisher.buildSelectablePublishers(context,forManagement);
-  for (User u: users.values()) {
-    _list.add(new SelectItem(u.getKey(),u.getName()));
-  }
+public void build(RequestContext context) {
+    _list.clear();
+    try {
+        
+        ManagedConnection mc = context.getConnectionBroker().returnConnection("");
+        Connection con = mc.getJdbcConnection();
+        
+        ResultSet rs = null;
+        PreparedStatement st = null;
+        
+        // initialize
+        String strSQL ="SELECT ID, NOME FROM gpt_pa WHERE 1=1 ORDER BY NOME";
+      
+        st = con.prepareStatement(strSQL);
+        
+        rs = st.executeQuery();
+
+        while (rs.next()) {
+            _list.add(new SelectItem(rs.getString("NOME"),rs.getString("NOME")));    
+        }
+
+    } catch (Exception ex) {
+        System.out.println("Errore");
+    }
+
+    
 }
 
 /** 
