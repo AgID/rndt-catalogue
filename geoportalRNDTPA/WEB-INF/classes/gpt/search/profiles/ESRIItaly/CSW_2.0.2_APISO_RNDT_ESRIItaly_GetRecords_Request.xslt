@@ -20,8 +20,28 @@
         <xsl:element name="csw:GetRecords" use-attribute-sets="GetRecordsAttributes" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:ogc="http://www.opengis.net/ogc" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gml="http://www.opengis.net/gml">
             <csw:Query typeNames="csw:Record">
                 <csw:ElementSetName>full</csw:ElementSetName>
+				 <xsl:if test="/GetRecords/KeyWord != ''">
+					<csw:Constraint version="1.0.0"> 
+						<ogc:Filter xmlns="http://www.opengis.net/ogc">
+							<!-- Key Word search -->
+							<xsl:apply-templates select="/GetRecords/KeyWord"/>
+						</ogc:Filter>
+					</csw:Constraint>
+				</xsl:if>
             </csw:Query>
         </xsl:element>
+    </xsl:template>
+
+    <!-- key word search -->
+    <xsl:template match="/GetRecords/KeyWord" xmlns:ogc="http://www.opengis.net/ogc">
+        <xsl:if test="normalize-space(.)!=''">
+            <ogc:PropertyIsLike wildCard="" escape="" singleChar="">
+                <ogc:PropertyName>apiso:Subject</ogc:PropertyName>
+                <ogc:Literal>
+                    <xsl:value-of select="."/>
+                </ogc:Literal>
+            </ogc:PropertyIsLike>
+        </xsl:if>
     </xsl:template>
 
     <xsl:attribute-set name="GetRecordsAttributes">
