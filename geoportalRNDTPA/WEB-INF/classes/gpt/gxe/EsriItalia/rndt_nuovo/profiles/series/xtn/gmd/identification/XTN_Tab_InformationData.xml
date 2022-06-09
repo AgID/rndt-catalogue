@@ -18,7 +18,7 @@
                         </h:div>    
 
 
-                        <g:element g:minOccurs="1" g:targetName="gmd:presentationForm" g:info="$i18n.catalog.rdnt.dataset.hint.formatoPresentazione" g:maxOccurs="unbounded" xmlns:g="http://www.esri.com/geoportal/gxe" 
+                        <g:element g:minOccurs="0" g:targetName="gmd:presentationForm" g:info="$i18n.catalog.rdnt.dataset.hint.formatoPresentazione" g:maxOccurs="unbounded" xmlns:g="http://www.esri.com/geoportal/gxe" 
                                                    xmlns:h="http://www.esri.com/geoportal/gxe/html"
                                                    g:extends="$base/schema/gco/xtn/Wrapped_CodePropertyType.xml"
                                                    g:label="$i18n.catalog.mdParam.rndt.identification.presentationForm">       
