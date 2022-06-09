@@ -19,6 +19,7 @@
       <g:i18n g:key="client.loading">$i18n.catalog.gxe.general.client.loading</g:i18n>   
       <g:i18n g:key="client.error">$i18n.catalog.gxe.general.client.error</g:i18n>
       <g:i18n g:key="client.saving.title">$i18n.catalog.gxe.general.client.saving.title</g:i18n>
+      <g:i18n g:key="client.verify.title">$i18n.catalog.gxe.general.client.verify.title</g:i18n>
             
       <g:i18n g:key="validate.format">$i18n.catalog.gxe.general.validate.format</g:i18n>
       <g:i18n g:key="validate.ok">$i18n.catalog.gxe.general.validate.ok</g:i18n>
