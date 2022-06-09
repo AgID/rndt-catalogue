@@ -431,7 +431,7 @@ private String getReportStats() {
   StringBuilder sb = new StringBuilder();
   sb.append("<report>");
   sb.append("<saveOutput>OFF</saveOutput>");
-  sb.append("<validate>OFF</validate>");
+  sb.append("<validate>ON</validate>");
   sb.append("<publish>ON</publish>");
   sb.append("<harvestEnd>").append(getEndTime().toString()).append("</harvestEnd>");
   sb.append((maxDocToHarvest != null ? "<maxDocsToHarvest>" + maxDocToHarvest + "</maxDocsToHarvest>" : ""));

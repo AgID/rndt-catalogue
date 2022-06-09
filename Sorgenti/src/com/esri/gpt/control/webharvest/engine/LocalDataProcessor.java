@@ -27,6 +27,7 @@ import com.esri.gpt.catalog.publication.HarvesterRequest;
 import com.esri.gpt.catalog.schema.Schema;
 import com.esri.gpt.catalog.schema.SchemaException;
 import com.esri.gpt.catalog.schema.ValidationException;
+import com.esri.gpt.control.publication.controlMetadata.ControlMetadataDocument;
 import com.esri.gpt.control.publication.fromMaven;
 import com.esri.gpt.control.webharvest.AccessException;
 import com.esri.gpt.control.webharvest.engine.Suspender.Expiration;
@@ -63,10 +64,12 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.json.JSONException;
 import org.xml.sax.SAXException;
 
 /**
@@ -353,7 +356,7 @@ class LocalDataProcessor implements DataProcessor {
           }
           //Modifiche EsriItalia per validazione Schematron
           Schema schema = publicationRequest.prepareForPublication();
-          boolean continua=true;
+          boolean continua=false;
         String fileSch = schema.getSchematronSch();
         if (!fileSch.isEmpty()){ 
             LOGGER.finer("[SYNCHRONIZER] Schematron file:[" + fileSch + "]");
@@ -367,8 +370,24 @@ class LocalDataProcessor implements DataProcessor {
 
             OUT.setFile(is, fileVal);
             OUT.execute();
+            
+            //schematron ok
             if (OUT.failedList.isEmpty()) {
-                continua=true;
+                
+                ControlMetadataDocument controlMetadata = new ControlMetadataDocument(context,publicationRequest.getPublicationRecord().getSourceXml());
+                if(!controlMetadata.getStatus()){
+                    ArrayList<String> errorMessage = controlMetadata.getErrorMessage();
+                    
+                    //errorMessage.forEach((error) -> {
+                    //    msgBroker.addErrorMessage(error);
+                    //});
+                    rp.createInvalidEntry(sourceUri.asString(), errorMessage);
+                    listener.onPublishException(unit.getRepository(), sourceUri, metadata, null);
+                    continua=false;
+                }else{
+                    continua=true;
+                }
+                
             } else {
                 continua=false;
                 List<String> lstErr= new ArrayList<String>();
@@ -465,6 +484,10 @@ class LocalDataProcessor implements DataProcessor {
         } catch (MojoExecutionException ex) {
               Logger.getLogger(LocalDataProcessor.class.getName()).log(Level.SEVERE, null, ex);
           } catch (MojoFailureException ex) {
+              Logger.getLogger(LocalDataProcessor.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (JSONException ex) {
+              Logger.getLogger(LocalDataProcessor.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (ParserConfigurationException ex) {
               Logger.getLogger(LocalDataProcessor.class.getName()).log(Level.SEVERE, null, ex);
           }
       }
