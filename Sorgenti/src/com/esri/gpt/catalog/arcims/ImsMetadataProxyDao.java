@@ -42,7 +42,6 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -367,7 +366,7 @@ public class ImsMetadataProxyDao extends BaseDao {
                 }
 
             } catch (Exception e) {
-                LOGGER.finest("Fallito inserimento statistiche");//added by Esri Italy
+                LOGGER.severe("Fallito inserimento statistiche");//added by Esri Italy
             }
         } catch (ImsServiceException ex) {
             if (con != null) {
@@ -434,8 +433,11 @@ public class ImsMetadataProxyDao extends BaseDao {
         public List<String> elencoTopic = new ArrayList<String>();
         public List<String> elencoServiceType = new ArrayList<String>();
         public List<String> elencoTemiInspire = new ArrayList<String>();
-        public List<String> elencoTassonomiaISO = new ArrayList<String>();
+        public List<String> elencoTassonomiaISO = new ArrayList<String>(); 
+        public List<String> elencoPriorityDataset = new ArrayList<String>();
+        public List<String> elencoOpenData = new ArrayList<String>();
     }
+   
 
     public class NamespaceResolver implements NamespaceContext {
 
@@ -554,69 +556,567 @@ public class ImsMetadataProxyDao extends BaseDao {
             DocumentBuilder builder = factory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(sXml));
             Document document = builder.parse(is);
-
+         
             XPathFactory xpathfactory = XPathFactory.newInstance();
             XPath xpath = xpathfactory.newXPath();
             xpath.setNamespaceContext(new NamespaceResolver(document));
 
-            // note that all the elements in the expression are prefixed with our namespace mapping!
-            XPathExpression expr = xpath.compile("/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode");
+            String strInserito = "";
+            // Tipo metadato. Modifica: eliminati i namespaces
+//            XPathExpression expr = xpath.compile("/gmd:MD_Metadata/gmd:hierarchyLevel/gmd:MD_ScopeCode");
+            XPathExpression expr = xpath.compile("/*[local-name() = 'MD_Metadata']/*[local-name() = 'hierarchyLevel']/*[local-name() = 'MD_ScopeCode']");
 
-            // assuming you've got your XML document in a variable named doc...
             NodeList nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             if (nodeList.getLength() > 0) {
-                retJson.Hier = nodeList.item(0).getTextContent();
+                
+                String strAscii = nodeList.item(0).getTextContent().trim();
+                // Inserisco solo se la stringa è ascii e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0)
+                    retJson.Hier = strAscii;
             }
 
-            //Responsabile prendo solo il primo
-            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString");
-            // assuming you've got your XML document in a variable named doc...
+            //Responsabile prendo solo il primo. Modifica: eliminati i namespaces
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:organisationName/gco:CharacterString");
+            expr = xpath.compile("/*[local-name() = 'MD_Metadata']/*[local-name() = 'identificationInfo']/*/*[local-name() = 'citation']/*[local-name() = 'CI_Citation']/*[local-name() = 'citedResponsibleParty']/*[local-name() = 'CI_ResponsibleParty']/*[local-name() = 'organisationName']/*[local-name() = 'CharacterString']");
+
             nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             if (nodeList.getLength() > 0) {
-                retJson.Resp = nodeList.item(0).getTextContent();
+                
+                String strAscii = nodeList.item(0).getTextContent().trim();
+                // Inserisco solo se la stringa è printable e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0)
+                    retJson.Resp= strAscii;
             }
 
-            //Topic 
-            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode");
-            // assuming you've got your XML document in a variable named doc...
+            //Topic. Modifica: eliminati i namespaces
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory/gmd:MD_TopicCategoryCode");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='topicCategory']/*[local-name()='MD_TopicCategoryCode']");
+			
             nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
             for (int i = 0; i < nodeList.getLength(); i++) {
-                retJson.elencoTopic.add(nodeList.item(i).getTextContent());
+                String strAscii = nodeList.item(i).getTextContent().trim();
+                // Inserisco solo se la stringa è printable e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0)
+                    retJson.elencoTopic.add(strAscii);
             }
-            //Service Type 
-            ///gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName
-            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName");
-            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                retJson.elencoServiceType.add(nodeList.item(i).getTextContent());
-            }
-            //Tassonomia INSPIRE/ISO
-            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[count(gmd:MD_Keywords/gmd:thesaurusName) = 0]/gmd:MD_Keywords/gmd:keyword/gco:CharacterString");
-            ///expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString");
-            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
-                if (lstISO.contains(nodeList.item(i).getTextContent())) retJson.elencoTassonomiaISO.add(nodeList.item(i).getTextContent());
-            }
-            
-            
-            
-            //Inspire Theme  dovrei prendere solo quello con GEMET
-            //a[b/c/@d = 'text1' and b/c/@d = 'text4']/b/c[@d = 'text5']/@e
-            //gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString
-            //expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title[contains(gco:CharacterString, 'GEMET - INSPIRE themes')]/../../../gmd:keyword/gco:CharacterString");
-            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString = 'GEMET - INSPIRE themes, version 1.0']/gmd:keyword/gco:CharacterString");
-            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
-            for (int i = 0; i < nodeList.getLength(); i++) {
+			
+            //Service Type Modifica: eliminati i namespaces
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/srv:serviceType/gco:LocalName");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='SV_ServiceIdentification']/*[local-name()='serviceType']/*[local-name() = 'LocalName']");
 
-                retJson.elencoTemiInspire.add(nodeList.item(i).getTextContent());
+            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                
+                String strAscii = nodeList.item(i).getTextContent().trim();
+                // Inserisco solo se la stringa è printable e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0)
+                    retJson.elencoServiceType.add(strAscii);
+            }
+			
+            //Tassonomia servizi INSPIRE/ISO Modifica: eliminati i namespaces
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/srv:SV_ServiceIdentification/gmd:descriptiveKeywords[count(gmd:MD_Keywords/gmd:thesaurusName) = 0]/gmd:MD_Keywords/gmd:keyword/gco:CharacterString");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='SV_ServiceIdentification']/*[local-name()='descriptiveKeywords'][count(*[local-name()='MD_Keywords']/*[local-name()='thesaurusName']) = 0]/*[local-name()='MD_Keywords']/*[local-name()='keyword']/*[local-name() = 'CharacterString']");
+ 
+            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            strInserito = "";
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                
+                String strAscii = nodeList.item(i).getTextContent().trim();
+
+                // Inserisco solo se la stringa è printable e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0){
+                    // E poi inserisco solo se c'è nella list Iso e non è già stata inserita
+                    if (lstISO.contains(strAscii) && !strInserito.contains("'"+strAscii+"'")) {
+                        retJson.elencoTassonomiaISO.add(strAscii);
+                        strInserito = strInserito + "'"+strAscii+"'";
+                    }         
+                }      
+            }
+            
+            //Priority dataset Modifica: eliminati i namespaces
+            //lista chiavi priorityDataset 
+            List<String> aria = new ArrayList<String>();
+            aria.add("Directive 2008/50/EC");
+            aria.add("Management zones and agglomerations (Air Quality Directive)");
+            aria.add("Agglomerations (Air Quality Directive)");
+            aria.add("Management zones (Air Quality Directive)");
+            aria.add("Model areas (Air Quality Directive)");
+            aria.add("Monitoring stations (Air Quality Directive)");
+            aria.add("Measurement and modelling data (Air Quality Directive)");
+            aria.add("Directive 2002/49/EC");
+            aria.add("Major roads, railways and air transport network (Noise Directive)");
+            aria.add("Major roads (Noise Directive)");
+            aria.add("Major roads, railways and air transport network (Noise Directive)");
+            aria.add("Major railways (Noise Directive)");
+            aria.add("Major roads, railways and air transport network (Noise Directive)");
+            aria.add("Major air transport (Noise Directive)");
+            aria.add("Agglomerations (Noise Directive)");
+            aria.add("Population (Noise Directive)");
+            aria.add("Environmental noise exposure (Noise Directive)");
+            aria.add("Population - densely populated built-up areas (Noise Directive)");
+            aria.add("Major roads noise exposure delineation (Noise Directive)");
+            aria.add("Major railways noise exposure delineation (Noise Directive)");
+            aria.add("Agglomerations - roads noise exposure delineation (Noise Directive)");
+            aria.add("Agglomerations - railways noise exposure delineation (Noise Directive)");
+            aria.add("Agglomerations - aircraft noise exposure delineation (Noise Directive)");
+            aria.add("Agglomerations - industrial noise exposure delineation (Noise Directive)");
+            aria.add("Agglomerations - noise exposure delineation (Noise Directive)");
+            aria.add("Major roads noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Major roads noise exposure delineation - night (Noise Directive)");
+            aria.add("Major railways noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Major railways noise exposure delineation - night (Noise Directive)");
+            aria.add("Major airports noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Major airports noise exposure delineation - night (Noise Directive)");
+            aria.add("Agglomerations - roads noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Agglomerations - roads noise exposure delineation - night (Noise Directive)");
+            aria.add("Agglomerations - railways noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Agglomerations - railways noise exposure delineation - night (Noise Directive)");
+            aria.add("Agglomerations - aircraft noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Agglomerations - aircraft noise exposure delineation - night (Noise Directive)");
+            aria.add("Agglomerations - industrial noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Agglomerations - industrial noise exposure delineation - night (Noise Directive)");
+            aria.add("Agglomerations - noise exposure delineation day-evening-night (Noise Directive)");
+            aria.add("Agglomerations - noise exposure delineation - night (Noise Directive)");
+            
+            List<String> industria = new ArrayList<String>();
+            industria.add("Regulation (EC) 166/2006");
+            industria.add("Industrial sites - EU Registry (European Pollutant Release and Transfer Register)");
+            industria.add("Sites and facilities (European Pollutant Release and Transfer Register)");
+            industria.add("Actual pollutant releases (European Pollutant Release and Transfer Register)");
+            industria.add("Directive 2010/75/EU");
+            industria.add("Industrial sites - EU Registry (Industrial Emissions Directive)");
+            industria.add("Installations (Industrial Emissions Directive)");
+            industria.add("Directive 2010/75/EU");
+            industria.add("Industrial sites - EU Registry (Industrial Emissions Directive)");
+            industria.add("Large combustion plants (Industrial Emissions Directive)");
+            industria.add("Directive 2010/75/EU");
+            industria.add("Emissions (Industrial Emissions Directive)");
+            industria.add("Recommendation 2014/70/EU");
+            industria.add("Boreholes (Recommendation on hydraulic fracturing)");
+            industria.add("Boreholes for hydraulic fracturing (Recommendation on hydraulic fracturing)");
+            industria.add("Directive 2012/18/EU");
+            industria.add("Establishments  involving dangerous substances (SEVESO III Directive)");
+
+            List<String> rifiuti = new ArrayList<String>();
+            rifiuti.add("Directive 1999/31/EC");
+            rifiuti.add("Exempted islands and isolated settlements (Landfill of Waste Directive)");
+            rifiuti.add("Landfill of waste sites (Landfill of Waste Directive)");
+            rifiuti.add("Directive 2006/21/EC");
+            rifiuti.add("Facilities for managing extractive waste (Extractive Waste Directive)");
+            rifiuti.add("Agricultural facilities receiving sludge (Sewage Sludge Directive)");
+            rifiuti.add("Directive 86/278/EEC");
+            rifiuti.add("Agricultural sites where sludge is deposited (Sewage Sludge Directive)");
+            rifiuti.add("Regulation (EU) 2017/852");
+            rifiuti.add("Mercury storage facilities (Mercury Regulation)");
+
+            List<String> natura = new ArrayList<String>();			   
+            natura.add("Directive 92/43/EEC");
+            natura.add("National legislation");
+            natura.add("Directive 92/43/EEC");
+            natura.add("Directive 2009/147/EC");
+            natura.add("Regulation (EU) 1143/2014");
+            natura.add("EEA Annual Work Programme");
+            natura.add("Pan-European biogeographical regions (Habitats Directive)");
+            natura.add("National biogeographical regions");
+            natura.add("Habitat types and species distribution and range (Habitats Directive)");
+            natura.add("Natura 2000 sites (Habitats Directive)");
+            natura.add("Pan-European biogeographical regions (Birds Directive)");
+            natura.add("National biogeographical regions");
+            natura.add("Bird species distribution and range (Birds Directive)");
+            natura.add("Natura 2000 sites (Birds Directive)");
+            natura.add("Invasive alien species distribution (Invasive Alien Species Directive)");
+            natura.add("Nationally designated areas - CDDA");
+            natura.add("National biogeographical regions (Habitats Directive)");
+            natura.add("Habitat types distribution (Habitats Directive)");
+            natura.add("Habitat types range (Habitats Directive)");
+            natura.add("Species distribution (Habitats Directive)");
+            natura.add("Species range (Habitats Directive)");
+            natura.add("National biogeographical regions (Birds Directive)");
+            natura.add("Bird species distribution (Birds Directive)");
+            natura.add("Birds range (Birds Directive)");
+            natura.add("Habitat types distribution - sensitive (Habitats Directive)");
+            natura.add("Species distribution sensitive (Habitats Directive)");
+            natura.add("Bird species distribution - sensitive (Birds Directive)");
+            natura.add("Birds range - sensitive (Birds Directive)");
+
+            List<String> acqua = new ArrayList<String>();	
+            acqua.add("Directive 98/83/EC");
+            acqua.add("Directive 2006/7/EC");
+            acqua.add("Directive 91/271/EEC");
+            acqua.add("Drinking water supply zones (Drinking Water Directive)");
+            acqua.add("Drinking water abstraction points (Drinking Water Directive)");
+            acqua.add("Bathing water sites  (Bathing Water Directive)");
+            acqua.add("Agglomerations (Urban Waste Water Treatment Directive)");
+            acqua.add("Urban waste-water treatment plants (Urban Waste Water Treatment Directive)");
+            acqua.add("Discharge points to receiving waters (Urban Waste Water Treatment Directive)");
+            acqua.add("Sensitive areas, less sensitive areas and catchments (Urban Waste-Water Treatment Directive)");
+            acqua.add("Monitoring stations (Nitrates Directive)");
+            acqua.add("Nitrates vulnerable zones (Nitrates Directive)");
+            acqua.add("Large water supply zones (Drinking Water Directive)");
+            acqua.add("Small water supply zones (Drinking Water Directive)");
+            acqua.add("Sensitive areas (Urban Waste-Water Treatment Directive)");
+            acqua.add("Less sensitive areas (Urban Waste-Water Treatment Directive)");
+            acqua.add("Sensitive area catchments (Urban Waste-Water Treatment Directive)");
+            acqua.add("Directive 2000/60/EC");
+            acqua.add("Directive 2007/60/EC");
+            acqua.add("River basin districts (Water Framework Directive)");
+            acqua.add("River basin districts sub-units (Water Framework Directive)");
+            acqua.add("Water bodies (Water Framework Directive)");
+            acqua.add("Protected areas (Water Framework Directive)");
+            acqua.add("Monitoring stations (Water Framework Directive)");
+            acqua.add("Areas of Potential significant flood risk (Floods Directive)");
+            acqua.add("Preliminary flood risk assessment (Floods Directive)");
+            acqua.add("Flooded areas (Floods Directive)");
+            acqua.add("Flood risk zones (Floods Directive)");
+            acqua.add("Management units (Floods Directive)");
+            acqua.add("Surface water bodies (Water Framework Directive)");
+            acqua.add("Groundwater bodies (Water Framework Directive)");
+            acqua.add("Nitrate vulnerable zones - nutrient sensitive areas (Water Framework Directive)");
+            acqua.add("Urban waste water sensitive areas - nutrient sensitive areas (Water Framework Directive)");
+            acqua.add("Bathing waters - recreational waters (Water Framework Directive)");
+            acqua.add("Drinking water protection areas (Water Framework Directive)");
+            acqua.add("Water dependent Natura 2000 sites (Water Framework Directive)");
+            acqua.add("Designated waters (Water Framework Directive)");
+            acqua.add("Preliminary flood risk assessment - observed events (Floods Directive)");
+            acqua.add("Preliminary flood risk assessment - potential future events (Floods Directive)");
+            acqua.add("Flood hazard areas low probability scenario (Floods Directive)");
+            acqua.add("Flood hazard areas medium probability scenario (Floods Directive)");
+            acqua.add("Flood hazard areas high probability scenario (Floods Directive)");
+            acqua.add("Flood risk zones low probability scenario (Floods Directive)");
+            acqua.add("Flood risk zones medium probability scenario (Floods Directive)");
+            acqua.add("Flood risk zones high probability scenario (Floods Directive)");
+            acqua.add("Lakes (Water Framework Directive)");
+            acqua.add("Rivers (Water Framework Directive)");
+            acqua.add("Transitional waters (Water Framework Directive)");
+            acqua.add("Coastal waters (Water Framework Directive)");
+            acqua.add("Protection of economically significant aquatic species - shellfish designated waters (Water Framework Directive)");
+            acqua.add("Protection of economically significant aquatic species - freshwater fish designated waters (Water Framework Directive)");
+            acqua.add("Other protected areas (Water Framework Directive)");
+
+            List<String> marina = new ArrayList<String>();	
+            marina.add("Directive 2008/56/EC");
+            marina.add("Marine regions and units (Marine Strategy Framework Directive)");
+            marina.add("Marine assessment units (Marine Strategy Framework Directive)");
+            marina.add("Marine regions (Marine Strategy Framework Directive)");
+            marina.add("Marine reporting units (Marine Strategy Framework Directive)");
+            marina.add("Marine sub-regions (Marine Strategy Framework Directive)");
+
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text()");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='descriptiveKeywords']/*[local-name()='MD_Keywords']/*[local-name()='keyword']/*/text()");
+
+
+            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            strInserito = "";
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                String strAscii = nodeList.item(i).getTextContent().trim();
+                // Inserisco solo se la stringa è printable e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0){
+                    // E poi inserisco solo se non è già stata inserita e c'è in una delle liste
+                    if (aria.contains(strAscii) && !strInserito.contains("'aria'")) {
+                        retJson.elencoPriorityDataset.add("Aria e rumore");
+                        strInserito = strInserito + "'aria'";
+                    }
+                    else if (industria.contains(strAscii) && !strInserito.contains("'industria'")) {
+                        retJson.elencoPriorityDataset.add("Industria");
+                        strInserito = strInserito + "'industria'";
+                    }
+                    else if (rifiuti.contains(strAscii) && !strInserito.contains("'rifiuti'")) {
+                        retJson.elencoPriorityDataset.add("Rifiuti");
+                        strInserito = strInserito + "'rifiuti'";
+                    }
+                    else if (natura.contains(strAscii) && !strInserito.contains("'natura'")) {
+                        retJson.elencoPriorityDataset.add("Natura e biodiversità");
+                        strInserito = strInserito + "'natura'";
+                    }
+                    else if (acqua.contains(strAscii) && !strInserito.contains("'acqua'")) {
+                        retJson.elencoPriorityDataset.add("Acqua"); 
+                        strInserito = strInserito + "'acqua'";
+                    }
+                    else if (marina.contains(strAscii) && !strInserito.contains("'marina'")) {
+                        retJson.elencoPriorityDataset.add("Marina");
+                        strInserito = strInserito + "'marina'";
+                    }
+                }
+            }
+            
+            // OpenData - INIZIO -----
+            //Lista chiavi opendata Modifica eliminati i namespace
+            List<String> agricoltura = new ArrayList<String>();
+            agricoltura.add("Impianti agricoli e di acquacoltura");
+            agricoltura.add("Agricultural and aquaculture facilities");
+            
+            List<String> ambiente = new ArrayList<String>();
+            ambiente.add("Condizioni atmosferiche");
+            ambiente.add("Copertura del suolo");
+            ambiente.add("Distribuzione delle specie");
+            ambiente.add("Elementi geografici meteorologici");
+            ambiente.add("Elementi geografici oceanografici");
+            ambiente.add("Habitat e biotopi");
+            ambiente.add("Idrografia");
+            ambiente.add("Impianti di monitoraggio ambientale");
+            ambiente.add("Regioni biogeografiche");
+            ambiente.add("Regioni marine");
+            ambiente.add("Risorse minerarie");
+            ambiente.add("Siti protetti");
+            ambiente.add("Suolo");
+            ambiente.add("Utilizzo del territorio");
+            ambiente.add("Zone a rischio naturale");
+            ambiente.add("Zone sottoposte a gestione/limitazioni/regolamentazione e unità con obbligo di comunicare dati");
+            ambiente.add("Atmospheric conditions");
+            ambiente.add("Land cover");
+            ambiente.add("Species distribution");
+            ambiente.add("Meteorological geographical features");
+            ambiente.add("Oceanographic geographical features");
+            ambiente.add("Habitats and biotopes");
+            ambiente.add("Hydrography");
+            ambiente.add("Environmental monitoring facilities");
+            ambiente.add("Bio-geographical regions");
+            ambiente.add("Sea regions");
+            ambiente.add("Mineral resources");
+            ambiente.add("Protected sites");
+            ambiente.add("Soil");
+            ambiente.add("Land use");
+            ambiente.add("Natural risk zones");
+            ambiente.add("Area management/restriction/regulation zones and reporting units");
+            
+            List<String> economia = new ArrayList<String>();
+            economia.add("Parcelle catastali");
+            economia.add("Produzione e impianti industriali");
+            economia.add("Risorse minerarie");
+            economia.add("Utilizzo del territorio");
+            economia.add("Cadastral parcels");
+            economia.add("Production and industrial facilities");
+            economia.add("Mineral resources");
+            economia.add("Land use");
+            
+            List<String> governo = new ArrayList<String>();
+            governo.add("Servizi di pubblica utilità e servizi amministrativi");
+            governo.add("Unità amministrative");
+            governo.add("Utility and governmental services");
+            governo.add("Administrative units"); 
+            
+            List<String> popolazione = new ArrayList<String>();
+            popolazione.add("Distribuzione della popolazione — demografia");
+            popolazione.add("Unità statistiche");
+            popolazione.add("Population distribution - demography");
+            popolazione.add("Statistical units");
+            
+            List<String> regioni = new ArrayList<String>();
+            regioni.add("Edifici");
+            regioni.add("Elevazione");
+            regioni.add("Geologia");
+            regioni.add("Indirizzi");
+            regioni.add("Nomi geografici");
+            regioni.add("Ortoimmagini");
+            regioni.add("Parcelle catastali");
+            regioni.add("Sistemi di coordinate");
+            regioni.add("Sistemi di griglie geografiche");
+            regioni.add("Buildings");
+            regioni.add("Elevation");
+            regioni.add("Geology");
+            regioni.add("Addresses");
+            regioni.add("Geographical names");
+            regioni.add("Orthoimagery");
+            regioni.add("Cadastral parcels");
+            regioni.add("Coordinate reference systems");
+            regioni.add("Geographical grid systems");
+            
+            List<String> salute = new ArrayList<String>();     
+            salute.add("Salute umana e sicurezza");
+            salute.add("Human health and safety");    
+            
+            List<String> scienza = new ArrayList<String>();    
+            scienza.add("Elementi geografici meteorologici");
+            scienza.add("Geologia");
+            scienza.add("Idrografia");
+            scienza.add("Ortoimmagini");
+            scienza.add("Meteorological geographical features");
+            scienza.add("Geology");
+            scienza.add("Hydrography");
+            scienza.add("Orthoimagery");
+            
+            List<String> trasporti = new ArrayList<String>();    
+            trasporti.add("Reti di trasporto");
+            trasporti.add("Transport networks");
+
+            // Prima verifico se è Opendata: se contiene la licenza giusta in useLimitation oppure alcune stringhe in keywords
+            // Verifico useLimitation
+            boolean isOpenData = false;        
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation/gco:CharacterString/text()");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='resourceConstraints']/*[local-name()='MD_Constraints']/*[local-name()='useLimitation']/*[local-name() = 'CharacterString' ]/text()");
+
+            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            for (int i = 0; (i < nodeList.getLength()) && (!isOpenData); i++) {
+                String strAscii = nodeList.item(i).getTextContent().trim();
+                if (    (strAscii.indexOf("CC-BY")>=0) || 
+                        (strAscii.indexOf("CCBY")>=0) ||
+                        (strAscii.indexOf("BY SA")>=0) ||
+                        (strAscii.indexOf("IODL")>=0) ||
+                        (strAscii.indexOf("Italian Open Data")>=0) ||
+                        (strAscii.indexOf("Creative Commons BY")>=0) ||
+                        (strAscii.indexOf("Open Data")>=0) ||
+                        (strAscii.indexOf("CC BY")>=0) ||
+                        (strAscii.indexOf("citazione della fonte")>=0)        )
+                    isOpenData = true;
+            }
+            // Se non ho trovato nulla verifico se ci sono specifiche parole chiave in keywords
+            if (!isOpenData){
+//                expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/*/text()");
+                expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='descriptiveKeywords']/*[local-name()='MD_Keywords']/*[local-name()='keyword']/*/text()");
+
+                nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+
+                for (int i = 0; (i < nodeList.getLength()) && (!isOpenData); i++) {
+                    String strAscii = nodeList.item(i).getTextContent().trim().toLowerCase();
+                    if (    (strAscii.indexOf("opendata")>=0) || 
+                            (strAscii.indexOf("open data")>=0)   )
+                        isOpenData = true;
+                }
+            }
+
+            // Se è Open Data allora prendo le sole keyword dei temi INSPIRE
+            if (isOpenData) {
+//                expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']/gmd:keyword/*/text()");
+                expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='descriptiveKeywords']/*[local-name()='MD_Keywords'][*[local-name()='thesaurusName']/*[local-name()='CI_Citation']/*[local-name()='title']/*/text() = 'GEMET - INSPIRE themes, version 1.0']/*[local-name()='keyword']/*/text()");
+
+                nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+                strInserito = "";
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    String strAscii = nodeList.item(i).getTextContent().trim();
+
+                    // Inserisco solo se la stringa è printable e non vuota
+                    if (this.isPrintable(strAscii) && strAscii.length() > 0){
+                    // E poi inserisco solo se non è già stata inserita e c'è in una delle liste
+                        if (agricoltura.contains(strAscii) && !strInserito.contains("'agricoltura'")) {
+                            retJson.elencoOpenData.add("Agricoltura, pesca, silvicoltura e prodotti alimentari");
+                            strInserito = strInserito + "'agricoltura'";
+                        }
+                        else if (ambiente.contains(strAscii) && !strInserito.contains("'ambiente'")) {
+                            retJson.elencoOpenData.add("Ambiente");
+                            strInserito = strInserito + "'ambiente'";
+                        }
+                        else if (economia.contains(strAscii) && !strInserito.contains("'economia'")) {
+                            retJson.elencoOpenData.add("Economia");
+                            strInserito = strInserito + "'economia'";
+                        }
+                        else if (governo.contains(strAscii) && !strInserito.contains("'governo'")) {
+                            retJson.elencoOpenData.add("Governo e settore pubblico");
+                            strInserito = strInserito + "'governo'";
+                        }
+                        else if (popolazione.contains(strAscii) && !strInserito.contains("'popolazione'")) {
+                            retJson.elencoOpenData.add("Popolazione e società");
+                            strInserito = strInserito + "'popolazione'";
+                        }
+                        else if (regioni.contains(strAscii) && !strInserito.contains("'regioni'")) {
+                            retJson.elencoOpenData.add("Regioni e città");
+                            strInserito = strInserito + "'regioni'";
+                        }
+                        else if (salute.contains(strAscii) && !strInserito.contains("'salute'")) {
+                            retJson.elencoOpenData.add("Salute");
+                            strInserito = strInserito + "'salute'";
+                        }
+                        else if (scienza.contains(strAscii) && !strInserito.contains("'scienza'")) {
+                            retJson.elencoOpenData.add("Scienza e tecnologia");
+                            strInserito = strInserito + "'scienza'";
+                        }
+                        else if (trasporti.contains(strAscii) && !strInserito.contains("'trasporti'")) {
+                            retJson.elencoOpenData.add("Trasporti");
+                            strInserito = strInserito + "'trasporti'";
+                        }
+                    }
+                }
+            }
+            // Open Data FINE ---------------
+            
+            //Inspire Theme  prendo solo quello con GEMET vero Modifica tolti namespace
+//            expr = xpath.compile("/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/*/text() = 'GEMET - INSPIRE themes, version 1.0']/gmd:keyword/*/text()");
+            expr = xpath.compile("/*[local-name()='MD_Metadata']/*[local-name()='identificationInfo']/*[local-name()='MD_DataIdentification']/*[local-name()='descriptiveKeywords']/*[local-name()='MD_Keywords'][*[local-name()='thesaurusName']/*[local-name()='CI_Citation']/*[local-name()='title']/*/text() = 'GEMET - INSPIRE themes, version 1.0']/*[local-name()='keyword']/*/text()");
+
+            nodeList = (NodeList) expr.evaluate(document, XPathConstants.NODESET);
+            strInserito = "";
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                // Tolgo eventuali spazi
+                String strAscii = nodeList.item(i).getTextContent().trim();
+
+                // Inserisco solo se la stringa è "printable" (cioè ascii più le lettere accentate) e non vuota
+                if (this.isPrintable(strAscii) && strAscii.length() > 0){
+                    // E poi inserisco solo se non è già stata inserita e c'è in una delle liste
+                    if (!strInserito.contains("'"+strAscii+"'")){
+                        retJson.elencoTemiInspire.add(strAscii);
+                        strInserito = strInserito + "'"+strAscii+"'";
+                    }
+                }
             }
 
         } catch (Exception e) {
-            LOGGER.finest(e.getMessage());//added by Esri Italy
+            LOGGER.warning(e.getMessage());//added by Esri Italy
         }
         return retJson;
     }
-
+    
+    /** 
+     * Verifica se una stringa è "stampabile" cioè se è ascii + lettere accentate (
+     **/
+    public static boolean isPrintable(String str) {
+      if (str == null) {
+          return false;
+      }
+      int sz = str.length();
+      for (int i = 0; i < sz; i++) {
+          if (isPrintable(str.charAt(i)) == false) {
+              return false;
+          }
+      }
+      return true;
+  }
+  
+  /**
+   * verifica se una stringa è ASCII o una lettera accentata italiana
+   */
+  public static boolean isPrintable(char ch) {
+      if (ch >= 32 && ch < 127)
+          return(true);
+      if ( ch == 'à' || ch =='è' || ch == 'é' || ch == 'ì' || ch == 'ò' || ch == 'ù' )
+        return(true);
+      return(false);
+  }  
+    
+       /** 
+        * Verifica se una stringa è completamente ascii (
+        **/
+    public static boolean isAsciiPrintable(String str) {
+      if (str == null) {
+          return false;
+      }
+      int sz = str.length();
+      for (int i = 0; i < sz; i++) {
+          if (isAsciiPrintable(str.charAt(i)) == false) {
+              return false;
+          }
+      }
+      return true;
+  }
+  
+  /**
+   * <p>Checks whether the character is ASCII 7 bit printable.</p>
+   *
+   * <pre>
+   *   CharUtils.isAsciiPrintable('a')  = true
+   *   CharUtils.isAsciiPrintable('A')  = true
+   *   CharUtils.isAsciiPrintable('3')  = true
+   *   CharUtils.isAsciiPrintable('-')  = true
+   *   CharUtils.isAsciiPrintable('\n') = false
+   *   CharUtils.isAsciiPrintable('&copy;') = false
+   * </pre>
+   * 
+   * @param ch  the character to check
+   * @return true if between 32 and 126 inclusive
+   */
+  public static boolean isAsciiPrintable(char ch) {
+      return ch >= 32 && ch < 127;
+  }  
+    
+      
     /** 
      * insertStat
      * Inserisce i dati nelle tabelle statistiche
@@ -868,6 +1368,92 @@ public class ImsMetadataProxyDao extends BaseDao {
                     }
                 }
             }
+            /** Inserimento nella tabella del tipo priority Dataset **/
+            if ((quale.equalsIgnoreCase("prioritydataset")) || (quale.equals(""))) {
+                sql = new StringBuffer();
+                sDataTable = "gpt_resource_stat_priority_dataset".toUpperCase();
+                sql.append("DELETE FROM  ").append(sDataTable);
+                sql.append(" WHERE DOCUUID = ?");
+                logExpression(sql.toString());
+                st = con.prepareStatement(sql.toString());
+                st.setString(1, docUUID);
+                Logger.getLogger(ImsMetadataProxyDao.class.getName()).log(Level.FINEST, "Query new:" + st, (Throwable)null);
+                nRows = st.executeUpdate();
+                closeStatement(st);
+
+                if (jsonData.elencoPriorityDataset != null) {
+                    //Inserimento tabella statistica priority Dataset
+                    sDataTable = "gpt_resource_stat_priority_dataset".toUpperCase();
+                    for (final String theme : jsonData.elencoPriorityDataset) {
+                        // insert a record
+                        sql = new StringBuffer();
+                        sql.append("INSERT INTO ").append(sDataTable);
+                        sql.append(" (");
+                        sql.append("DOCUUID,");
+                        sql.append("ID,");
+                        sql.append("PRIORITYDATASET");
+                        sql.append(")");
+                        sql.append(" VALUES(?,?,?)");
+
+                        logExpression(sql.toString());
+                        id = getIdFromTable(sDataTable);
+                        st = con.prepareStatement(sql.toString());
+                        st.setString(1, docUUID);
+                        st.setLong(2, id + 1);
+                        st.setString(3, theme);
+                        Logger.getLogger(ImsMetadataProxyDao.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                        nRows = st.executeUpdate();
+                        closeStatement(st);
+                    }
+                }
+            }
+            /** Inserimento nella tabella del tipo openData **/
+            if ((quale.equalsIgnoreCase("opendata")) || (quale.equals(""))) {
+                
+                /*
+                SELECT DOCUUID, 
+ExtractValue(XML, "/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gco:CharacterString | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword/gmx:Anchor") OPENDATA 
+from gpt_resource_data
+where ExtractValue(XML, "/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:descriptiveKeywords/gmd:MD_Keywords/gmd:keyword[contains(gco:CharacterString, 'opendata') or contains(gco:CharacterString, 'open data')] | /gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_Constraints/gmd:useLimitation[contains(gco:CharacterString, 'CC-BY') or contains(gco:CharacterString, 'CCBY') or contains(gco:CharacterString, 'BY SA') or contains(gco:CharacterString,'IODL') or contains(gco:CharacterString,'Italian Open Data') or contains(gco:CharacterString, 'Creative Commons BY') or contains(gco:CharacterString,'Open Data') or contains(gco:CharacterString, 'CC BY') or contains(gco:CharacterString,'citazione della fonte')]") > 0
+                */
+                sql = new StringBuffer();
+                sDataTable = "gpt_resource_stat_opendata".toUpperCase();
+                sql.append("DELETE FROM  ").append(sDataTable);
+                sql.append(" WHERE DOCUUID = ?");
+                logExpression(sql.toString());
+                st = con.prepareStatement(sql.toString());
+                st.setString(1, docUUID);
+                Logger.getLogger(ImsMetadataProxyDao.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                nRows = st.executeUpdate();
+                closeStatement(st);
+
+                if (jsonData.elencoOpenData != null) {
+                    //Inserimento tabella statistica priority Dataset
+                    sDataTable = "gpt_resource_stat_opendata".toUpperCase();
+                    for (final String theme : jsonData.elencoOpenData) {
+                        // insert a record
+                        sql = new StringBuffer();
+                        sql.append("INSERT INTO ").append(sDataTable);
+                        sql.append(" (");
+                        sql.append("DOCUUID,");
+                        sql.append("ID,");
+                        sql.append("OPENDATA");
+                        sql.append(")");
+                        sql.append(" VALUES(?,?,?)");
+
+                        logExpression(sql.toString());
+                        id = getIdFromTable(sDataTable);
+                        st = con.prepareStatement(sql.toString());
+                        st.setString(1, docUUID);
+                        st.setLong(2, id + 1);
+                        st.setString(3, theme);
+                        Logger.getLogger(ImsMetadataProxyDao.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                        nRows = st.executeUpdate();
+                        closeStatement(st);
+                    }
+                }
+            }
+
             con.commit();
         } catch (SQLException ex) {
             if (con != null) {
@@ -1164,8 +1750,8 @@ public class ImsMetadataProxyDao extends BaseDao {
             transformer.transform(new StreamSource(new StringReader(sXml)), new StreamResult(writer));
             sXmlClean = writer.toString();
         } catch (Exception ex) {
-            LOGGER.finest("Errore: non posso continuare con la trasformazione");
-            LOGGER.finest(ex.getMessage());
+            LOGGER.severe("Errore: non posso continuare con la trasformazione");
+            LOGGER.severe(ex.getMessage());
             return sXml;
         }
         LOGGER.finest("Fatto!");

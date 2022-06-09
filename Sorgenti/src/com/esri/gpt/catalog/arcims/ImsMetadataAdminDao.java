@@ -273,6 +273,20 @@ public int deleteRecord(String uuid)
     st = con.prepareStatement(sSql);
     st.setString(1,uuid);
     st.executeUpdate();
+
+    // gpt_resource_stat_priority_dataset
+    sSql = "DELETE FROM gpt_resource_stat_priority_dataset WHERE DOCUUID=?";
+    logExpression(sSql);
+    st = con.prepareStatement(sSql);
+    st.setString(1,uuid);
+    st.executeUpdate();
+
+    // gpt_resource_stat_opendata
+    sSql = "DELETE FROM gpt_resource_stat_opendata WHERE DOCUUID=?";
+    logExpression(sSql);
+    st = con.prepareStatement(sSql);
+    st.setString(1,uuid);
+    st.executeUpdate();
     /* Modified by Esri Italy END */
     
     CollectionDao colDao = new CollectionDao(this.getRequestContext());
