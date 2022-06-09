@@ -11,6 +11,7 @@ import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.sql.BaseDao;
 import com.esri.gpt.framework.sql.ManagedConnection;
 import com.esri.gpt.framework.context.ApplicationContext;
+import static com.esri.gpt.framework.util.DateProxy.DEFAULT_TIME_FORMAT;																		
 import com.esri.gpt.framework.util.Val;
 import java.io.IOException;
 import java.sql.Connection;
@@ -124,7 +125,135 @@ public class RestUserAddOn extends BaseServlet {
                 }
                 
             }
-        }
+        }		
+	/**
+         * getCSVResults
+         * ritorna tutti gli utenti di una PA ordinati per USERNAME
+         * Parametri:
+         * Title: Stringa parziale del nome utente (utilizzatoa con like %nome%)
+         * FileIdetifier:
+         * CatalogueID:
+         * MetadataID:
+         * DocOwner:
+         * PublicMethod:
+         * ProtocolType:
+         * UpdateDataStart:
+         * UpdateDataFine:
+         */
+        else if (uriParts[uriParts.length-1].equalsIgnoreCase("getCSVResults")){
+            //TITOLO;PROPRIETARIO;STATO;METODO
+            Logger.getLogger(RestUserAddOn.class.getName()).log(Level.FINEST, "Method getCSVResults entered", (Throwable)null);
+            ManagedConnection mc;
+            ResultSet rs = null;
+            PreparedStatement st = null;
+            JSONArray arr = new JSONArray();
+            try {
+                mc = context.getConnectionBroker().returnConnection("");
+                Connection con = mc.getJdbcConnection();
+                // initialize
+                String Title ="";
+                String FileIdetifier="";
+                String CatalogueID="";
+                String MetadataID="";
+                String Ente="";
+                String DocOwner="";
+                String PublicMethod="";
+                String ProtocolType="";
+                String UpdateDataStart="";
+                String UpdateDataFine="";
+
+                if (request.getParameterMap().containsKey("Title")) Title = request.getParameter("Title").toString();
+                if (request.getParameterMap().containsKey("FileIdetifier")) FileIdetifier = request.getParameter("FileIdetifier").toString();
+                if (request.getParameterMap().containsKey("CatalogueID")) CatalogueID = request.getParameter("CatalogueID").toString();
+                if (request.getParameterMap().containsKey("MetadataID")) MetadataID = request.getParameter("MetadataID").toString();
+                if (request.getParameterMap().containsKey("Ente")) Ente = request.getParameter("Ente").toString();
+                if (request.getParameterMap().containsKey("DocOwner")) DocOwner = request.getParameter("DocOwner").toString();
+                if (request.getParameterMap().containsKey("PublicMethod")) PublicMethod = request.getParameter("PublicMethod").toString();
+                if (request.getParameterMap().containsKey("ProtocolType")) ProtocolType = request.getParameter("ProtocolType").toString();
+                if (request.getParameterMap().containsKey("UpdateDataStart")) UpdateDataStart = request.getParameter("UpdateDataStart").toString();
+                if (request.getParameterMap().containsKey("UpdateDataFine")) UpdateDataFine = request.getParameter("UpdateDataFine").toString();
+
+                String sql = "SELECT a.TITLE, b.USERNAME, a.APPROVALSTATUS,a.PUBMETHOD,a.UPDATEDATE FROM gpt_resource a, gpt_user b WHERE a.OWNER = b.USERID ";
+
+                Integer i = 1;
+                if (!Title.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.TITLE LIKE '%"+Title+"%'";
+                }
+                if (!FileIdetifier.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.FILEIDENTIFIER='"+FileIdetifier+"'";
+                }
+                if (!CatalogueID.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.SITEUUID='"+CatalogueID+"'";
+                }
+                if (!MetadataID.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.DOCUUID='"+MetadataID+"'";
+                }
+                if (!DocOwner.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " b.DN='"+DocOwner+"'";
+                }
+                if (!Ente.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+
+                    String subPA = "SELECT ID FROM gpt_pa WHERE nome = '"+Ente+"'";
+                    sql += " a.OWNER IN (SELECT USERID FROM gpt_user WHERE FK_IDPA in ("+subPA+"))";
+                }
+                if (!PublicMethod.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.PUBMETHOD='"+PublicMethod+"'";
+                }
+                if (!ProtocolType.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    sql += " a.APPROVALSTATUS='"+ProtocolType+"'";
+                }
+                if (!UpdateDataStart.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    SimpleDateFormat format = new SimpleDateFormat(DEFAULT_TIME_FORMAT);
+                    sql += " a.UPDATE > '"+format.format(UpdateDataStart)+"'";
+                }
+                if (!UpdateDataFine.isEmpty()) {
+                    if(i++!=0){ sql+=" AND ";}
+                    SimpleDateFormat format = new SimpleDateFormat(DEFAULT_TIME_FORMAT);
+                    sql += " a.UPDATE < '"+format.format(UpdateDataFine)+"'";
+                }
+
+                Logger.getLogger(RestUserAddOn.class.getName()).log(Level.FINEST, "QUERY: "+sql, (Throwable)null);
+
+                st = con.prepareStatement(sql);
+                //Logger.getLogger(RestUserAddOn.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                rs = st.executeQuery();
+
+                while (rs.next()) {
+                    JSONObject jsonObj = new JSONObject();
+                    jsonObj.put("TITLE", rs.getString("TITLE"));
+                    jsonObj.put("USERNAME", rs.getString("USERNAME"));
+                    jsonObj.put("APPROVALSTATUS", rs.getString("APPROVALSTATUS"));
+                    jsonObj.put("PUBMETHOD", rs.getString("PUBMETHOD"));
+                    jsonObj.put("UPDATEDATE", rs.getString("UPDATEDATE"));
+                    arr.put(jsonObj);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(RestUserAddOn.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(RestUserAddOn.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                BaseDao.closeResultSet(rs);
+                BaseDao.closeStatement(st);
+                String jsonPrettyPrintString;
+                try {
+                    jsonPrettyPrintString = arr.toString(4);
+                    response.getWriter().write(jsonPrettyPrintString);
+                } catch (JSONException ex) {
+                    Logger.getLogger(RestUserAddOn.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }			
+
          /**
          * getPAFromUser
          * ritorna la PA di un utente

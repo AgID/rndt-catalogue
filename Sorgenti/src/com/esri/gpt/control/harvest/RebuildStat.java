@@ -137,6 +137,26 @@ public class RebuildStat extends BaseServlet {
                  objJ.put("tabella", "gpt_resource_stat_inspire_service");
                  objJ.put("numero", numero);
                  jarr.put(objJ);
+
+                /* Tabella di Tipo dataset prioritari */
+                sSql = "DELETE FROM gpt_resource_stat_priority_dataset ";
+                logExpression(sSql);
+                st = con.prepareStatement(sSql);
+                Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                numero = st.executeUpdate();
+                objJ.put("tabella", "gpt_resource_stat_priority_dataset");
+                objJ.put("numero", numero);
+                jarr.put(objJ);
+
+                /* Tabella di Tipo dati aperti */
+                sSql = "DELETE FROM gpt_resource_stat_opendata ";
+                logExpression(sSql);
+                st = con.prepareStatement(sSql);
+                Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                numero = st.executeUpdate();
+                objJ.put("tabella", "gpt_resource_stat_opendata");
+                objJ.put("numero", numero);
+                jarr.put(objJ);
                  
             } catch (SQLException ex) {
                 Logger.getLogger(RebuildStat.class.getName()).log(Level.SEVERE, null, ex);
@@ -220,7 +240,7 @@ public class RebuildStat extends BaseServlet {
                  st = con.prepareStatement(sSql);
                  int numero = st.executeUpdate();
                  objJ.put("tabella", "gpt_resource_stat");
-                 objJ.put("numero", numero);
+                 objJ.put("numero record cancellati:", numero);
                  jarr.put(objJ);
                  objJ = new JSONObject();
                  
@@ -231,7 +251,7 @@ public class RebuildStat extends BaseServlet {
                  Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
                  numero = st.executeUpdate();
                  objJ.put("tabella", "gpt_resource_stat_topic");
-                 objJ.put("numero", numero);
+                 objJ.put("numero record cancellati:", numero);
                  jarr.put(objJ);
                  objJ = new JSONObject();
                  
@@ -242,7 +262,7 @@ public class RebuildStat extends BaseServlet {
                  Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
                  numero = st.executeUpdate();
                  objJ.put("tabella", "gpt_resource_stat_service_type");
-                 objJ.put("numero", numero);
+                 objJ.put("numero record cancellati:", numero);
                  jarr.put(objJ);
                  objJ = new JSONObject();
 
@@ -253,7 +273,7 @@ public class RebuildStat extends BaseServlet {
                  Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
                  numero = st.executeUpdate();
                  objJ.put("tabella", "gpt_resource_stat_inspire_theme");
-                 objJ.put("numero", numero);
+                 objJ.put("numero record cancellati:", numero);
                  jarr.put(objJ);
                  objJ = new JSONObject();
                  
@@ -264,7 +284,29 @@ public class RebuildStat extends BaseServlet {
                  Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
                  numero = st.executeUpdate();
                  objJ.put("tabella", "gpt_resource_stat_inspire_service");
-                 objJ.put("numero", numero);
+                 objJ.put("numero record cancellati:", numero);
+                 jarr.put(objJ);
+                 objJ = new JSONObject();
+                 
+                 closeStatement(st);
+                 sSql = "DELETE FROM gpt_resource_stat_priority_dataset ";
+                 logExpression(sSql);
+                 st = con.prepareStatement(sSql);
+                 Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                 numero = st.executeUpdate();
+                 objJ.put("tabella", "gpt_resource_stat_priority_dataset");
+                 objJ.put("numero record cancellati:", numero);
+                 jarr.put(objJ);
+                 objJ = new JSONObject();
+                 
+                 closeStatement(st);
+                 sSql = "DELETE FROM gpt_resource_stat_opendata ";
+                 logExpression(sSql);
+                 st = con.prepareStatement(sSql);
+                 Logger.getLogger(RebuildStat.class.getName()).log(Level.FINEST, "Query:" + st, (Throwable)null);
+                 numero = st.executeUpdate();
+                 objJ.put("tabella", "gpt_resource_stat_opendata");
+                 objJ.put("numero record cancellati:", numero);
                  jarr.put(objJ);
                  objJ = new JSONObject();
             
