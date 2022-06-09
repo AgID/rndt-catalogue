@@ -41,18 +41,18 @@
                 </g:element>
             </h:div>   
 		   
-            <!-- Other keywords -->
+            <!-- Other keywords with Thesaurus -->
             <h:div g:label="$i18n.catalog.mdParam.KeywordsAltriTemi.caption"> 
                 <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="unbounded"
                                g:label="$i18n.catalog.mdParam.KeywordsAltriTemi.caption"
                                g:extends="$base/schema/gmd/identification/MD_Keywords_PropertyType.xml">
                     <g:matchTopElements>
                         <g:match
-                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gmx:Anchor"
                             g:qValue="GEMET - INSPIRE themes, version 1.0"
                             g:qMode="mustNot"/>
                         <g:match 
-                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString"
+                            g:qPath="gmd:MD_Keywords/gmd:thesaurusName/gmd:CI_Citation/gmd:title/gmx:Anchor"
                             g:qValue="GEMET - Concepts, version 2.4"
                             g:qMode="mustNot"/>
                         <g:match 
@@ -65,7 +65,7 @@
                     </g:matchTopElements>		      
                 </g:element>
             </h:div>    
-            <!-- Other keywords NICOL-->
+            <!-- Other keywords free text-->
             <h:div g:label="$i18n.catalog.mdParam.keywords.caption"> 
                 <g:element g:targetName="gmd:descriptiveKeywords" g:minOccurs="0" g:maxOccurs="1"
                                g:label="$i18n.catalog.mdParam.keywords.caption"
