@@ -406,9 +406,6 @@ public Date getModifiedDateAsDateObject(String format) {
     format = DEFAULT_DATE_FORMAT;
   }
   String date = Val.chkStr(this.getModifiedDate());
-  /** Esri Italy: modified Aprile 2020: ignore 'T' in AAAA-MM-DDTHH:MM:SS format **/
-  date = date.replace('T', ' ');
-  
   DateFormat fmt = new SimpleDateFormat(format);
   try {
     return fmt.parse(date);
