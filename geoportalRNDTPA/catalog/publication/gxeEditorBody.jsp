@@ -33,6 +33,7 @@
   
   String gxeLabelSave = gxeMsgBroker.retrieveMessage("catalog.publication.editMetadata.button.submit");
   String gxeLabelSaveDraft = gxeMsgBroker.retrieveMessage("catalog.publication.editMetadata.button.saveAsDraft");
+  String gxeLabelValidate = gxeMsgBroker.retrieveMessage("catalog.publication.editMetadata.button.validate");
   String gxeLabelUndo = gxeMsgBroker.retrieveMessage("catalog.publication.createMetadata.button.cancel");
   String gxeLabelReq = gxeMsgBroker.retrieveMessage("catalog.general.requiredFieldNote");
   com.esri.gpt.framework.ArcGIS.InteractiveMap imConfig = com.esri.gpt.framework.context.RequestContext.extract(request).getApplicationConfiguration().getInteractiveMap();%>
@@ -135,6 +136,15 @@ $("html").click(function(){
       gxeClient.saveDocument(gxeContext,null,sXml,asDraft);
     }
   }
+  function gxeValidateDocument(asDraft){
+	  var xmlGenerator = new gxe.xml.Generator();
+    var sXml = xmlGenerator.generate(gxeContext,asDraft); 
+    if (!xmlGenerator.hadValidationErrors) {
+	  //verifica
+	  var gxeClient = new gxe.Client();
+      gxeClient.verifyDocument(gxeContext,null,sXml,asDraft);
+    }
+  }
   
     function reloadImgEvent(){
         //aggiunto tab index manualmente a img
@@ -156,6 +166,7 @@ $("html").click(function(){
 <div class="container">
   <div id="gxeControlBar" class="gxeControlBar">
     <input type="button" value="<%=gxeLabelSaveDraft%>" onclick="gxeSaveDocument(true)"/>
+    <input type="button" value="<%=gxeLabelValidate%>" onclick="gxeValidateDocument(false)"/>
     <input type="button" value="<%=gxeLabelSave%>" onclick="gxeSaveDocument(false)"/>
     <input type="button" value="<%=gxeLabelUndo%>" onclick="gxeUndo()"/>
     <img id="gxeLoading" src="<%=request.getContextPath()%>/catalog/images/loading.gif" 
