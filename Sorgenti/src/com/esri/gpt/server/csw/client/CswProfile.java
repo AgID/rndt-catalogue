@@ -180,13 +180,14 @@ public String generateCSWGetMetadataByIDRequestURL(String baseURL,
  */
 public String generateCSWGetRecordsRequest(CswSearchCriteria search)
     throws TransformerException, IOException {
+
+    
   // Build xml
   String request = "<?xml version='1.0' encoding='UTF-8' ?>";
   request += "<GetRecords>" + "<StartPosition>" + search.getStartPosition()
       + "</StartPosition>";
   request += "<MaxRecords>" + search.getMaxRecords() + "</MaxRecords>";
-  request += "<KeyWord>" + this.XmlEscape(search.getSearchText())
-      + "</KeyWord>";
+  request += "<KeyWord>" + this.XmlEscape(search.getSearchText()) +  search._filter + "</KeyWord>";
   request += ("<LiveDataMap>" + search.isLiveDataAndMapsOnly() + "</LiveDataMap>");
   if (search.getEnvelope() != null) {
     request += ("<Envelope>");

@@ -42,6 +42,7 @@ private String _searchText;
 /** The _start position. */
 private int _startPosition;
 
+public String _filter = "";
 
 private boolean envelopeIntersects;
 

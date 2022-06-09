@@ -14,8 +14,16 @@
  */
 package com.esri.gpt.server.csw.client;
 
+import com.esri.gpt.framework.context.ApplicationContext;
+import com.esri.gpt.framework.context.RequestContext;
 import com.esri.gpt.framework.robots.Bots;
+import com.esri.gpt.framework.sql.ConnectionBroker;
+import com.esri.gpt.framework.sql.DatabaseReferences;
+import com.esri.gpt.framework.sql.ManagedConnection;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +45,7 @@ private static final Logger LOG =
   Logger.getLogger(CswSearchRequest.class.getCanonicalName());
 
 private CswCatalog        catalog;
+private RequestContext    context;
 private CswSearchCriteria criteria;
 private CswClient         cswClient;
 private CswSearchResponse response;
@@ -399,6 +408,41 @@ public void search() throws NullReferenceException, XPathExpressionException,
     throw new NullReferenceException("No specified profile");
   }
 
+  //query qui
+  //criteria._filter
+    try{
+
+
+      DatabaseReferences dbR = ApplicationContext.getInstance().getConfiguration().getDatabaseReferences();
+      ConnectionBroker c = new ConnectionBroker(dbR);
+
+      ManagedConnection mc = c.returnConnection("");
+      Connection con = mc.getJdbcConnection();
+
+      ResultSet rs = null;
+      PreparedStatement st = null;
+
+      // initialize
+      String strSQL = "SELECT FILTRO_CSW FROM gpt_resource WHERE HOST_URL='"+catalog.getUrl()+"'";
+
+      st = con.prepareStatement(strSQL);
+
+      rs = st.executeQuery();
+
+      String filterFound = "";
+      while (rs.next()) {
+          filterFound = rs.getString("FILTRO_CSW");
+          if(filterFound != null && filterFound != "") break;
+      }
+      criteria._filter = filterFound;
+      c.closeConnection(mc);
+    }catch(Exception e){
+
+    }
+    
+  
+  
+  
   // Generate getRecords query
   CswProfile profile = catalog.getProfile();
 
