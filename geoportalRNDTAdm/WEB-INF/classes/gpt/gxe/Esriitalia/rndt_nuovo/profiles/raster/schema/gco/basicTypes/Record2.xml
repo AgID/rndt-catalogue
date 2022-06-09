@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<g:element xmlns:g="http://www.esri.com/geoportal/gxe" 
+           xmlns:h="http://www.esri.com/geoportal/gxe/html"
+           g:targetName="gco:Record" 
+           g:extends="$base/xtn/ui/UI_Wrapped_ElementTextOnly.xml"> 
+	<g:attribute g:targetNS="" g:targetName="xsi:type" h:tag="div" g:jsClass="gxe.control.Attribute"
+			g:fixedValue="xs:double" h:class="gxeDisplayNone">
+		<g:input h:class="gxeDisplayNone" g:extends="$base/core/ui/InputText.xml"/>
+	</g:attribute>
+</g:element>
